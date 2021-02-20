@@ -14,6 +14,7 @@ import { Link, Redirect } from "react-router-dom";
 import Footer from "../navigation/Footer";
 import NavBar from "../navigation/NavBar";
 import MainBackground from "./img/schedule-background.jpg";
+//import MainBackgroundSmall from "./img/schedule-background-sm.jpg";
 
 function Home() {
   console.log(window.innerWidth);

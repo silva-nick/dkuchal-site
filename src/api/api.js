@@ -1,17 +1,18 @@
 import axios from "axios";
 
 import test from "./test.jpg";
-// TODO: get items, get challenges, post completed challenge?, login?
 
 const client = axios.create({
-  baseURL: "serverurl.com",
+  //baseURL: "https://dku-caps.herokuapp.com/",
+  baseURL: "http://localhost:3001/",
 });
 
 export const getItems = async () => {
   // Return available items
-  //const { items } = await client.get("/items");
-  let items = [];
-  console.log(test);
+  console.log("/items");
+  const { items } = await client.get("/items");
+  //let items = [];
+  console.log(items);
   for (let i = 0; i < 30; i++) {
     items.push({
       img: test,
@@ -19,7 +20,7 @@ export const getItems = async () => {
       tier: 3,
       text:
         "This is an amazing prize that will inspire you to reach out and make new friends.",
-      code: "test",
+      code: 0,
     });
   }
 
@@ -33,13 +34,38 @@ export const getTasks = async () => {
       title: "Fun Event!",
       points: 10,
       text: "This is an event where you are doing something with your partner.",
-      code: "test",
+      code: 123,
     });
   }
 
   return tasks;
 };
 
-export default { getItems, getTasks };
+export const putPerson = async () => {
+  // create new person
+  return 0;
+};
 
+export const updatePerson = async () => {
+  // update existing person
+  return 0;
+};
 
+export const putSubmission = async () => {
+  // update existing person
+  return 0;
+};
+
+export const putClaim = async () => {
+  // update existing person
+  return 0;
+};
+
+export default {
+  getItems,
+  getTasks,
+  putPerson,
+  updatePerson,
+  putSubmission,
+  putClaim,
+};

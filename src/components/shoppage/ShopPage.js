@@ -95,9 +95,9 @@ class ShopPage extends React.Component {
     ));
 
     return this.state.loading ? (
-      <div style={{ width: "100%", height: "50%" }}>
+      <center style={{ width: "100%", height: "100%", padding: "40% 0" }}>
         <Spinner animation="border" size="md" />
-      </div>
+      </center>
     ) : (
       cardRows
     );
