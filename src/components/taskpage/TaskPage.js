@@ -33,7 +33,9 @@ class TaskPage extends React.Component {
           </Card.Subtitle>
           <Card.Text>{task.text}</Card.Text>
           <Card.Link href="#">Sign up</Card.Link>
-          <Card.Link href="#">Submit</Card.Link>
+          <Card.Link as={Link} to={"/tasks/submit?task=" + task.code}>
+            Submit
+          </Card.Link>
         </Card.Body>
       </Card>
     ));

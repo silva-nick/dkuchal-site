@@ -4,14 +4,18 @@ import Home from "./home/Home";
 import TaskPage from "./taskpage/TaskPage";
 import ShopPage from "./shoppage/ShopPage";
 import LoginPage from "./loginpage/LoginPage";
+import SignupPage from "./signuppage/SignupPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Route exact path="/" component={Home} />
       <Route exact path="/tasks" component={TaskPage} />
+      <Route exact path="/tasks/submit" component={TaskPage} />
       <Route exact path="/shop" component={ShopPage} />
+      <Route exact path="/shop/claim" component={ShopPage} />
       <Route exact path="/login" component={LoginPage} />
+      <Route exact path="/signup" component={SignupPage} />
     </BrowserRouter>
   );
 }

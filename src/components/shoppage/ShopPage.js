@@ -31,7 +31,9 @@ class ShopPage extends React.Component {
             {"Tier " + item.tier}
           </Card.Subtitle>
           <Card.Text>{item.text}</Card.Text>
-          <Card.Link href="#">Claim</Card.Link>
+          <Card.Link as={Link} to={"/shop/claim?item=" + item.code}>
+            Claim
+          </Card.Link>
         </Card.Body>
       </Card>
     ));
