@@ -9,6 +9,7 @@ const client = axios.create({
 
 export const getItems = async () => {
   // Return available items
+  //const { items } = await client.get("/items");
   let items = [];
   console.log(test);
   for (let i = 0; i < 30; i++) {
@@ -40,3 +41,5 @@ export const getTasks = async () => {
 };
 
 export default { getItems, getTasks };
+
+
