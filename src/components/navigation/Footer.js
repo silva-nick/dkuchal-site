@@ -8,7 +8,7 @@ function Footer() {
     <Container
       fluid
       className="footer"
-      style={{ lineHeight: "2rem", minHeight: "10rem" }}
+      style={{ lineHeight: "2rem", minHeight: "10rem", paddingTop: "1rem" }}
     >
       <center>
         {" "}

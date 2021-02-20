@@ -9,6 +9,19 @@ const client = axios.create({
 export const getItems = async () => {
   // Return available items
 };
+export const getTasks = async () => {
+  // Return available items
+  let tasks = [];
 
+  for (let i = 0; i < 30; i++) {
+    tasks.push({
+      title: "Fun Event!",
+      subtitle: "10 points",
+      text: "This is an event where you are doing something with your partner.",
+    });
+  }
 
-export default { getItems };
+  return tasks;
+};
+
+export default { getItems, getTasks };

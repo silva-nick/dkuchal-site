@@ -3,8 +3,7 @@ import React from "react";
 import {
   Container,
   Image,
-  OverlayTrigger,
-  Tooltip,
+  Alert,
   Jumbotron,
   Accordion,
   Card,
@@ -15,22 +14,6 @@ import { Link, Redirect } from "react-router-dom";
 import Footer from "../navigation/Footer";
 import NavBar from "../navigation/NavBar";
 import MainBackground from "./img/schedule-background.jpg";
-
-function OverlayText(props) {
-  return (
-    <OverlayTrigger
-      key={props.val}
-      placement={"top"}
-      overlay={
-        <Tooltip id={`tooltip-${props.val}`}>
-          Tooltip on <strong>{props.val}</strong>.
-        </Tooltip>
-      }
-    >
-      <a>{props.val}</a>
-    </OverlayTrigger>
-  );
-}
 
 function Home() {
   console.log(window.innerWidth);
@@ -52,7 +35,7 @@ function Home() {
             src={MainBackground}
             style={{
               backgroundSize: "cover",
-              marginTop: "24px",
+              marginTop: "5%",
             }}
             fluid
           />
