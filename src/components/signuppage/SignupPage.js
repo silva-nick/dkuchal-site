@@ -1,7 +1,15 @@
 import "../../App.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Container, Card, Button, Form, Row, Col } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Button,
+  Form,
+  Row,
+  Col,
+  Image,
+} from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
 import FooterLight from "../navigation/FooterLight";
@@ -18,7 +26,8 @@ class LoginPage extends React.Component {
     name2: "",
     email: "",
     pswd: "",
-    file: "",
+    file: null,
+    fileURL: null,
   };
 
   submit(e) {
@@ -103,9 +112,24 @@ class LoginPage extends React.Component {
                   <Form.File
                     id="fileInput"
                     label="To start, upload a picture of both of you!"
-                    onChange={(e) => this.setState({ file: e.target.files[0] })}
+                    onChange={(e) =>
+                      this.setState({
+                        file: e.target.files[0],
+                        fileURL: URL.createObjectURL(e.target.files[0]),
+                      })
+                    }
                   />
                 </Form.Group>
+                <center>
+                  {this.state.file && (
+                    <Image
+                      src={this.state.fileURL}
+                      thumbnail
+                      fluid
+                      style={{ width: "60%" }}
+                    />
+                  )}
+                </center>
                 <br />
                 <Button variant="primary" type="submit" onClick={this.submit}>
                   Signup
