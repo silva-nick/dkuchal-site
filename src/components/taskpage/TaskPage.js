@@ -22,16 +22,14 @@ class TaskPage extends React.Component {
   };
 
   makeTasks() {
-    let result = 0;
-
     console.log(this.state.tasks);
 
     let cards = this.state.tasks.map((task, index) => (
-      <Card style={{ width: "18rem" }} key={index}>
+      <Card style={{ width: "18rem", margin: ".4rem" }} key={index}>
         <Card.Body>
           <Card.Title>{task.title}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
-            {task.subtitle}
+            {task.points + " points"}
           </Card.Subtitle>
           <Card.Text>{task.text}</Card.Text>
           <Card.Link href="#">Sign up</Card.Link>
@@ -40,12 +38,30 @@ class TaskPage extends React.Component {
       </Card>
     ));
 
+    let rows = [];
+    for (let i = 0; i < Math.ceil(cards.length / 4) * 4; i += 4) {
+      rows[i] = cards.slice(i, i + 4);
+    }
+
+    let cardRows = rows.map((row, index) => (
+      <div
+        style={{
+          padding: ".2rem",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        {row}
+      </div>
+    ));
+
     return this.state.loading ? (
       <div>
         <Spinner animation="border" size="md" />
       </div>
     ) : (
-      cards
+      cardRows
     );
   }
 
@@ -58,14 +74,9 @@ class TaskPage extends React.Component {
         <center>
           <NavBar />
         </center>
-        <Container
-          style={{
-            marginTop: "5%",
-          }}
-        >
+        <Container style={{ marginTop: "5%" }}>
           <h1>Open Tasks:</h1>
           <hr />
-          <br />
           <div>{cards}</div>
         </Container>
         <Footer />

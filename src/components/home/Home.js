@@ -87,10 +87,10 @@ function Home() {
             </Accordion.Collapse>
           </Card>
           <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="1">
+            <Accordion.Toggle as={Card.Header} eventKey="2">
               More questions:
             </Accordion.Toggle>
-            <Accordion.Collapse eventKey="1">
+            <Accordion.Collapse eventKey="2">
               <Card.Body>blah blah!!</Card.Body>
             </Accordion.Collapse>
           </Card>
