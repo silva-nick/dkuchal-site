@@ -1,10 +1,25 @@
-import "../App.css";
+import "../../App.css";
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container, Alert } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
 function ShopPage() {
-  return <div></div>;
+  return (
+    <div>
+      {" "}
+      <Alert
+        variant="warning"
+        dismissible
+        style={{
+          textAlign: "center",
+        }}
+      >
+        <Alert.Heading>
+          Our website is currently under development!
+        </Alert.Heading>
+      </Alert>
+    </div>
+  );
 }
 
 export default ShopPage;

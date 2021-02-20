@@ -1,0 +1,16 @@
+.logo {
+  height: 2rem;
+  width: 2rem;
+  margin: 0.1rem;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  justify-content: center;
+  background-image: url("./logo.svg");
+}
+
+.footer {
+  vertical-align: top;
+  background-color: #363636;
+  color: #fff;
+  margin-top: 14px;
+}

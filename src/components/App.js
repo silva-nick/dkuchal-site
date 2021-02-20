@@ -1,10 +1,9 @@
-import "../App.css";
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import Home from "./home/Home";
-import TaskPage from "./home/TaskPage";
-import ShopPage from "./home/ShopPage";
-import LoginPage from "./home/LoginPage";
+import TaskPage from "./taskpage/TaskPage";
+import ShopPage from "./shoppage/ShopPage";
+import LoginPage from "./loginpage/LoginPage";
 
 function App() {
   return (
