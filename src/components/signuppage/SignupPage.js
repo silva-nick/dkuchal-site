@@ -40,7 +40,7 @@ class LoginPage extends React.Component {
             <p>Join DKU Challenge 2.0</p>
           </center>
 
-          <Card className="text-left"  >
+          <Card className="text-left" style={{ margin: "0 0 2% 0" }}>
             <Card.Header>Signup</Card.Header>
             <Card.Body>
               <Card.Text className="text-muted">
@@ -108,7 +108,7 @@ class LoginPage extends React.Component {
                 </Form.Group>
                 <br />
                 <Button variant="primary" type="submit" onClick={this.submit}>
-                  Login
+                  Signup
                 </Button>
               </Form>
             </Card.Body>

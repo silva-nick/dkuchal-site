@@ -1,6 +1,6 @@
 import "./ShopPage.css";
-import React from "react";
-import { Container, Spinner, Card } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Spinner, Card, Toast, Button } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
 import Footer from "../navigation/Footer";
@@ -8,10 +8,34 @@ import NavBar from "../navigation/NavBar";
 
 import { getItems } from "../../api/api";
 
+function ClaimToast(props) {
+  const [show, setShow] = useState(true);
+  const toggleShow = () => setShow(!show);
+
+  return (
+    <Toast show={show} onClose={toggleShow}>
+      <Toast.Header>
+        <strong className="mr-auto">Congrats!</strong>
+        <small>{"props.claims+ remaining claims."}</small>
+      </Toast.Header>
+      <Toast.Body>
+        DKU Challenge 2.0 Admin will respond to your request.
+      </Toast.Body>
+    </Toast>
+  );
+}
+
 class ShopPage extends React.Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   state = {
     loading: true,
     items: [],
+    item: null,
+    toasts: [],
   };
 
   componentDidMount = async () => {
@@ -20,6 +44,15 @@ class ShopPage extends React.Component {
     items = items ? items : [];
     this.setState({ loading: false, items: items });
   };
+
+  handleClick(e) {
+    this.setState({
+      toasts: this.state.toasts.concat([
+        <ClaimToast props={this.state.item} />,
+      ]),
+    });
+    // Handle request to our email or smthn
+  }
 
   makeItems() {
     let cards = this.state.items.map((item, index) => (
@@ -31,9 +64,14 @@ class ShopPage extends React.Component {
             {"Tier " + item.tier}
           </Card.Subtitle>
           <Card.Text>{item.text}</Card.Text>
-          <Card.Link as={Link} to={"/shop/claim?item=" + item.code}>
+          <Button
+            onClick={(e) => {
+              this.setState({ item: item });
+              this.handleClick(e);
+            }}
+          >
             Claim
-          </Card.Link>
+          </Button>
         </Card.Body>
       </Card>
     ));
@@ -57,7 +95,7 @@ class ShopPage extends React.Component {
     ));
 
     return this.state.loading ? (
-      <div>
+      <div style={{ width: "100%", height: "50%" }}>
         <Spinner animation="border" size="md" />
       </div>
     ) : (
@@ -69,8 +107,18 @@ class ShopPage extends React.Component {
     let cards = this.makeItems();
 
     return (
-      <div>
-        {" "}
+      <div aria-live="polite" aria-atomic="true">
+        <div
+          style={{
+            position: "absolute",
+            top: "10%",
+            right: "2%",
+          }}
+        >
+          {" "}
+          {this.state.toasts}
+        </div>
+
         <center>
           <NavBar />
         </center>
@@ -79,6 +127,7 @@ class ShopPage extends React.Component {
           <hr />
           <div>{cards}</div>
         </Container>
+
         <Footer />
       </div>
     );
