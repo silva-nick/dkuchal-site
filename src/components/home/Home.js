@@ -1,5 +1,5 @@
 import "./Home.css";
-import React from "react";
+import { React, useState, useEffect } from "react";
 import {
   Container,
   Image,
@@ -13,35 +13,58 @@ import { Link, Redirect } from "react-router-dom";
 
 import Footer from "../navigation/Footer";
 import NavBar from "../navigation/NavBar";
-import MainBackground from "./img/schedule-background.jpg";
+import MainBackground from "./img/schedule-background-md.jpg";
 //import MainBackgroundSmall from "./img/schedule-background-sm.jpg";
 
 function Home() {
-  console.log(window.innerWidth);
+  const [width, setWidth] = useState(window.innerWidth);
 
-  let headerText = {
-    position: "absolute",
-    left: "30%",
-    color: "#fff",
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
   };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  let headerText;
+
+  if (width < 500) {
+    let hs = {
+      color: "#fff",
+    };
+
+    headerText = (
+      <center>
+        {" "}
+        <h4 style={{ ...hs, marginTop: "-25%" }}>Duke Kunshan University</h4>
+        <p style={{ ...hs, fontSize: "large" }}>[Challenge 2.0]</p>
+      </center>
+    );
+  } else {
+    let hs = {
+      left: "40%",
+      color: "#fff",
+    };
+
+    headerText = (
+      <center>
+        {" "}
+        <h1 style={{ ...hs, fontSize: "xxx-large", marginTop: "-40%" }}>Duke Kunshan University</h1>
+        <h2 style={{ ...hs, marginBottom: "30%" }}>[Friend Marathon]</h2>
+      </center>
+    );
+  }
 
   return (
     <div>
-      <center>
-        <NavBar />
-      </center>
+      <NavBar />
+
       <Container>
         <div>
-          <Image
-            src={MainBackground}
-            style={{
-              backgroundSize: "cover",
-              marginTop: "5%",
-            }}
-            fluid
-          />
-          <h1 style={{ ...headerText, top: "40%" }}>Duke Kunshan University</h1>
-          <h2 style={{ ...headerText, top: "45%" }}>[Challenge 2.0]</h2>
+          <Image src={MainBackground} style={{backgroundSize: "cover"}} fluid />
+          {headerText}
         </div>
         <br />
         <h3>What is DKU Challenge 2.0</h3>

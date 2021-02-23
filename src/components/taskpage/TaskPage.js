@@ -12,6 +12,7 @@ class TaskPage extends React.Component {
   state = {
     loading: true,
     tasks: [],
+    width: window.innerWidth,
   };
 
   componentDidMount = async () => {
@@ -21,8 +22,14 @@ class TaskPage extends React.Component {
     this.setState({ loading: false, tasks: tasks });
   };
 
+  componentDidUpdate = () => {
+    if (this.state.innerWidth != window.innerWidth) {
+      this.setState({ innerWidth: window.innerWidth });
+    }
+  };
+
   makeTasks() {
-    console.log(this.state.tasks);
+    //console.log(this.state.tasks);
 
     let cards = this.state.tasks.map((task, index) => (
       <Card style={{ width: "18rem", margin: ".4rem" }} key={index}>
@@ -40,9 +47,11 @@ class TaskPage extends React.Component {
       </Card>
     ));
 
+    let cols = this.state.innerWidth < 500 ? 1 : 4;
+
     let rows = [];
-    for (let i = 0; i < Math.ceil(cards.length / 4) * 4; i += 4) {
-      rows[i] = cards.slice(i, i + 4);
+    for (let i = 0; i < Math.ceil(cards.length / cols) * cols; i += cols) {
+      rows[i] = cards.slice(i, i + cols);
     }
 
     let cardRows = rows.map((row, index) => (
@@ -59,9 +68,9 @@ class TaskPage extends React.Component {
     ));
 
     return this.state.loading ? (
-      <div>
+      <center style={{ width: "100%", height: "100%", padding: "40% 0" }}>
         <Spinner animation="border" size="md" />
-      </div>
+      </center>
     ) : (
       cardRows
     );
@@ -76,8 +85,12 @@ class TaskPage extends React.Component {
         <center>
           <NavBar />
         </center>
-        <Container style={{ marginTop: "5%" }}>
-          <h1>Open Tasks:</h1>
+        <Container style={{ marginTop: "1.2rem" }}>
+          {this.state.innerWidth < 500 ? (
+            <h3>Open Tasks:</h3>
+          ) : (
+            <h1>Open Tasks:</h1>
+          )}
           <hr />
           <div>{cards}</div>
         </Container>

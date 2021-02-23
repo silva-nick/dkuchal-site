@@ -1,6 +1,13 @@
 import "./ShopPage.css";
 import React, { useState } from "react";
-import { Container, Spinner, Card, Toast, Button } from "react-bootstrap";
+import {
+  Container,
+  Spinner,
+  Card,
+  Toast,
+  Button,
+  Alert,
+} from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
 import Footer from "../navigation/Footer";
@@ -13,7 +20,7 @@ function ClaimToast(props) {
   const toggleShow = () => setShow(!show);
 
   return (
-    <Toast show={show} onClose={toggleShow}>
+    <Toast show={show} onClose={toggleShow} style={{ zIndex: 1 }}>
       <Toast.Header>
         <strong className="mr-auto">Congrats!</strong>
         <small>{"props.claims+ remaining claims."}</small>
@@ -29,13 +36,17 @@ class ShopPage extends React.Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
+    this.handleAlertClose = this.handleAlertClose.bind(this);
   }
 
   state = {
     loading: true,
     items: [],
     item: null,
+    innerWidth: window.innerWidth,
     toasts: [],
+    shopIsOpen: false,
+    showAlert: true,
   };
 
   componentDidMount = async () => {
@@ -45,6 +56,12 @@ class ShopPage extends React.Component {
     this.setState({ loading: false, items: items });
   };
 
+  componentDidUpdate = () => {
+    if (this.state.innerWidth != window.innerWidth) {
+      this.setState({ innerWidth: window.innerWidth });
+    }
+  };
+
   handleClick(e) {
     this.setState({
       toasts: this.state.toasts.concat([
@@ -52,6 +69,11 @@ class ShopPage extends React.Component {
       ]),
     });
     // Handle request to our email or smthn
+  }
+
+  handleAlertClose() {
+    this.setState({ showAlert: false });
+    return;
   }
 
   makeItems() {
@@ -64,21 +86,26 @@ class ShopPage extends React.Component {
             {"Tier " + item.tier}
           </Card.Subtitle>
           <Card.Text>{item.text}</Card.Text>
-          <Button
-            onClick={(e) => {
-              this.setState({ item: item });
-              this.handleClick(e);
-            }}
-          >
-            Claim
-          </Button>
+          <center>
+            <Button
+              onClick={(e) => {
+                this.setState({ item: item });
+                this.handleClick(e);
+              }}
+              disabled={!this.state.shopIsOpen}
+            >
+              Claim
+            </Button>
+          </center>
         </Card.Body>
       </Card>
     ));
 
+    let cols = this.state.innerWidth < 500 ? 1 : 3;
+
     let rows = [];
-    for (let i = 0; i < Math.ceil(cards.length / 3) * 3; i += 3) {
-      rows[i] = cards.slice(i, i + 3);
+    for (let i = 0; i < Math.ceil(cards.length / cols) * cols; i += cols) {
+      rows[i] = cards.slice(i, i + cols);
     }
 
     let cardRows = rows.map((row, index) => (
@@ -108,11 +135,28 @@ class ShopPage extends React.Component {
 
     return (
       <div aria-live="polite" aria-atomic="true">
+        {this.state.showAlert && (
+          <Alert
+            variant="warning"
+            onClose={() => this.handleAlertClose(false)}
+            dismissible
+            style={{
+              textAlign: "center",
+              margin: 0,
+            }}
+          >
+            <Alert.Heading>Our program hasn't finished yet!</Alert.Heading>
+            <hr />
+            <p>Come back on 4/09/2021 to check out and claim your prizes.</p>
+          </Alert>
+        )}
+
         <div
           style={{
             position: "absolute",
             top: "10%",
             right: "2%",
+            zIndex: 1,
           }}
         >
           {" "}
@@ -122,7 +166,7 @@ class ShopPage extends React.Component {
         <center>
           <NavBar />
         </center>
-        <Container style={{ marginTop: "5%" }}>
+        <Container style={{ marginTop: "1.2rem" }}>
           <h1>Prize Options:</h1>
           <hr />
           <div>{cards}</div>

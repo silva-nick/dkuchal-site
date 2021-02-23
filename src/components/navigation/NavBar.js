@@ -7,8 +7,8 @@ import Logo from "./Logo";
 
 function NavBar() {
   return (
-    <Container>
-      <Navbar expand="lg" variant="light" bg="light" fixed="top">
+    <div>
+      <Navbar expand="lg" variant="light" bg="light">
         <Navbar.Brand as={Link} to="/" style={{ width: "2rem" }}>
           <Logo />
         </Navbar.Brand>
@@ -27,7 +27,7 @@ function NavBar() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    </Container>
+    </div>
   );
 }
 
