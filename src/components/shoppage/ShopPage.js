@@ -135,22 +135,6 @@ class ShopPage extends React.Component {
 
     return (
       <div aria-live="polite" aria-atomic="true">
-        {this.state.showAlert && (
-          <Alert
-            variant="warning"
-            onClose={() => this.handleAlertClose(false)}
-            dismissible
-            style={{
-              textAlign: "center",
-              margin: 0,
-            }}
-          >
-            <Alert.Heading>Our program hasn't finished yet!</Alert.Heading>
-            <hr />
-            <p>Come back on 4/09/2021 to check out and claim your prizes.</p>
-          </Alert>
-        )}
-
         <div
           style={{
             position: "absolute",
@@ -166,6 +150,25 @@ class ShopPage extends React.Component {
         <center>
           <NavBar />
         </center>
+
+        {this.state.showAlert && (
+          <Alert
+            variant="warning"
+            onClose={() => this.handleAlertClose(false)}
+            dismissible
+            style={{
+              textAlign: "center",
+              margin: 0,
+            }}
+          >
+            <Alert.Heading>Our program hasn't finished yet!</Alert.Heading>
+            <hr />
+            <p style={{ margin: 0 }}>
+              Come back on 4/09/2021 to check out and claim your prizes.
+            </p>
+          </Alert>
+        )}
+
         <Container style={{ marginTop: "1.2rem" }}>
           <h1>Prize Options:</h1>
           <hr />

@@ -44,7 +44,7 @@ class LoginPage extends React.Component {
           <NavBar />
         </center>
         <Container>
-          <center style={{ margin: "7% 0 0 0" }}>
+          <center style={{ margin: "2rem 0 0 0" }}>
             <h1>Create your account</h1>
             <p>Join DKU Challenge 2.0</p>
           </center>

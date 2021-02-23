@@ -30,7 +30,7 @@ class SubmitPage extends React.Component {
           <NavBar />
         </center>
         <Container>
-          <center style={{ margin: "7% 0 0 0" }}>
+          <center style={{ margin: "2rem 0 0 0" }}>
             <h1>Submit your proof</h1>
             <br />
           </center>
