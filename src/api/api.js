@@ -10,8 +10,9 @@ const client = axios.create({
 export const getItems = async () => {
   // Return available items
   console.log("/items");
-  const { items } = await client.get("/items");
-  //let items = [];
+  //const { items } = await client.get("/items");
+
+  let items = [];
   console.log(items);
   for (let i = 0; i < 30; i++) {
     items.push({
