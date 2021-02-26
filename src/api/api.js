@@ -1,9 +1,7 @@
 import axios from "axios";
 
-import test from "./test.jpg";
-
 const client = axios.create({
-  baseURL: "https://dku-caps.herokuapp.com/",
+  baseURL: "https://dku-caps.herokuapp.com",
   //baseURL: "http://localhost:3001/",
 });
 
