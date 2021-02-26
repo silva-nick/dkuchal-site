@@ -3,15 +3,15 @@ import axios from "axios";
 import test from "./test.jpg";
 
 const client = axios.create({
-  //baseURL: "https://dku-caps.herokuapp.com/",
-  baseURL: "http://localhost:3001/",
+  baseURL: "https://dku-caps.herokuapp.com/",
+  //baseURL: "http://localhost:3001/",
 });
 
 export const getItems = async () => {
   // Return available items
   const response = await client.get("/items");
   const items = response.data.items;
-  
+
   console.log(items);
 
   return items;
@@ -22,7 +22,7 @@ export const getTasks = async () => {
 
   const response = await client.get("/taskitems");
   const tasks = response.data.tasks;
-  
+
   console.log(tasks);
 
   return tasks;
