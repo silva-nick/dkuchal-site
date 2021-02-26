@@ -1,4 +1,3 @@
-const { response } = require("express");
 const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
@@ -15,7 +14,30 @@ Airtable.configure({
 });
 var base = Airtable.base("appCbJwTyR6Qw1100");*/
 
-app.get("/items", async function (request, respose, next) {
+// Serve tasks
+app.get("/taskitems", async (request, response, next) => {
+  console.log(request.body);
+
+  try {
+    const tasks = [];
+    const records = await base("tasks").select({ view: "Grid view" }).all();
+    records.map((record) => {
+      record = record._rawJson.fields;
+      tasks.push(record);
+    });
+
+    console.log(tasks);
+    response.json({ tasks: tasks });
+
+    response.end();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+// Serve Items
+app.get("/items", async (request, response, next) => {
   console.log(request.body);
 
   try {
@@ -28,13 +50,15 @@ app.get("/items", async function (request, respose, next) {
 
     console.log(items);
     response.json({ items: items });
+
+    response.end();
   } catch (error) {
+    console.log(error);
     next(error);
   }
-
-  response.end();
 });
 
+// Serve everything to index, backup for refresh
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../build/index.html"));
 });
@@ -43,12 +67,14 @@ app.get("*", (req, res) => {
 app.use(function (req, res, next) {
   res.status(404);
   res.send("<h1>404: File Not Found</h1><p>howd you get here</p>");
+  res.end();
 });
 
 // Status code 500 middleware
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("500", { error: err });
+  res.end();
 });
 
 // Start Server

@@ -79,7 +79,7 @@ class ShopPage extends React.Component {
   makeItems() {
     let cards = this.state.items.map((item, index) => (
       <Card style={{ width: "24rem", margin: ".8rem 2rem" }} key={index}>
-        <Card.Img variant="top" src={item.img} />
+        <Card.Img variant="top" src={item.img[0].thumbnails.large.url} />
         <Card.Body>
           <Card.Title>{item.name}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">

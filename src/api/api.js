@@ -9,35 +9,21 @@ const client = axios.create({
 
 export const getItems = async () => {
   // Return available items
-  console.log("/items");
-  //const { items } = await client.get("/items");
-
-  let items = [];
+  const response = await client.get("/items");
+  const items = response.data.items;
+  
   console.log(items);
-  for (let i = 0; i < 30; i++) {
-    items.push({
-      img: test,
-      name: "Cool Shoes!",
-      tier: 3,
-      text:
-        "This is an amazing prize that will inspire you to reach out and make new friends.",
-      code: 0,
-    });
-  }
 
   return items;
 };
+
 export const getTasks = async () => {
-  // Return available items
-  let tasks = [];
-  for (let i = 0; i < 30; i++) {
-    tasks.push({
-      title: "Fun Event!",
-      points: 10,
-      text: "This is an event where you are doing something with your partner.",
-      code: 123,
-    });
-  }
+  // Return available tasks
+
+  const response = await client.get("/taskitems");
+  const tasks = response.data.tasks;
+  
+  console.log(tasks);
 
   return tasks;
 };
