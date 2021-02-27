@@ -51,7 +51,7 @@ class ShopPage extends React.Component {
 
   componentDidMount = async () => {
     let items = await getItems();
-    console.log(items);
+    //console.log(items);
     items = items ? items : [];
     this.setState({ loading: false, items: items });
   };

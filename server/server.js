@@ -4,21 +4,24 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const cors = require("cors");
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+};
 
-app.use(cors());
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "../build")));
 
-const base = require("airtable").base("appCbJwTyR6Qw1100");
-/*var Airtable = require("airtable");
+//const base = require("airtable").base("appCbJwTyR6Qw1100");
+var Airtable = require("airtable");
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
-  apiKey: "",
+  apiKey: "keyIQLw7jZr2IQbNq",
 });
-var base = Airtable.base("appCbJwTyR6Qw1100");*/
+var base = Airtable.base("appCbJwTyR6Qw1100"); /**/
 
 // Serve tasks
-app.get("/taskitems", async (request, response, next) => {
+app.get("/taskitems", cors(), async (request, response, next) => {
   console.log(request.body);
 
   try {
@@ -40,7 +43,7 @@ app.get("/taskitems", async (request, response, next) => {
 });
 
 // Serve Items
-app.get("/items", async (request, response, next) => {
+app.get("/items", cors(corsOptions), async (request, response, next) => {
   console.log(request.body);
 
   try {

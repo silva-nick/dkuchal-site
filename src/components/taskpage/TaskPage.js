@@ -17,7 +17,7 @@ class TaskPage extends React.Component {
 
   componentDidMount = async () => {
     let tasks = await getTasks();
-    console.log(tasks);
+    //console.log(tasks);
     tasks = tasks ? tasks : [];
     this.setState({ loading: false, tasks: tasks });
   };
