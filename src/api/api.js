@@ -5,9 +5,16 @@ const client = axios.create({
   //baseURL: "http://localhost:3001/",
 });
 
+const corsConfig = {
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  },
+};
+
 export const getItems = async () => {
   // Return available items
-  const response = await client.get("/items");
+  const response = await client.get("/items", corsConfig);
   const items = response.data.items;
 
   console.log(items);
@@ -18,7 +25,7 @@ export const getItems = async () => {
 export const getTasks = async () => {
   // Return available tasks
 
-  const response = await client.get("/taskitems");
+  const response = await client.get("/taskitems", corsConfig);
   const tasks = response.data.tasks;
 
   console.log(tasks);

@@ -7,6 +7,7 @@ const cors = require("cors");
 const corsOptions = {
   origin: "*",
   credentials: true,
+  optionsSuccessStatus: 200
 };
 
 app.use(express.json());
@@ -33,6 +34,8 @@ app.get("/taskitems", cors(), async (request, response, next) => {
     });
 
     console.log(tasks);
+    response.set('Access-Control-Allow-Origin', '*');
+    response.set('Access-Control-Allow-Credentials', true);
     response.json({ tasks: tasks });
 
     response.end();
@@ -55,6 +58,8 @@ app.get("/items", cors(corsOptions), async (request, response, next) => {
     });
 
     console.log(items);
+    response.set('Access-Control-Allow-Origin', '*');
+    response.set('Access-Control-Allow-Credentials', true);
     response.json({ items: items });
 
     response.end();
