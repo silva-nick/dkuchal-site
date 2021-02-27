@@ -39,7 +39,7 @@ function Home() {
       <center>
         {" "}
         <h4 style={{ ...hs, marginTop: "-25%" }}>Duke Kunshan University</h4>
-        <p style={{ ...hs, fontSize: "large" }}>[Challenge 2.0]</p>
+        <p style={{ ...hs, fontSize: "large" }}>[Friendship Marathon]</p>
       </center>
     );
   } else {
@@ -51,8 +51,10 @@ function Home() {
     headerText = (
       <center>
         {" "}
-        <h1 style={{ ...hs, fontSize: "xxx-large", marginTop: "-40%" }}>Duke Kunshan University</h1>
-        <h2 style={{ ...hs, marginBottom: "30%" }}>[Friend Marathon]</h2>
+        <h1 style={{ ...hs, fontSize: "xxx-large", marginTop: "-40%" }}>
+          Duke Kunshan University
+        </h1>
+        <h2 style={{ ...hs, marginBottom: "30%" }}>[Friendship Marathon]</h2>
       </center>
     );
   }
@@ -63,7 +65,11 @@ function Home() {
 
       <Container>
         <div>
-          <Image src={MainBackground} style={{backgroundSize: "cover"}} fluid />
+          <Image
+            src={MainBackground}
+            style={{ backgroundSize: "cover" }}
+            fluid
+          />
           {headerText}
         </div>
         <br />

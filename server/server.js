@@ -4,11 +4,6 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const cors = require("cors");
-const corsOptions = {
-  origin: "*",
-  credentials: true,
-  optionsSuccessStatus: 200
-};
 
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "../build")));
@@ -22,7 +17,7 @@ Airtable.configure({
 var base = Airtable.base("appCbJwTyR6Qw1100"); */
 
 // Serve tasks
-app.get("/taskitems", cors(), async (request, response, next) => {
+app.put("/tasks", cors(), async (request, response, next) => {
   console.log(request.body);
 
   try {
@@ -34,8 +29,6 @@ app.get("/taskitems", cors(), async (request, response, next) => {
     });
 
     console.log(tasks);
-    response.set('Access-Control-Allow-Origin', '*');
-    response.set('Access-Control-Allow-Credentials', true);
     response.json({ tasks: tasks });
 
     response.end();
@@ -46,7 +39,7 @@ app.get("/taskitems", cors(), async (request, response, next) => {
 });
 
 // Serve Items
-app.get("/items", cors(corsOptions), async (request, response, next) => {
+app.put("/shop", cors(), async (request, response, next) => {
   console.log(request.body);
 
   try {
@@ -58,8 +51,6 @@ app.get("/items", cors(corsOptions), async (request, response, next) => {
     });
 
     console.log(items);
-    response.set('Access-Control-Allow-Origin', '*');
-    response.set('Access-Control-Allow-Credentials', true);
     response.json({ items: items });
 
     response.end();

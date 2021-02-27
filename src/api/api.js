@@ -14,7 +14,7 @@ const corsConfig = {
 
 export const getItems = async () => {
   // Return available items
-  const response = await client.get("/items", corsConfig);
+  const response = await client.get("/shop", corsConfig);
   const items = response.data.items;
 
   console.log(items);
@@ -25,7 +25,7 @@ export const getItems = async () => {
 export const getTasks = async () => {
   // Return available tasks
 
-  const response = await client.get("/taskitems", corsConfig);
+  const response = await client.get("/tasks", corsConfig);
   const tasks = response.data.tasks;
 
   console.log(tasks);
