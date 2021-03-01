@@ -5,9 +5,9 @@ const app = express();
 
 const cors = require("cors");
 
+app.use(express.static(path.resolve(__dirname, "../build")));
 app.use(express.json());
 app.use(cors());
-app.use(express.static(path.resolve(__dirname, "../build")));
 
 const base = require("airtable").base("appCbJwTyR6Qw1100");
 /*var Airtable = require("airtable");
