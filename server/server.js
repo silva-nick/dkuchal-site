@@ -6,6 +6,7 @@ const app = express();
 const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
 app.use(express.static(path.resolve(__dirname, "../build")));
 
 const base = require("airtable").base("appCbJwTyR6Qw1100");
@@ -17,7 +18,7 @@ Airtable.configure({
 var base = Airtable.base("appCbJwTyR6Qw1100"); */
 
 // Serve tasks
-app.get("/alltasks", cors(), async (request, response, next) => {
+app.get("/alltasks", async (request, response, next) => {
   console.log(request.body);
 
   try {
@@ -39,7 +40,7 @@ app.get("/alltasks", cors(), async (request, response, next) => {
 });
 
 // Serve Items
-app.get("/allitems", cors(), async (request, response, next) => {
+app.get("/allitems", async (request, response, next) => {
   console.log(request.body);
 
   try {
@@ -60,9 +61,12 @@ app.get("/allitems", cors(), async (request, response, next) => {
   }
 });
 
-// Serve everything to index, backup for refresh
-app.get("*", (request, response) => {
-  response.sendFile(path.resolve(__dirname, "../build/index.html"));
+// Backup serve to index, backup for refresh
+const ENDPOINTS = ["/tasks", "/shop", "/login", "/", "/submit", "/signup"];
+ENDPOINTS.map((endpoint) => {
+  app.get(endpoint, (request, response) => {
+    response.sendFile(path.resolve(__dirname, "../build/index.html"));
+  });
 });
 
 // Status code 404 middleware

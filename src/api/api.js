@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "http://dku-caps.herokuapp.com",
+  baseURL: "http://dku-caps.herokuapp.com/",
   //baseURL: "http://localhost:3001/",
 });
 
