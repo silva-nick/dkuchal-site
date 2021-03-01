@@ -6,7 +6,6 @@ const app = express();
 const cors = require("cors");
 
 app.use(express.json());
-app.use(cors());
 app.use(express.static(path.resolve(__dirname, "../build")));
 
 const base = require("airtable").base("appCbJwTyR6Qw1100");
@@ -18,7 +17,7 @@ Airtable.configure({
 var base = Airtable.base("appCbJwTyR6Qw1100"); */
 
 // Serve tasks
-app.get("/alltasks", async (request, response, next) => {
+app.get("/alltasks", cors(), async (request, response, next) => {
   console.log(request.body);
 
   try {
@@ -40,7 +39,7 @@ app.get("/alltasks", async (request, response, next) => {
 });
 
 // Serve Items
-app.get("/allitems", async (request, response, next) => {
+app.get("/allitems", cors(), async (request, response, next) => {
   console.log(request.body);
 
   try {
