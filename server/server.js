@@ -17,6 +17,13 @@ Airtable.configure({
 var base = Airtable.base("appCbJwTyR6Qw1100"); */
 
 // Serve tasks
+app.options("/tasks", function (req, response) {
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Methods", "*");
+  response.setHeader("Access-Control-Allow-Headers", "*");
+  response.end();
+});
+
 app.put("/tasks", cors(), async (request, response, next) => {
   console.log(request.body);
 
