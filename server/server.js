@@ -17,14 +17,7 @@ Airtable.configure({
 var base = Airtable.base("appCbJwTyR6Qw1100"); */
 
 // Serve tasks
-app.options("/tasks", function (request, response) {
-  response.setHeader("Access-Control-Allow-Origin", "*");
-  response.setHeader("Access-Control-Allow-Methods", "*");
-  response.setHeader("Access-Control-Allow-Headers", "*");
-  response.end();
-});
-
-app.put("/tasks", cors(), async (request, response, next) => {
+app.get("/alltasks", cors(), async (request, response, next) => {
   console.log(request.body);
 
   try {
@@ -46,7 +39,7 @@ app.put("/tasks", cors(), async (request, response, next) => {
 });
 
 // Serve Items
-app.put("/shop", cors(), async (request, response, next) => {
+app.get("/allitems", cors(), async (request, response, next) => {
   console.log(request.body);
 
   try {
