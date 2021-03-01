@@ -1,14 +1,15 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "https://dku-caps.herokuapp.com",
+  baseURL: "http://dku-caps.herokuapp.com",
   //baseURL: "http://localhost:3001/",
 });
 
 const corsConfig = {
   headers: {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    "Access-Control-Allow-Methods": "*",
+    "Access-Control-Allow-Headers": "*",
   },
 };
 

@@ -17,7 +17,7 @@ Airtable.configure({
 var base = Airtable.base("appCbJwTyR6Qw1100"); */
 
 // Serve tasks
-app.options("/tasks", function (req, response) {
+app.options("/tasks", function (request, response) {
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.setHeader("Access-Control-Allow-Methods", "*");
   response.setHeader("Access-Control-Allow-Headers", "*");
@@ -68,15 +68,15 @@ app.put("/shop", cors(), async (request, response, next) => {
 });
 
 // Serve everything to index, backup for refresh
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../build/index.html"));
+app.get("*", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "../build/index.html"));
 });
 
 // Status code 404 middleware
-app.use(function (req, res, next) {
-  res.status(404);
-  res.send("<h1>404: File Not Found</h1><p>howd you get here</p>");
-  res.end();
+app.use(function (request, response) {
+  response.status(404);
+  response.send("<h1>404: File Not Found</h1><p>howd you get here</p>");
+  response.end();
 });
 
 // Status code 500 middleware
