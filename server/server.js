@@ -1,4 +1,4 @@
-//const express = require("express");
+const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -20,7 +20,6 @@ var base = Airtable.base("appCbJwTyR6Qw1100"); */
 app.get("/alltasks", cors(), async (request, response, next) => {
   console.log(request.url);
   console.log(request.hostname);
-  console.log(request.body);
 
   try {
     const tasks = [];
@@ -30,7 +29,7 @@ app.get("/alltasks", cors(), async (request, response, next) => {
       tasks.push(record);
     });
 
-    console.log(tasks);
+    //console.log(tasks);
     response.json({ tasks: tasks });
 
     response.end();
@@ -52,7 +51,7 @@ app.get("/allitems", cors(), async (request, response, next) => {
       items.push(record);
     });
 
-    console.log(items);
+    //console.log(items);
     response.json({ items: items });
 
     response.end();
