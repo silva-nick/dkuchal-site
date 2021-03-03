@@ -18,8 +18,13 @@ var base = Airtable.base("appCbJwTyR6Qw1100"); */
 
 // Serve tasks
 app.get("/alltasks", cors(), async (request, response, next) => {
+  console.log(request.url);
+  console.log(request.hostname);
   console.log(request.body);
 
+  response.send("<h1>404: File Not Found</h1><p>howd you get here</p>");
+  response.end();
+  
   try {
     const tasks = [];
     const records = await base("tasks").select({ view: "Grid view" }).all();
