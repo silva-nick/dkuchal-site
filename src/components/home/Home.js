@@ -76,15 +76,15 @@ function Home() {
         <h3>What is DKU Challenge 2.0</h3>
         <Jumbotron fluid>
           <Container>
-            <p>DKU Challenge 2.0 is a program for students.</p>
+            <p style={{ fontWeight: "bold" }}>
+              DKU Challenge 2.0 is a program for students.
+            </p>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              The goal of this event is to add opportunities for DKU students to
+              make new foreign friends or to maintain their old friendship
+              overseas. Though we are apart during this special difficult
+              period, students can still keep active and accompany each other
+              via this meaningful online program.
             </p>
           </Container>
         </Jumbotron>
@@ -105,7 +105,9 @@ function Home() {
               How do I sign up?
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
-              <Card.Body>blah blah blah</Card.Body>
+              <Card.Body>
+                Link to a form <a href="https://www.google.com">here!</a>
+              </Card.Body>
             </Accordion.Collapse>
           </Card>
           <Card>
@@ -113,7 +115,15 @@ function Home() {
               Can I choose my own Partner?
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="1">
-              <Card.Body>blah blah</Card.Body>
+              <Card.Body>
+                We will create a Qualtrics or Airtable form/ questionnaire that
+                is designed to help create pairs of students. This form/
+                questionnaire will collect the students general information,
+                their interests, and some other characteristics that may be
+                useful in assigning them a partner. Using this data we will
+                create an email list. Then we will pair the students manually
+                and release submissions via the list.
+              </Card.Body>
             </Accordion.Collapse>
           </Card>
           <Card>
@@ -121,7 +131,7 @@ function Home() {
               More questions:
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="2">
-              <Card.Body>blah blah!!</Card.Body>
+              <Card.Body>Contact us: zaiying.yang@dukekunshan.edu.cn</Card.Body>
             </Accordion.Collapse>
           </Card>
         </Accordion>

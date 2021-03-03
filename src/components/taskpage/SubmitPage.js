@@ -1,6 +1,14 @@
 import "../../App.css";
 import React from "react";
-import { Container, Card, Button, Form, Row, Col } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Button,
+  Form,
+  Row,
+  Col,
+  Image,
+} from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
 import FooterLight from "../navigation/FooterLight";
@@ -14,7 +22,8 @@ class SubmitPage extends React.Component {
 
   state = {
     description: "",
-    file: "",
+    file: null,
+    fileURL: null,
   };
 
   submit(e) {
@@ -73,9 +82,24 @@ class SubmitPage extends React.Component {
                   <Form.File
                     id="fileInput"
                     label="Picture/ video evidence, if specified."
-                    onChange={(e) => this.setState({ file: e.target.files[0] })}
+                    onChange={(e) =>
+                      this.setState({
+                        file: e.target.files[0],
+                        fileURL: URL.createObjectURL(e.target.files[0]),
+                      })
+                    }
                   />
                 </Form.Group>
+                <center>
+                  {this.state.file && (
+                    <Image
+                      src={this.state.fileURL}
+                      thumbnail
+                      fluid
+                      style={{ width: "60%" }}
+                    />
+                  )}
+                </center>
                 <br />
                 <Button variant="primary" type="submit" onClick={this.submit}>
                   Submit

@@ -1,6 +1,6 @@
 import "../../App.css";
 import React from "react";
-import { Container, Spinner, Card } from "react-bootstrap";
+import { Container, Spinner, Card, Button, Row } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
 import Footer from "../navigation/Footer";
@@ -8,10 +8,18 @@ import NavBar from "../navigation/NavBar";
 
 import { getTasks } from "../../api/api";
 
+const download = require("downloadjs");
+
 class TaskPage extends React.Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   state = {
     loading: true,
     tasks: [],
+    fileUrl: "",
     width: window.innerWidth,
   };
 
@@ -28,6 +36,20 @@ class TaskPage extends React.Component {
     }
   };
 
+  handleClick = (task) => {
+    console.log(task);
+
+    if (task.description) {
+      download(
+        task.description[0].url,
+        task.description[0].filename,
+        "application/pdf"
+      );
+    }
+
+    return;
+  };
+
   makeTasks() {
     //console.log(this.state.tasks);
 
@@ -39,7 +61,9 @@ class TaskPage extends React.Component {
             {task.points + " points"}
           </Card.Subtitle>
           <Card.Text>{task.text}</Card.Text>
-          <Card.Link href="#">Sign up</Card.Link>
+          <Card.Link href={task.description ? task.description[0].url : "#"}>
+            Sign up
+          </Card.Link>
           <Card.Link as={Link} to={"/tasks/submit?task=" + task.code}>
             Submit
           </Card.Link>
@@ -62,6 +86,7 @@ class TaskPage extends React.Component {
           flexDirection: "row",
           justifyContent: "center",
         }}
+        key={index}
       >
         {row}
       </div>

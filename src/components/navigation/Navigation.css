@@ -9,8 +9,11 @@
 }
 
 .footer {
+  height: 100%;
   vertical-align: top;
   background-color: #363636;
+  margin: auto;
+  text-align: center;
   color: #fff;
   margin-top: 14px;
 }
