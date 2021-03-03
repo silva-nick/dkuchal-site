@@ -1,4 +1,4 @@
-const express = require("express");
+//const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -22,9 +22,6 @@ app.get("/alltasks", cors(), async (request, response, next) => {
   console.log(request.hostname);
   console.log(request.body);
 
-  response.send("<h1>404: File Not Found</h1><p>howd you get here</p>");
-  response.end();
-  
   try {
     const tasks = [];
     const records = await base("tasks").select({ view: "Grid view" }).all();
