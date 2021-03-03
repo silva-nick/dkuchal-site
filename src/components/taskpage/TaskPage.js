@@ -8,18 +8,14 @@ import NavBar from "../navigation/NavBar";
 
 import { getTasks } from "../../api/api";
 
-const download = require("downloadjs");
-
 class TaskPage extends React.Component {
   constructor() {
     super();
-    this.handleClick = this.handleClick.bind(this);
   }
 
   state = {
     loading: true,
     tasks: [],
-    fileUrl: "",
     width: window.innerWidth,
   };
 
@@ -34,20 +30,6 @@ class TaskPage extends React.Component {
     if (this.state.innerWidth != window.innerWidth) {
       this.setState({ innerWidth: window.innerWidth });
     }
-  };
-
-  handleClick = (task) => {
-    console.log(task);
-
-    if (task.description) {
-      download(
-        task.description[0].url,
-        task.description[0].filename,
-        "application/pdf"
-      );
-    }
-
-    return;
   };
 
   makeTasks() {
