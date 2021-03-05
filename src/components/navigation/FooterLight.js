@@ -1,6 +1,8 @@
 import "./Navigation.css";
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container, Image } from "react-bootstrap";
+
+import CapsLogo from "./caps-logo.svg";
 
 function FooterLight() {
   return (
@@ -13,6 +15,14 @@ function FooterLight() {
         {" "}
         <a>Counseling and Psychological Services</a>
         <br /> <a>Problems? Contact us: zaiying.yang@dukekunshan.edu.cn</a>
+        <br />
+        <a href="https://dukekunshan.edu.cn/en/caps">
+          <Image
+            src={CapsLogo}
+            style={{ height: "4rem", marginTop: ".4rem" }}
+            thumbnail
+          />
+        </a>
       </center>
     </Container>
   );

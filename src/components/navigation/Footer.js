@@ -1,7 +1,9 @@
 import "./Navigation.css";
 import React from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Image } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
+
+import CapsLogo from "./caps-logo.svg";
 
 function Footer() {
   return (
@@ -13,9 +15,16 @@ function Footer() {
       <center>
         {" "}
         <a>Counseling and Psychological Services</a>
-        <br /> <a>caps@dukekunshan.edu.cn</a>
         <br />
-        <a>Rooms CC 2081-2084</a>
+        <a>caps@dukekunshan.edu.cn | Rooms CC 2081-2084</a>
+        <br />
+        <a href="https://dukekunshan.edu.cn/en/caps">
+          <Image
+            src={CapsLogo}
+            style={{ height: "4rem", marginTop: ".4rem" }}
+            thumbnail
+          />
+        </a>
       </center>
     </Container>
   );
