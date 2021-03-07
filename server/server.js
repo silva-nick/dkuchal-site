@@ -10,6 +10,7 @@ app.use(express.static(path.resolve(__dirname, "../build")));
 
 const base = require("airtable").base("appCbJwTyR6Qw1100");
 
+
 // Serve tasks
 app.get("/api/alltasks", cors(), async (request, response, next) => {
   console.log(request.url);
@@ -55,28 +56,20 @@ app.get("/api/allitems", cors(), async (request, response, next) => {
   }
 });
 
-
-
-// Serve Items
+// Add new claim requests
 app.put("/api/claim", cors(), async (request, response, next) => {
   console.log(request.body);
+  base("claims").create([{ fields: request.body }], function (err, record) {
+    if (err) {
+      console.log(err);
+      response.header(500);
+      response.end();
+      return;
+    }
+  });
 
-  try {
-    const items = [];
-    const records = await base("items").select({ view: "Grid view" }).all();
-    records.map((record) => {
-      record = record._rawJson.fields;
-      items.push(record);
-    });
-
-    //console.log(items);
-    response.json({ items: items });
-
-    response.end();
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
+  response.header(200);
+  response.end();
 });
 
 // Backup serve to index, backup for refresh

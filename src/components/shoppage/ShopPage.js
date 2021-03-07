@@ -8,28 +8,43 @@ import {
   Button,
   Alert,
 } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
 
 import Footer from "../navigation/Footer";
 import NavBar from "../navigation/NavBar";
 
-import { getItems, putClaim, updatePerson } from "../../api/api";
+import { getItems, putClaim, updateUser } from "../../api/api";
 
 function ClaimToast(props) {
   const [show, setShow] = useState(true);
   const toggleShow = () => setShow(!show);
 
-  return (
-    <Toast show={show} onClose={toggleShow} style={{ zIndex: 1 }}>
-      <Toast.Header>
-        <strong className="mr-auto">Congrats!</strong>
-        <small>{"props.claims+ remaining claims."}</small>
-      </Toast.Header>
-      <Toast.Body>
-        DKU Challenge 2.0 Admin will respond to your request.
-      </Toast.Body>
-    </Toast>
-  );
+  if (props) {
+    return (
+      <Toast show={show} onClose={toggleShow} style={{ zIndex: 1 }}>
+        <Toast.Header>
+          <strong className="mr-auto">Congrats!</strong>
+          <small>{"props.claims + remaining claims."}</small>
+        </Toast.Header>
+        <Toast.Body>
+          DKU Challenge 2.0 Admin will respond to your request.
+        </Toast.Body>
+      </Toast>
+    );
+  } else {
+    return (
+      <Toast show={show} onClose={toggleShow} style={{ zIndex: 1 }}>
+        <Toast.Header>
+          <strong className="mr-auto" style={{ color: "red" }}>
+            ERROR
+          </strong>
+          <small>{"Failure to process request"}</small>
+        </Toast.Header>
+        <Toast.Body>
+          Please contact DKU Challenge admin for assistance.
+        </Toast.Body>
+      </Toast>
+    );
+  }
 }
 
 class ShopPage extends React.Component {
@@ -45,8 +60,9 @@ class ShopPage extends React.Component {
     item: null,
     innerWidth: window.innerWidth,
     toasts: [],
-    shopIsOpen: false,
+    shopIsOpen: true,
     showAlert: true,
+    claimSuccess: false,
   };
 
   componentDidMount = async () => {
@@ -62,22 +78,28 @@ class ShopPage extends React.Component {
     }
   };
 
-  handleClick(e) {
-    this.setState({
-      toasts: this.state.toasts.concat([
-        <ClaimToast props={this.state.item} key={this.state.toasts.length} />,
-      ]),
-    });
-
+  async handleClick(e, item) {
     // Send claim to server.
-    putClaim({
+    const claimSuccess = await putClaim({
       nameone: "Zaiying Yang",
       nametwo: "Nick Silva",
       usrcode: 1,
-      itmcode: this.state.item.itmcode,
+      itmcode: item.itmcode,
     });
+
+    let newToast = claimSuccess.success ? (
+      <ClaimToast props={item} key={this.state.toasts.length} />
+    ) : (
+      <ClaimToast props={null} key={this.state.toasts.length} />
+    );
+
+    this.setState({
+      claimSuccess: claimSuccess.success,
+      toasts: this.state.toasts.concat([newToast]),
+    });
+
     // Update person's claims
-    updatePerson({
+    updateUser({
       nameone: "Zaiying Yang",
       nametwo: "Nick Silva",
       usrcode: 1,
@@ -87,6 +109,11 @@ class ShopPage extends React.Component {
 
   handleAlertClose() {
     this.setState({ showAlert: false });
+    return;
+  }
+
+  handleFailureAlertClose() {
+    this.setState({ showFailureAlert: false });
     return;
   }
 
@@ -103,8 +130,7 @@ class ShopPage extends React.Component {
           <center>
             <Button
               onClick={(e) => {
-                this.setState({ item: item });
-                this.handleClick(e);
+                this.handleClick(e, item);
               }}
               disabled={!this.state.shopIsOpen}
             >
@@ -145,7 +171,7 @@ class ShopPage extends React.Component {
   }
 
   render() {
-    let cards = this.makeItems();
+    const cards = this.makeItems();
 
     return (
       <div aria-live="polite" aria-atomic="true">
