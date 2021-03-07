@@ -9,15 +9,9 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "../build")));
 
 const base = require("airtable").base("appCbJwTyR6Qw1100");
-/*var Airtable = require("airtable");
-Airtable.configure({
-  endpointUrl: "https://api.airtable.com",
-  apiKey: "",
-});
-var base = Airtable.base("appCbJwTyR6Qw1100"); */
 
 // Serve tasks
-app.get("/alltasks", cors(), async (request, response, next) => {
+app.get("/api/alltasks", cors(), async (request, response, next) => {
   console.log(request.url);
   console.log(request.hostname);
 
@@ -40,7 +34,31 @@ app.get("/alltasks", cors(), async (request, response, next) => {
 });
 
 // Serve Items
-app.get("/allitems", cors(), async (request, response, next) => {
+app.get("/api/allitems", cors(), async (request, response, next) => {
+  console.log(request.body);
+
+  try {
+    const items = [];
+    const records = await base("items").select({ view: "Grid view" }).all();
+    records.map((record) => {
+      record = record._rawJson.fields;
+      items.push(record);
+    });
+
+    //console.log(items);
+    response.json({ items: items });
+
+    response.end();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+
+
+// Serve Items
+app.put("/api/claim", cors(), async (request, response, next) => {
   console.log(request.body);
 
   try {

@@ -1,20 +1,12 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "http://dku-caps.herokuapp.com/",
+  baseURL: "http://dku-caps.herokuapp.com/api/",
   //baseURL: "http://localhost:3001/",
 });
 
-const corsConfig = {
-  headers: {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "*",
-    "Access-Control-Allow-Headers": "*",
-  },
-};
-
+// Return available items
 export const getItems = async () => {
-  // Return available items
   const response = await client.get("/allitems");
   const items = response.data.items;
 
@@ -23,9 +15,8 @@ export const getItems = async () => {
   return items;
 };
 
+// Return available tasks
 export const getTasks = async () => {
-  // Return available tasks
-
   const response = await client.get("/alltasks");
   const tasks = response.data.tasks;
 
@@ -34,31 +25,43 @@ export const getTasks = async () => {
   return tasks;
 };
 
-export const putPerson = async () => {
-  // create new person
-  return 0;
+// Create new User
+export const putUser = async (raw_users) => {
+  const response = await client.put("/users", raw_users);
+  console.log(response);
+
+  return response ? 1 : 0;
 };
 
-export const updatePerson = async () => {
-  // update existing person
-  return 0;
+// update existing User
+export const updateUser = async (usrcode) => {
+  const response = await client.put("/users/update", usrcode);
+  console.log(response);
+
+  return response ? 1 : 0;
 };
 
-export const putSubmission = async () => {
-  // update existing person
-  return 0;
+// Create new submission
+export const putSubmission = async (raw_submission) => {
+  const response = await client.put("/submit", raw_submission);
+  console.log(response);
+
+  return response ? 1 : 0;
 };
 
-export const putClaim = async () => {
-  // update existing person
-  return 0;
+// Create new item claim
+export const putClaim = async (raw_claim) => {
+  const response = await client.put("/claim", raw_claim);
+  console.log(response);
+
+  return response ? 1 : 0;
 };
 
 export default {
   getItems,
   getTasks,
-  putPerson,
-  updatePerson,
+  putUser,
+  updateUser,
   putSubmission,
   putClaim,
 };

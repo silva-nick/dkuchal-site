@@ -13,7 +13,7 @@ import { Link, Redirect } from "react-router-dom";
 import Footer from "../navigation/Footer";
 import NavBar from "../navigation/NavBar";
 
-import { getItems } from "../../api/api";
+import { getItems, putClaim, updatePerson } from "../../api/api";
 
 function ClaimToast(props) {
   const [show, setShow] = useState(true);
@@ -65,10 +65,24 @@ class ShopPage extends React.Component {
   handleClick(e) {
     this.setState({
       toasts: this.state.toasts.concat([
-        <ClaimToast props={this.state.item} />,
+        <ClaimToast props={this.state.item} key={this.state.toasts.length} />,
       ]),
     });
-    // Handle request to our email or smthn
+
+    // Send claim to server.
+    putClaim({
+      nameone: "Zaiying Yang",
+      nametwo: "Nick Silva",
+      usrcode: 1,
+      itmcode: this.state.item.itmcode,
+    });
+    // Update person's claims
+    updatePerson({
+      nameone: "Zaiying Yang",
+      nametwo: "Nick Silva",
+      usrcode: 1,
+      claims: 2,
+    });
   }
 
   handleAlertClose() {
