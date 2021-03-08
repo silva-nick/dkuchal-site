@@ -8,9 +8,11 @@ import {
   Row,
   Col,
   Image,
+  Alert,
 } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
+import { putSubmission } from "../../api/api";
 import FooterLight from "../navigation/FooterLight";
 import NavBar from "../navigation/NavBar";
 
@@ -18,17 +20,38 @@ class SubmitPage extends React.Component {
   constructor() {
     super();
     this.submit = this.submit.bind(this);
+    this.handleAlertClose = this.handleAlertClose.bind(this);
   }
 
   state = {
     description: "",
     file: null,
     fileURL: null,
+    showAlert: false,
   };
 
-  submit(e) {
+  async submit(e) {
     e.preventDefault();
-    console.log(this.state);
+    //console.log(this.state.fileURL);
+
+    const success = await putSubmission({
+      nameone: "Zaiying Yang",
+      nametwo: "Nick Silva",
+      description: this.state.description,
+      usrcode: 1,
+      tskcode: parseInt(this.props.location.search.substring(6)),
+      proof: this.state.fileURL,
+    });
+
+    if (!success) {
+      this.setState({ showAlert: true });
+    }
+
+    return;
+  }
+
+  handleAlertClose() {
+    this.setState({ showAlert: false });
     return;
   }
 
@@ -38,11 +61,28 @@ class SubmitPage extends React.Component {
         <center>
           <NavBar />
         </center>
+
         <Container>
           <center style={{ margin: "2rem 0 0 0" }}>
             <h1>Submit your proof</h1>
             <br />
           </center>
+
+          {this.state.showAlert && (
+            <Alert
+              variant="danger"
+              onClose={() => this.handleAlertClose(false)}
+              dismissible
+              style={{
+                textAlign: "center",
+                margin: "0 0 1rem 0",
+              }}
+            >
+              <Alert.Heading>Your submission has failed</Alert.Heading>
+              <hr />
+              <p style={{ margin: 0 }}>Please contact DKU Challenge admin.</p>
+            </Alert>
+          )}
 
           <Card className="text-left" style={{ margin: "0 0 2% 0" }}>
             <Card.Header>Proof of participation</Card.Header>
@@ -112,6 +152,7 @@ class SubmitPage extends React.Component {
             </Card.Footer>
           </Card>
         </Container>
+
         <FooterLight />
       </div>
     );

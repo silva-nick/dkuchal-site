@@ -43,6 +43,7 @@ class LoginPage extends React.Component {
         <center>
           <NavBar />
         </center>
+
         <Container>
           <center style={{ margin: "2rem 0 0 0" }}>
             <h1>Create your account</h1>

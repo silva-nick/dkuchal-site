@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "http://dku-caps.herokuapp.com/api/",
-  //baseURL: "http://localhost:3001/api/",
+  //baseURL: "http://dku-caps.herokuapp.com/api/",
+  baseURL: "http://localhost:3001/api/",
 });
 
 // Return available items
@@ -43,6 +43,9 @@ export const updateUser = async (usrcode) => {
 
 // Create new submission
 export const putSubmission = async (raw_submission) => {
+  const fileURL = raw_submission.fileURL;
+  // upload to image host then send link to airtable
+  // https://api.imgur.com/
   const response = await client.put("/submit", raw_submission);
   console.log(response);
 

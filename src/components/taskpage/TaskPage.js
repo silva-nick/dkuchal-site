@@ -46,7 +46,7 @@ class TaskPage extends React.Component {
           <Card.Link href={task.description ? task.description[0].url : "#"}>
             Sign up
           </Card.Link>
-          <Card.Link as={Link} to={"/tasks/submit?task=" + task.code}>
+          <Card.Link as={Link} to={"/tasks/submit?task=" + task.tskcode}>
             Submit
           </Card.Link>
         </Card.Body>
@@ -75,7 +75,7 @@ class TaskPage extends React.Component {
     ));
 
     return this.state.loading ? (
-      <center style={{ width: "100%", height: "100%", padding: "40% 0" }}>
+      <center style={{ width: "100%", height: "100%", padding: "60% 0" }}>
         <Spinner animation="border" size="md" />
       </center>
     ) : (
