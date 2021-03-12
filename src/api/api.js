@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const client = axios.create({
-  //baseURL: "http://dku-caps.herokuapp.com/api/",
-  baseURL: "http://localhost:3001/api/",
+  baseURL: "https://dku-caps.herokuapp.com/api/",
+  //baseURL: "http://localhost:3001/api/",
 });
 
 // Return available items

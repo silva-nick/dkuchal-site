@@ -39,7 +39,7 @@ function Home() {
       <center>
         {" "}
         <h4 style={{ ...hs, marginTop: "-25%" }}>Duke Kunshan University</h4>
-        <p style={{ ...hs, fontSize: "large" }}>[Friendship Marathon]</p>
+        <p style={{ ...hs, fontSize: "large" }}>[CAPS Challenge]</p>
       </center>
     );
   } else {
@@ -54,7 +54,7 @@ function Home() {
         <h1 style={{ ...hs, fontSize: "xxx-large", marginTop: "-40%" }}>
           Duke Kunshan University
         </h1>
-        <h2 style={{ ...hs, marginBottom: "30%" }}>[Friendship Marathon]</h2>
+        <h2 style={{ ...hs, marginBottom: "30%" }}>[Mental Wellness Challenge]</h2>
       </center>
     );
   }
@@ -77,7 +77,7 @@ function Home() {
         <Jumbotron fluid>
           <Container>
             <p style={{ fontWeight: "bold" }}>
-              DKU Challenge 2.0 is a program for students.
+              DKU CAPS Mental Wellness Challenge is a program for students.
             </p>
             <p>
               The goal of this event is to add opportunities for DKU students to
