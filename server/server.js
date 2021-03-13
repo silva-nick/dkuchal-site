@@ -4,8 +4,11 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const cors = require("cors");
+const FormData = require("form-data");
+const axios = require("axios");
 
 app.use(express.json());
+app.use(cors());
 app.use(express.static(path.resolve(__dirname, "../build")));
 
 //const base = require("airtable").base("appCbJwTyR6Qw1100");
@@ -17,7 +20,7 @@ Airtable.configure({
 const base = Airtable.base("appCbJwTyR6Qw1100");
 
 // Serve tasks
-app.get("/api/alltasks", cors(), async (request, response, next) => {
+app.get("/api/alltasks", async (request, response, next) => {
   console.log(request.url);
   console.log(request.hostname);
 
@@ -40,7 +43,7 @@ app.get("/api/alltasks", cors(), async (request, response, next) => {
 });
 
 // Serve Items
-app.get("/api/allitems", cors(), async (request, response, next) => {
+app.get("/api/allitems", async (request, response, next) => {
   console.log(request.body);
 
   try {
@@ -61,10 +64,34 @@ app.get("/api/allitems", cors(), async (request, response, next) => {
   }
 });
 
-// Add new claim requests
-app.put("/api/claim", cors(), async (request, response, next) => {
+// Add new submit requests
+app.put("/api/submit", async (request, response, next) => {
   console.log(request.body);
-  base("claims").create([{ fields: request.body }], function (err, record) {
+
+  const file = request.body.file;
+  const url = request.body.url;
+
+  // Upload to image host then send link to airtable
+  let data = new FormData();
+  data.append("image", file, url);
+  console.log(data);
+  const config = {
+    method: "post",
+    url: "https://api.imgur.com/3/image",
+    headers: data.getHeaders(),
+    data: data,
+  };
+
+  axios(config)
+    .then(() => {
+      console.log(JSON.stringify(response.data));
+      //request.body.url = response.data.test;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  base("submissions").create([{ fields: request.body }], function (err, record) {
     if (err) {
       console.log(err);
       response.header(500);

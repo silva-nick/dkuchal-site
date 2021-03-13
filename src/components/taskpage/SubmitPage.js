@@ -32,7 +32,7 @@ class SubmitPage extends React.Component {
 
   async submit(e) {
     e.preventDefault();
-    //console.log(this.state.fileURL);
+    console.log(this.state.fileURL);
 
     const success = await putSubmission({
       nameone: "Zaiying Yang",
@@ -40,7 +40,8 @@ class SubmitPage extends React.Component {
       description: this.state.description,
       usrcode: 1,
       tskcode: parseInt(this.props.location.search.substring(6)),
-      proof: this.state.fileURL,
+      file: this.state.file,
+      url: this.state.fileURL,
     });
 
     if (!success) {
