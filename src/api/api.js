@@ -1,8 +1,9 @@
 import axios from "axios";
+const FormData = require("form-data");
 
 const client = axios.create({
-  baseURL: "https://dku-caps.herokuapp.com/api/",
-  //baseURL: "http://localhost:3001/api/",
+  //baseURL: "https://dku-caps.herokuapp.com/api/",
+  baseURL: "http://localhost:3001/api/",
 });
 
 // Return available items
@@ -44,8 +45,25 @@ export const updateUser = async (usrcode) => {
 // Create new submission
 export const putSubmission = async (raw_submission) => {
   const fileURL = raw_submission.fileURL;
-  // upload to image host then send link to airtable
-  // https://api.imgur.com/
+
+  // Upload to image host then send link to airtable
+  let data = new FormData();
+  data.append("image", fileURL);
+  const config = {
+    method: "post",
+    url: "https://api.imgur.com/3/image",
+    headers: data.getHeaders(),
+    data: data,
+  };
+
+  axios(config)
+    .then(() => {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
   const response = await client.put("/submit", raw_submission);
   console.log(response);
 

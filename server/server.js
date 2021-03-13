@@ -8,13 +8,13 @@ const cors = require("cors");
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "../build")));
 
-const base = require("airtable").base("appCbJwTyR6Qw1100");
-/*var Airtable = require("airtable");
+//const base = require("airtable").base("appCbJwTyR6Qw1100");
+var Airtable = require("airtable");
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
-  apiKey: "",
+  apiKey: "key1yVlhEldCllEqO",
 });
-const base = Airtable.base("appCbJwTyR6Qw1100");*/
+const base = Airtable.base("appCbJwTyR6Qw1100");
 
 // Serve tasks
 app.get("/api/alltasks", cors(), async (request, response, next) => {

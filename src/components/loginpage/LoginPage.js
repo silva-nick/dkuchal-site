@@ -20,6 +20,10 @@ class LoginPage extends React.Component {
 
   submit(e) {
     e.preventDefault();
+    // loginUser()..
+
+    sessionStorage.setItem(this.state.email);
+
     console.log(this.state.email);
     console.log(this.state.pswd);
     return;
@@ -49,9 +53,6 @@ class LoginPage extends React.Component {
                       onChange={(e) => this.setState({ email: e.target.value })}
                       required
                     />
-                    <Form.Text className="text-muted">
-                      We'll never share your email with anyone else.
-                    </Form.Text>
                   </Form.Group>
 
                   <Form.Group controlId="formBasicPassword">
@@ -64,11 +65,22 @@ class LoginPage extends React.Component {
                       required
                     />
                   </Form.Group>
+                  <Form.Text className="text-muted">
+                    Forgot your password?{" "}
+                    <a
+                      href="mailto:zaiying.yang@dukekunshan.edu.cn?subject=Reset%20my%20password"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Click here.
+                    </a>
+                  </Form.Text>
                   <center>
                     <Button
                       variant="primary"
                       type="submit"
                       onClick={this.submit}
+                      style={{ marginTop: ".5rem" }}
                     >
                       Login
                     </Button>
