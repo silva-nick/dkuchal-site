@@ -125,7 +125,7 @@ class SubmitPage extends React.Component {
                     label="Picture/ video evidence, if specified."
                     onChange={(e) => {
                       this.setState({
-                        fileURL: URL.createObjectURL(),
+                        fileURL: URL.createObjectURL(e.target.files[0]),
                         file: e.target.files[0],
                       });
                     }}

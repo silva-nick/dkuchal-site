@@ -42,7 +42,7 @@ export const updateUser = async (usrcode) => {
 // Create new submission
 export const putSubmission = async (raw_submission) => {
   var formdata = new FormData();
-  //formdata.append("image", raw_submission.file);
+  console.log(raw_submission.file);
   formdata.append("image", raw_submission.file);
 
   var requestOptions = {
