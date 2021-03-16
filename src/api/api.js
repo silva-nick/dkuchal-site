@@ -41,6 +41,31 @@ export const updateUser = async (usrcode) => {
 
 // Create new submission
 export const putSubmission = async (raw_submission) => {
+  var headers = new Headers();
+  headers.append("Authorization", "Client-ID b39c75b9d3071f5");
+
+  var formdata = new FormData();
+  formdata.append("image", raw_submission.file);
+
+  var requestOptions = {
+    method: "POST",
+    headers: headers,
+    body: formdata,
+    redirect: "follow",
+  };
+
+  var hash = require("object-hash");
+  var imgHash = hash([
+    raw_submission.nameone,
+    raw_submission.usrcode,
+    raw_submission.tskcode,
+  ]);
+
+  fetch("https://api.imgur.com/3/image/", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.log("error", error));
+
   const response = await client.put("/submit", raw_submission);
   console.log(response);
 

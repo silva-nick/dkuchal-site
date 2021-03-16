@@ -11,9 +11,10 @@
 .footer {
   height: 100%;
   vertical-align: top;
-  background-color: #363636;
+  background-color: #566485;
   margin: auto;
   text-align: center;
+  font-weight: 400;
   color: #fff;
   margin-top: 14px;
 }

@@ -43,7 +43,7 @@ function About() {
         <h1 style={{ fontSize: "xxx-large", marginTop: "1rem" }}>
           Counseling and Psychological Services
         </h1>
-        <h2>About Us</h2>
+        <hr />
       </div>
     );
   }
@@ -56,22 +56,29 @@ function About() {
         {headerText}
 
         <br />
-        <h3>What is DKU Challenge 2.0</h3>
-        <Jumbotron fluid>
-          <Container>
-            <p style={{ fontWeight: "bold" }}>
-              DKU CAPS Mental Wellness Challenge is a program for students.
-            </p>
-            <p>
-              The goal of this event is to add opportunities for DKU students to
-              make new foreign friends or to maintain their old friendship
-              overseas. Though we are apart during this special difficult
-              period, students can still keep active and accompany each other
-              via this meaningful online program.
-            </p>
-          </Container>
-        </Jumbotron>
-
+        <Card>
+          <Card.Header>What is DKU CAPS</Card.Header>
+          <Card.Body>
+            <Card.Title>
+              {" "}
+              CAPS provides face-to-face counseling service to students on
+              campus and virtual counseling service to students who cannot
+              travel back to campus in Fall Semester.{" "}
+            </Card.Title>
+            <Card.Text>
+              CAPS is committed to creating an environment that is educationally
+              inspiring, physically and psychologically safe, and accessible and
+              accepting of all gender expressions and identities, of all races,
+              ethnicities, nationalities, faith communities and sexual
+              orientations. CAPS aims to provide excellent assistance to the
+              distressed and injured, aid in eradicating those situations and
+              conditions that result in psychological problems, and will promote
+              and nurture positive mental health and happiness on the Duke
+              Kunshan campus.
+            </Card.Text>
+          </Card.Body>
+        </Card>
+        <br />
         <Card>
           <Card.Img
             variant="top"
@@ -84,62 +91,59 @@ function About() {
         </Card>
 
         <br />
+        <Card>
+          <Card.Body>
+            <Card.Title>CAPS During Covid-19</Card.Title>
+            There is much beyond our control during the COVID-19 pandemic. If
+            you find yourself feeling anxious and overwhelmed, you are not
+            alone. We hope the following online resources will provide you some
+            calm, insight and connection. Together, we can get through this!
+            Here is a universal mantra for us: "This, too shall pass."
+          </Card.Body>
+          <Card.Footer className="text-muted">
+            Want more information{" "}
+            <a href="https://dukekunshan.edu.cn/en/caps/online-resources-virtual-mental-health-support">
+              Check it out here.
+            </a>
+          </Card.Footer>
+        </Card>
+        <br />
 
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <h3>FAQ</h3>
+        <h3>CAPS Information</h3>
         <Accordion>
           <Card>
             <Accordion.Toggle as={Card.Header} eventKey="0">
-              How do I sign up?
+              Working Hours
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                Link to a form <a href="https://www.google.com">here!</a>
-              </Card.Body>
+              <Card.Body>9:00-12:00, 13:00-17:30 (Monday-Friday)</Card.Body>
             </Accordion.Collapse>
           </Card>
           <Card>
             <Accordion.Toggle as={Card.Header} eventKey="1">
-              Can I choose my own Partner?
+              Phone
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="1">
-              <Card.Body>
-                We will create a Qualtrics or Airtable form/ questionnaire that
-                is designed to help create pairs of students. This form/
-                questionnaire will collect the students general information,
-                their interests, and some other characteristics that may be
-                useful in assigning them a partner. Using this data we will
-                create an email list. Then we will pair the students manually
-                and release submissions via the list.
-              </Card.Body>
+              <Card.Body>+86-0512-3665-7829</Card.Body>
             </Accordion.Collapse>
           </Card>
           <Card>
             <Accordion.Toggle as={Card.Header} eventKey="2">
-              More questions:
+              Email
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="2">
-              <Card.Body>Contact us: zaiying.yang@dukekunshan.edu.cn</Card.Body>
+              <Card.Body>caps@dukekunshan.edu.cn</Card.Body>
+            </Accordion.Collapse>
+          </Card>
+          <Card>
+            <Accordion.Toggle as={Card.Header} eventKey="3">
+              After-hours Hotline
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="3">
+              <Card.Body>+86-0512-3665-7110</Card.Body>
             </Accordion.Collapse>
           </Card>
         </Accordion>
-        <br />
-        <h3>Rules</h3>
-        <p>To qualify for the competition you have to follow these rules.</p>
-        <ListGroup variant="flush">
-          <ListGroup.Item>Cras justo odio</ListGroup.Item>
-          <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-          <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-          <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-        </ListGroup>
         <br />
       </Container>
       <Footer />

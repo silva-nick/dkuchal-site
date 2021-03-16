@@ -10,14 +10,12 @@ function Footer() {
     <Container
       fluid
       className="footer"
-      style={{ lineHeight: "2rem", minHeight: "10rem", paddingTop: "1rem" }}
+      style={{ lineHeight: "1rem", minHeight: "10rem", padding: "1.6rem" }}
     >
       <center>
         {" "}
-        <a>Counseling and Psychological Services</a>
-        <br />
-        <a>caps@dukekunshan.edu.cn | Rooms CC 2081-2084</a>
-        <br />
+        <p>Counseling and Psychological Services</p>
+        <p>caps@dukekunshan.edu.cn | Rooms CC 2081-2084</p>
         <a href="https://dukekunshan.edu.cn/en/caps">
           <Image
             src={CapsLogo}

@@ -32,7 +32,18 @@ class SubmitPage extends React.Component {
 
   async submit(e) {
     e.preventDefault();
-    console.log(this.state.fileURL);
+    // console.log(this.state.file);
+
+    // var formData = new FormData();
+    // formData.append("names[]", "Zaiying Yang", "Nick Silva");
+    // formData.append("description", this.state.description);
+    // formData.append("usrcode", 1);
+    // formData.append(
+    //   "tskcode",
+    //   parseInt(this.props.location.search.substring(6))
+    // );
+    // formData.append("image", this.state.file);
+    // formData.append("url", this.state.fileURL);
 
     const success = await putSubmission({
       nameone: "Zaiying Yang",
