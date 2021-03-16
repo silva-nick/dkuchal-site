@@ -41,35 +41,37 @@ export const updateUser = async (usrcode) => {
 
 // Create new submission
 export const putSubmission = async (raw_submission) => {
-  var headers = new Headers();
-  headers.append("Authorization", "Client-ID b39c75b9d3071f5");
-
   var formdata = new FormData();
+  //formdata.append("image", raw_submission.file);
   formdata.append("image", raw_submission.file);
 
   var requestOptions = {
     method: "POST",
-    headers: headers,
+    headers: new Headers({ Authorization: "Client-ID 3aee61ef688768b" }),
     body: formdata,
-    redirect: "follow",
   };
 
-  var hash = require("object-hash");
-  var imgHash = hash([
-    raw_submission.nameone,
-    raw_submission.usrcode,
-    raw_submission.tskcode,
-  ]);
-
-  fetch("https://api.imgur.com/3/image/", requestOptions)
+  fetch("https://api.imgur.com/3/image", requestOptions)
     .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
+    .then((result) => {
+      console.log("wtf", result);
+      // remove file from raw_submission
+      client
+        .put("/submit", raw_submission)
+        .then((response) => {
+          console.log(response);
 
-  const response = await client.put("/submit", raw_submission);
-  console.log(response);
-
-  return response.status === 200 ? 1 : 0;
+          return response.status === 200 ? 1 : 0;
+        })
+        .catch((error) => {
+          console.log("error", error);
+          return 0;
+        });
+    })
+    .catch((error) => {
+      console.log("error", error);
+      return 0;
+    });
 };
 
 // Create new item claim

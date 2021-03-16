@@ -15,7 +15,7 @@ app.use(express.static(path.resolve(__dirname, "../build")));
 var Airtable = require("airtable");
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
-  apiKey: "",
+  apiKey: "key1yVlhEldCllEqO",
 });
 const base = Airtable.base("appCbJwTyR6Qw1100");
 
@@ -67,29 +67,6 @@ app.get("/api/allitems", async (request, response, next) => {
 // Add new submit requests
 app.put("/api/submit", async (request, response, next) => {
   console.log(request.body);
-
-  const file = request.body.file;
-  const url = request.body.url;
-
-  // Upload to image host then send link to airtable
-  // let data = new FormData();
-  // data.append("image", file, url);
-  // console.log(data);
-  // const config = {
-  //   method: "post",
-  //   url: "https://api.imgur.com/3/image",
-  //   headers: data.getHeaders(),
-  //   data: data,
-  // };
-
-  // axios(config)
-  //   .then(() => {
-  //     console.log(JSON.stringify(response.data));
-  //     //request.body.url = response.data.test;
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
 
   base("submissions").create([{ fields: request.body }], function (err, record) {
     if (err) {

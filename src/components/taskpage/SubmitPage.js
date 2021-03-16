@@ -32,18 +32,7 @@ class SubmitPage extends React.Component {
 
   async submit(e) {
     e.preventDefault();
-    // console.log(this.state.file);
-
-    // var formData = new FormData();
-    // formData.append("names[]", "Zaiying Yang", "Nick Silva");
-    // formData.append("description", this.state.description);
-    // formData.append("usrcode", 1);
-    // formData.append(
-    //   "tskcode",
-    //   parseInt(this.props.location.search.substring(6))
-    // );
-    // formData.append("image", this.state.file);
-    // formData.append("url", this.state.fileURL);
+    //console.log(this.state.file);
 
     const success = await putSubmission({
       nameone: "Zaiying Yang",
@@ -134,12 +123,16 @@ class SubmitPage extends React.Component {
                   <Form.File
                     id="fileInput"
                     label="Picture/ video evidence, if specified."
-                    onChange={(e) =>
-                      this.setState({
-                        file: e.target.files[0],
-                        fileURL: URL.createObjectURL(e.target.files[0]),
-                      })
-                    }
+                    onChange={(e) => {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        this.setState({
+                          fileURL: URL.createObjectURL(e.target.files[0]),
+                          file: reader.result, //.split(',')[1],
+                        });
+                      };
+                      reader.readAsDataURL(e.target.files[0]);
+                    }}
                   />
                 </Form.Group>
                 <center>
