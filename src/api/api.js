@@ -43,7 +43,7 @@ export const updateUser = async (usrcode) => {
 export const putSubmission = async (raw_submission) => {
   var formdata = new FormData();
   //formdata.append("image", raw_submission.file);
-  formdata.append("image", raw_submission.file, raw_submission.fileURL);
+  formdata.append("image", raw_submission.file);
 
   var requestOptions = {
     method: "POST",
