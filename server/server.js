@@ -4,16 +4,22 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const cors = require("cors");
+const corsOptions = {
+  origin: "https://dku-caps.herokuapp.com",
+  optionsSuccessStatus: 200,
+};
 
-app.use(express.json());
+app.use(express.json(corsOptions));
 app.use(cors());
 app.use(express.static(path.resolve(__dirname, "../build")));
+
+app.options("*", cors());
 
 const base = require("airtable").base("appCbJwTyR6Qw1100");
 /*var Airtable = require("airtable");
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
-  apiKey: "key1yVlhEldCllEqO",
+  apiKey: "",
 });
 const base = Airtable.base("appCbJwTyR6Qw1100");*/
 
@@ -66,14 +72,17 @@ app.get("/api/allitems", async (request, response, next) => {
 app.put("/api/submit", async (request, response, next) => {
   console.log(request.body);
 
-  base("submissions").create([{ fields: request.body }], function (err, record) {
-    if (err) {
-      console.log(err);
-      response.header(500);
-      response.end();
-      return;
+  base("submissions").create(
+    [{ fields: request.body }],
+    function (err, record) {
+      if (err) {
+        console.log(err);
+        response.header(500);
+        response.end();
+        return;
+      }
     }
-  });
+  );
 
   response.header(200);
   response.end();
