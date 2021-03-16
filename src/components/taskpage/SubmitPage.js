@@ -124,14 +124,10 @@ class SubmitPage extends React.Component {
                     id="fileInput"
                     label="Picture/ video evidence, if specified."
                     onChange={(e) => {
-                      const reader = new FileReader();
-                      reader.onloadend = () => {
-                        this.setState({
-                          fileURL: URL.createObjectURL(e.target.files[0]),
-                          file: reader.result.split(',')[1],
-                        });
-                      };
-                      reader.readAsDataURL(e.target.files[0]);
+                      this.setState({
+                        fileURL: URL.createObjectURL(),
+                        file: e.target.files[0],
+                      });
                     }}
                   />
                 </Form.Group>

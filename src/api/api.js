@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "https://mw-challenge/api/",
+  baseURL: "https://mw-challenge.xyz/api/",
   //baseURL: "http://localhost:3001/api/",
 });
 
