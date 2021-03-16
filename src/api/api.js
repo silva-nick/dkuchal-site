@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const client = axios.create({
-  //baseURL: "https://dku-caps.herokuapp.com/api/",
-  baseURL: "http://localhost:3001/api/",
+  baseURL: "https://dku-caps.herokuapp.com/api/",
+  //baseURL: "http://localhost:3001/api/",
 });
 
 // Return available items
@@ -43,7 +43,7 @@ export const updateUser = async (usrcode) => {
 export const putSubmission = async (raw_submission) => {
   var formdata = new FormData();
   //formdata.append("image", raw_submission.file);
-  formdata.append("image", raw_submission.file);
+  formdata.append("image", raw_submission.file, raw_submission.fileURL);
 
   var requestOptions = {
     method: "POST",
