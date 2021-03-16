@@ -40,9 +40,10 @@ function About() {
     headerText = (
       <div>
         {" "}
-        <h1 style={{ fontSize: "xxx-large", marginTop: "1rem" }}>
+        <h1 style={{ marginTop: "1.5rem" }}>
           Counseling and Psychological Services
         </h1>
+        <h3 style={{ marginTop: "1rem" }}>About us</h3>
         <hr />
       </div>
     );
@@ -55,7 +56,42 @@ function About() {
       <Container>
         {headerText}
 
+        <p style={{ padding: "1rem" }}>
+          Counseling and Psychological Services (CAPS) is committed to creating
+          an environment that is educationally inspiring, physically and
+          psychologically safe, and accessible and accepting of all gender
+          expressions and identities, of all races, ethnicities, nationalities,
+          faith communities and sexual orientations. With the hard work and
+          generous support of CAPS and ISS student workers, CAPS has the
+          opportunity to invite you to participate in this DKU Mental Wellness
+          Challenge. This 30-day program aims to promote and nurture positive
+          mental health and happiness in DKU community. We invite pairs of
+          students to participate in this program, so we can maintain and
+          improve the connections between different student populations. We wish
+          you a pleasant journey with your partner in this program. For more
+          information of CAPS services, please visit our website
+          <a href="https://dukekunshan.edu.cn/en/caps">
+            {" "}
+            https://dukekunshan.edu.cn/en/caps
+          </a>
+          .
+        </p>
+
         <br />
+
+        <Card>
+          <Card.Img
+            variant="top"
+            src={MainBackground}
+            style={{ backgroundSize: "cover" }}
+          />
+          <Card.Body>
+            <Card.Text>A mental wellness event held Fall 2020.</Card.Text>
+          </Card.Body>
+        </Card>
+
+        <br />
+
         <Card>
           <Card.Header>What is DKU CAPS</Card.Header>
           <Card.Body>
@@ -78,19 +114,9 @@ function About() {
             </Card.Text>
           </Card.Body>
         </Card>
-        <br />
-        <Card>
-          <Card.Img
-            variant="top"
-            src={MainBackground}
-            style={{ backgroundSize: "cover" }}
-          />
-          <Card.Body>
-            <Card.Text>A mental wellness event held Fall 2020.</Card.Text>
-          </Card.Body>
-        </Card>
 
         <br />
+
         <Card>
           <Card.Body>
             <Card.Title>CAPS During Covid-19</Card.Title>

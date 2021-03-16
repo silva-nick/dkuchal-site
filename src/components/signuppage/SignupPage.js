@@ -1,6 +1,5 @@
 import "../../App.css";
 import React from "react";
-import ReactDOM from "react-dom";
 import {
   Container,
   Card,
@@ -64,9 +63,9 @@ class LoginPage extends React.Component {
                     <Col>
                       <Form.Control
                         placeholder="First partner name"
-                        value={this.state.name1}
+                        value={this.state.nameone}
                         onChange={(e) =>
-                          this.setState({ name1: e.target.value })
+                          this.setState({ nameone: e.target.value })
                         }
                         required
                       />
@@ -74,9 +73,9 @@ class LoginPage extends React.Component {
                     <Col>
                       <Form.Control
                         placeholder="Second partner name"
-                        value={this.state.name2}
+                        value={this.state.nametwo}
                         onChange={(e) =>
-                          this.setState({ name2: e.target.value })
+                          this.setState({ nametwo: e.target.value })
                         }
                         required
                       />
@@ -84,15 +83,30 @@ class LoginPage extends React.Component {
                   </Row>
                 </Form.Group>
 
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    value={this.state.email}
-                    onChange={(e) => this.setState({ email: e.target.value })}
-                    required
-                  />
+                <Form.Group controlId="formBasicNetids">
+                  <Form.Label>Netids</Form.Label>
+                  <Row>
+                    <Col>
+                      <Form.Control
+                        placeholder="First partner Netid"
+                        value={this.state.netidone}
+                        onChange={(e) =>
+                          this.setState({ netidone: e.target.value })
+                        }
+                        required
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        placeholder="Second partner Netid"
+                        value={this.state.netidtwo}
+                        onChange={(e) =>
+                          this.setState({ netidtwo: e.target.value })
+                        }
+                        required
+                      />
+                    </Col>
+                  </Row>
                   <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                   </Form.Text>
@@ -132,9 +146,11 @@ class LoginPage extends React.Component {
                   )}
                 </center>
                 <br />
-                <Button variant="primary" type="submit" onClick={this.submit}>
-                  Signup
-                </Button>
+                <center>
+                  <Button variant="primary" type="submit" onClick={this.submit}>
+                    Signup
+                  </Button>
+                </center>
               </Form>
             </Card.Body>
             <Card.Footer className="text-muted">
