@@ -77,8 +77,6 @@ function About() {
           .
         </p>
 
-        <br />
-
         <Card>
           <Card.Img
             variant="top"

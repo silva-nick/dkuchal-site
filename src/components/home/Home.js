@@ -131,7 +131,7 @@ function Home() {
               More questions:
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="2">
-              <Card.Body>Contact us: zaiying.yang@dukekunshan.edu.cn</Card.Body>
+              <Card.Body>Contact us: dkumwchallenge@outlook.com</Card.Body>
             </Accordion.Collapse>
           </Card>
         </Accordion>

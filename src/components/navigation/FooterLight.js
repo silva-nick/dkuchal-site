@@ -14,7 +14,7 @@ function FooterLight() {
       <center>
         {" "}
         <a>Counseling and Psychological Services</a>
-        <br /> <a>Problems? Contact us: zaiying.yang@dukekunshan.edu.cn</a>
+        <br /> <a>Problems? Contact us: dkumwchallenge@outlook.com</a>
         <br />
         <a href="https://dukekunshan.edu.cn/en/caps">
           <Image
