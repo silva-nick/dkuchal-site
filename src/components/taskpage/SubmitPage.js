@@ -128,7 +128,7 @@ class SubmitPage extends React.Component {
                       reader.onloadend = () => {
                         this.setState({
                           fileURL: URL.createObjectURL(e.target.files[0]),
-                          file: reader.result, //.split(',')[1],
+                          file: reader.result.split(',')[1],
                         });
                       };
                       reader.readAsDataURL(e.target.files[0]);

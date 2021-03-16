@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "https://dku-caps.herokuapp.com/api/",
+  baseURL: "https://mw-challenge/api/",
   //baseURL: "http://localhost:3001/api/",
 });
 

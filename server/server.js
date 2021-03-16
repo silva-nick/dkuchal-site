@@ -4,8 +4,6 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const cors = require("cors");
-const FormData = require("form-data");
-const axios = require("axios");
 
 app.use(express.json());
 app.use(cors());
@@ -15,7 +13,7 @@ const base = require("airtable").base("appCbJwTyR6Qw1100");
 /*var Airtable = require("airtable");
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
-  apiKey: "",
+  apiKey: "key1yVlhEldCllEqO",
 });
 const base = Airtable.base("appCbJwTyR6Qw1100");*/
 
