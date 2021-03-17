@@ -57,7 +57,7 @@ export const putSubmission = async (raw_submission) => {
       console.log("Imgur Response:", result);
       raw_submission.file = result.link;
       client
-        .put("/submit", raw_submission)
+      .put("/submit", {...raw_submission, deleteHash: result.deletehash})
         .then((response) => {
           console.log(response);
 

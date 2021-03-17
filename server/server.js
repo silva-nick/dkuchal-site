@@ -5,7 +5,7 @@ const app = express();
 
 const cors = require("cors");
 const corsOptions = {
-  origin: "https://dku-caps.herokuapp.com",
+  origin: "*",
   optionsSuccessStatus: 200,
 };
 
@@ -72,6 +72,9 @@ app.get("/api/allitems", async (request, response, next) => {
 app.put("/api/submit", async (request, response, next) => {
   console.log(request.body);
 
+  const deleteHash = request.body.deleteHash;
+  delete request.body.deleteHash;
+
   base("submissions").create(
     [{ fields: request.body }],
     function (err, record) {
@@ -97,18 +100,16 @@ app.put("/api/submit", async (request, response, next) => {
       airtableFinished = 1;
 
       // Delete image on imgur
-      if (!airtableFinished) {
+      if (airtableFinished) {
         const axios = require("axios");
         const FormData = require("form-data");
         const data = new FormData();
 
-        const imageHash = 0;
-
         var config = {
           method: "delete",
-          url: "https://api.imgur.com/3/image/{{imageDeleteHash}}",
+          url: "https://api.imgur.com/3/image/" + deleteHash,
           headers: {
-            Authorization: "Client-ID {{clientId}}",
+            Authorization: "Client-ID 3aee61ef688768b",
             ...data.getHeaders(),
           },
           data: data,
@@ -120,6 +121,9 @@ app.put("/api/submit", async (request, response, next) => {
           })
           .catch(function (error) {
             console.log(error);
+            response.header(500);
+            response.end();
+            return;
           });
       }
     }, 3000);
