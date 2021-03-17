@@ -56,11 +56,12 @@ export const putSubmission = async (raw_submission) => {
     .then((result) => {
       console.log("Imgur Response:", result);
       raw_submission.file = result.link;
+      raw_submission = { ...raw_submission, deleteHash: result.deletehash };
+      console.log("raw test", raw_submission);
       client
-      .put("/submit", {...raw_submission, deleteHash: result.deletehash})
+        .put("/submit", raw_submission)
         .then((response) => {
           console.log(response);
-
           return response.status === 200 ? 1 : 0;
         })
         .catch((error) => {
