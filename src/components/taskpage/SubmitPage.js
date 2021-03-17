@@ -26,7 +26,7 @@ class SubmitPage extends React.Component {
   state = {
     description: "",
     file: null,
-    fileURL: null,
+    fileUrl: null,
     showAlert: false,
   };
 
@@ -41,7 +41,6 @@ class SubmitPage extends React.Component {
       usrcode: 1,
       tskcode: parseInt(this.props.location.search.substring(6)),
       file: this.state.file,
-      url: this.state.fileURL,
     });
 
     if (!success) {

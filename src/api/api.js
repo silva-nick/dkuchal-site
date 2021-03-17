@@ -54,8 +54,8 @@ export const putSubmission = async (raw_submission) => {
   fetch("https://api.imgur.com/3/image", requestOptions)
     .then((response) => response.text())
     .then((result) => {
-      console.log("wtf", result);
-      // remove file from raw_submission
+      console.log("Imgur Response:", result);
+      raw_submission.file = result.link;
       client
         .put("/submit", raw_submission)
         .then((response) => {
