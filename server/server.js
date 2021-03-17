@@ -85,45 +85,45 @@ app.put("/api/submit", async (request, response, next) => {
   );
 
   var airtableFinished;
-  while(!airtableFinished) {
-    setTimeout(()=>{
+  while (!airtableFinished) {
+    setTimeout(async () => {
       // Check if airtable is finished uploading
-      const records = await base("submissions").select({ view: "Grid view" }).all();
-      for (let record of records){
-        console.log(record._rawJson.fields)
+      const records = await base("submissions")
+        .select({ view: "Grid view" })
+        .all();
+      for (let record of records) {
+        console.log(record._rawJson.fields);
       }
       airtableFinished = 1;
 
       // Delete image on imgur
-      if(!airtableFinished){
-        const axios = require('axios');
-        const FormData = require('form-data');
+      if (!airtableFinished) {
+        const axios = require("axios");
+        const FormData = require("form-data");
         const data = new FormData();
-        
+
         const imageHash = 0;
 
         var config = {
-          method: 'delete',
-          url: 'https://api.imgur.com/3/image/{{imageDeleteHash}}',
-          headers: { 
-            'Authorization': 'Client-ID {{clientId}}', 
-            ...data.getHeaders()
+          method: "delete",
+          url: "https://api.imgur.com/3/image/{{imageDeleteHash}}",
+          headers: {
+            Authorization: "Client-ID {{clientId}}",
+            ...data.getHeaders(),
           },
-          data : data
+          data: data,
         };
-        
-        axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      }
 
+        axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     }, 3000);
   }
-
 
   response.header(200);
   response.end();
