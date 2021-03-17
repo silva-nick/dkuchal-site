@@ -43,6 +43,8 @@ class SubmitPage extends React.Component {
       file: this.state.file,
     });
 
+    console.log(success);
+
     if (!success) {
       this.setState({ showAlert: true });
     }

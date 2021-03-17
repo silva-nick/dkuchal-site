@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const baseURL = "https://dku-caps.herokuapp.com/api/";
+//const baseURL = "http://localhost:3001/api/";
+
 const client = axios.create({
-  baseURL: "https://dku-caps.herokuapp.com/api/",
-  //baseURL: "http://localhost:3001/api/",
+  baseURL: baseURL,
 });
 
 // Return available items
@@ -41,8 +43,8 @@ export const updateUser = async (usrcode) => {
 
 // Create new submission
 export const putSubmission = async (raw_submission) => {
+  //console.log(raw_submission.file);
   var formdata = new FormData();
-  console.log(raw_submission.file);
   formdata.append("file", raw_submission.file);
 
   let fileHash =
@@ -57,14 +59,14 @@ export const putSubmission = async (raw_submission) => {
       headers: { "Content-Type": "multipart/form-data" },
     })
     .then((response) => {
-      console.log("internal response: ", response);
+      console.log("Temp host response: ", response);
 
-      raw_submission.file = "http://localhost:3001/api/temp/" + fileHash;
+      raw_submission.file = baseURL + fileHash;
 
       client
         .put("/submit", raw_submission)
         .then((response) => {
-          console.log(response);
+          console.log("Submission response", response);
           return response.status === 200 ? 1 : 0;
         })
         .catch((error) => {
