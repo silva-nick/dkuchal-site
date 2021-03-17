@@ -123,7 +123,6 @@ app.get("/api/temp/:hash", async (request, response, next) => {
 
 // Add new submit requests
 app.put("/api/submit", async (request, response, next) => {
-  request.body.file = [{ url: request.body.file }];
   console.log(request.body);
 
   var newRecordID;

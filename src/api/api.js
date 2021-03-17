@@ -61,7 +61,7 @@ export const putSubmission = async (raw_submission) => {
     .then((response) => {
       console.log("Temp host response: ", response);
 
-      raw_submission.file = baseURL + fileHash;
+      raw_submission.file = [{ url: baseURL +"/temp"+ fileHash }];
 
       client
         .put("/submit", raw_submission)
