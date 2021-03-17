@@ -157,6 +157,7 @@ app.put("/api/submit", async (request, response, next) => {
 
       if (airtableFinished) {
         // Delete image on imgur
+        console.log(request.body.file[0].url);
         const hash = request.body.file[0].url.substring(
           request.body.file[0].url.indexOf("temp/") + 5
         );
