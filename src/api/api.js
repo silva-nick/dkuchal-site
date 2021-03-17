@@ -43,21 +43,24 @@ export const updateUser = async (usrcode) => {
 export const putSubmission = async (raw_submission) => {
   var formdata = new FormData();
   console.log(raw_submission.file);
-  formdata.append("image", raw_submission.file);
+  formdata.append("file", raw_submission.file);
 
-  var requestOptions = {
-    method: "POST",
-    headers: new Headers({ Authorization: "Client-ID 3aee61ef688768b" }),
-    body: formdata,
-  };
+  let fileHash =
+    Date.now() +
+    "." +
+    raw_submission.file.type.substring(
+      raw_submission.file.type.indexOf("/") + 1
+    );
 
-  fetch("https://api.imgur.com/3/image", requestOptions)
-    .then((response) => response.text())
-    .then((result) => {
-      console.log("Imgur Response:", result);
-      raw_submission.file = result.link;
-      raw_submission = { ...raw_submission, deleteHash: result.deletehash };
-      console.log("raw test", raw_submission);
+  client
+    .post("/temp/" + fileHash, formdata, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    .then((response) => {
+      console.log("internal response: ", response);
+
+      raw_submission.file = "http://localhost:3001/api/temp/" + fileHash;
+
       client
         .put("/submit", raw_submission)
         .then((response) => {

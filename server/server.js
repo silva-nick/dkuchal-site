@@ -1,3 +1,4 @@
+// Setup Express
 const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
@@ -12,16 +13,24 @@ const corsOptions = {
 app.use(express.json(corsOptions));
 app.use(cors());
 app.use(express.static(path.resolve(__dirname, "../build")));
-
 app.options("*", cors());
 
+// Setup Multer
+const multer = require("multer");
+var upload = multer({ dest: "uploads/" });
+const fs = require("fs");
+
+// Setup Airtable
 const base = require("airtable").base("appCbJwTyR6Qw1100");
 /*var Airtable = require("airtable");
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
-  apiKey: "",
+  apiKey: "key1yVlhEldCllEqO",
 });
 const base = Airtable.base("appCbJwTyR6Qw1100");*/
+
+/* ======================================================================================== */
+// Endpoints
 
 // Serve tasks
 app.get("/api/alltasks", async (request, response, next) => {
@@ -68,69 +77,108 @@ app.get("/api/allitems", async (request, response, next) => {
   }
 });
 
+// All new temp upload
+app.post(
+  "/api/temp/:hash",
+  upload.single("file"),
+  (request, response, next) => {
+    let file = request.file;
+    console.log("temp request", file);
+
+    if (!file) {
+      const error = new Error("Please upload a file");
+      error.httpStatusCode = 400;
+      return next(error);
+    }
+
+    var tempFile = fs.createReadStream(file.path);
+    var fileDest = fs.createWriteStream("uploads/" + request.params.hash);
+
+    tempFile.pipe(fileDest);
+    fs.unlinkSync(file.path);
+
+    tempFile.on("end", () => {
+      response.header(200);
+      response.end();
+    });
+    tempFile.on("error", (err) => {
+      next(err);
+    });
+  }
+);
+
+app.get("/api/temp/:hash", async (request, response, next) => {
+  //console.log(request);
+  const hash = request.params.hash;
+  try {
+    const data = await fs.promises.readFile("./uploads/" + hash);
+    response.header(200);
+    response.send(data);
+    response.end();
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
 // Add new submit requests
 app.put("/api/submit", async (request, response, next) => {
+  request.body.file = [{ url: request.body.file }];
   console.log(request.body);
 
-  const deleteHash = request.body.deleteHash;
-  delete request.body.deleteHash;
-
+  var newRecordID;
   base("submissions").create(
     [{ fields: request.body }],
     function (err, record) {
       if (err) {
         console.log(err);
-        response.header(500);
-        response.end();
+        next(err);
         return;
       }
+      newRecordID = record[0].getId();
     }
   );
 
-  var airtableFinished;
-  while (!airtableFinished) {
-    setTimeout(async () => {
+  let airtableFinished, checkFinished, checkFinishedLoop;
+  checkFinished = async () => {
+    try {
       // Check if airtable is finished uploading
-      const records = await base("submissions")
-        .select({ view: "Grid view" })
-        .all();
-      for (let record of records) {
-        console.log(record._rawJson.fields);
-      }
+      base("submissions").find(newRecordID, function (err, record) {
+        if (err) {
+          clearInterval(checkFinishedLoop);
+          console.error(err);
+          next(err);
+          return;
+        }
+        record = record._rawJson;
+        console.log(record);
+        airtableFinished = record.file && record.file[0].thumbnails;
+      });
       airtableFinished = 1;
 
-      // Delete image on imgur
       if (airtableFinished) {
-        const axios = require("axios");
-        const FormData = require("form-data");
-        const data = new FormData();
+        // Delete image on imgur
+        const hash = request.body.file[0].url.substring(
+          request.body.file[0].url.indexOf("temp/") + 5
+        );
+        console.log(hash);
 
-        var config = {
-          method: "delete",
-          url: "https://api.imgur.com/3/image/" + deleteHash,
-          headers: {
-            Authorization: "Client-ID 3aee61ef688768b",
-            ...data.getHeaders(),
-          },
-          data: data,
-        };
-
-        axios(config)
-          .then(function (response) {
-            console.log(JSON.stringify(response.data));
-          })
-          .catch(function (error) {
-            console.log(error);
-            response.header(500);
-            response.end();
-            return;
-          });
+        fs.unlinkSync("./uploads/" + hash);
+        clearInterval(checkFinishedLoop);
+        response.header(200);
+        response.end();
       }
-    }, 3000);
-  }
+    } catch (error) {
+      console.log(error);
+      clearInterval(checkFinishedLoop);
+      next(error);
+      return;
+    }
+  };
 
-  response.header(200);
-  response.end();
+  checkFinishedLoop = setInterval(function () {
+    checkFinished();
+  }, 2000);
 });
 
 // Backup serve to index, backup for refresh
@@ -150,8 +198,9 @@ app.use(function (request, response) {
 
 // Status code 500 middleware
 app.use(function (err, req, res, next) {
+  console.log(err);
   res.status(err.status || 500);
-  res.render("500", { error: err });
+  res.send(err);
   res.end();
 });
 
