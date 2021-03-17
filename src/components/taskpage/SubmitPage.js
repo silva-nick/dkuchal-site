@@ -30,6 +30,7 @@ class SubmitPage extends React.Component {
     file: null,
     fileUrl: null,
     showAlert: false,
+    success: true,
   };
 
   async submit(e) {
@@ -37,24 +38,35 @@ class SubmitPage extends React.Component {
     //console.log(this.state.file);
 
     if (!this.state.file) {
-      this.setState({ showAlert: "Please finish the form" });
+      this.setState({ showAlert: "Please finish the form", success: false });
     }
 
-    const success = await putSubmission({
-      nameone: this.state.nameone,
-      nametwo: this.state.nametwo,
-      netidone: "", //sessionstorage
-      netidtwo: "",
-      description: this.state.description,
-      tskcode: parseInt(this.props.location.search.substring(6)),
-      file: this.state.file,
-    });
+    let resultCallback = (success) => {
+      if (!success) {
+        this.setState({
+          showAlert: "Your submission has failed.",
+          success: false,
+        });
+      } else {
+        this.setState({
+          showAlert: "Your submission has succeeded. Congrats!",
+          success: true,
+        });
+      }
+    };
 
-    console.log(success);
-
-    if (!success) {
-      this.setState({ showAlert: "Your submission has failed." });
-    }
+    await putSubmission(
+      {
+        nameone: this.state.nameone,
+        nametwo: this.state.nametwo,
+        netidone: "", //sessionstorage
+        netidtwo: "",
+        description: this.state.description,
+        tskcode: parseInt(this.props.location.search.substring(6)),
+        file: this.state.file,
+      },
+      resultCallback
+    );
 
     return;
   }
@@ -79,7 +91,7 @@ class SubmitPage extends React.Component {
 
           {this.state.showAlert && (
             <Alert
-              variant="danger"
+              variant={this.state.success ? "success" : "danger"}
               onClose={() => this.handleAlertClose(false)}
               dismissible
               style={{
@@ -89,7 +101,11 @@ class SubmitPage extends React.Component {
             >
               <Alert.Heading>{this.state.showAlert}</Alert.Heading>
               <hr />
-              <p style={{ margin: 0 }}>Please try again or contact DKU Challenge admin.</p>
+              <p style={{ margin: 0 }}>
+                {this.state.success
+                  ? "Check out the shop!"
+                  : "Please try again or contact DKU Challenge admin."}
+              </p>
             </Alert>
           )}
 

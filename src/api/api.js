@@ -42,7 +42,7 @@ export const updateUser = async (usrcode) => {
 };
 
 // Create new submission
-export const putSubmission = async (raw_submission) => {
+export const putSubmission = async (raw_submission, resultCallback) => {
   //console.log(raw_submission.file);
   var formdata = new FormData();
   formdata.append("file", raw_submission.file);
@@ -61,23 +61,25 @@ export const putSubmission = async (raw_submission) => {
     .then((response) => {
       console.log("Temp host response: ", response);
 
-      raw_submission.file = [{ url: baseURL +"temp/"+ fileHash }];
+      raw_submission.file = [{ url: baseURL + "temp/" + fileHash }];
 
       client
         .put("/submit", raw_submission)
         .then((response) => {
           console.log("Submission response", response);
-          return response.status === 200 ? 1 : 0;
+          resultCallback(true);
         })
         .catch((error) => {
           console.log("error", error);
-          return 0;
+          resultCallback(false);
         });
     })
     .catch((error) => {
       console.log("error", error);
-      return 0;
+      resultCallback(false);
     });
+
+  return;
 };
 
 // Create new item claim
