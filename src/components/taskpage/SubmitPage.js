@@ -9,6 +9,8 @@ import {
   Col,
   Image,
   Alert,
+  ButtonGroup,
+  ToggleButton,
 } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
@@ -19,16 +21,26 @@ import NavBar from "../navigation/NavBar";
 class SubmitPage extends React.Component {
   constructor() {
     super();
+
     this.submit = this.submit.bind(this);
     this.handleAlertClose = this.handleAlertClose.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
   }
 
   state = {
+    typeSelect: [
+      { text: "One image", key: 1 },
+      { text: "Two images", key: 2 },
+      { text: "Video", key: 3 },
+    ],
+    type: 1,
     nameone: "",
     nametwo: "",
     description: "",
     file: null,
     fileUrl: null,
+    filetwo: null,
+    filebackupUrl: null,
     showAlert: false,
     success: true,
   };
@@ -76,7 +88,122 @@ class SubmitPage extends React.Component {
     return;
   }
 
+  handleTypeChange(e) {
+    let val = parseInt(e.target.value);
+    if (val === 1) {
+      this.setState({
+        type: val,
+        filetwo: null,
+        filebackupURL: null,
+      });
+    } else {
+      this.setState({ type: val });
+    }
+  }
+
   render() {
+    let input;
+
+    if (this.state.type === 1) {
+      input = (
+        <div>
+          <Form.Group>
+            <Form.File
+              id="fileInput"
+              label="One picture/ image, if specified."
+              onChange={(e) => {
+                this.setState({
+                  fileURL: URL.createObjectURL(e.target.files[0]),
+                  file: e.target.files[0],
+                });
+              }}
+              required
+            />
+          </Form.Group>
+          <center>
+            {this.state.file && (
+              <Image
+                src={this.state.fileURL}
+                thumbnail
+                fluid
+                style={{ width: "40%" }}
+              />
+            )}
+          </center>
+        </div>
+      );
+    } else if (this.state.type === 2) {
+      input = (
+        <div>
+          <Form.Group>
+            <Form.File
+              id="fileInput"
+              label="Two pictures/ images, if specified."
+              onChange={(e) => {
+                this.setState({
+                  fileURL: URL.createObjectURL(e.target.files[0]),
+                  file: e.target.files[0],
+                });
+              }}
+              required
+            />
+            <br />
+            <Form.File
+              id="fileInput2"
+              onChange={(e) => {
+                this.setState({
+                  filebackupURL: URL.createObjectURL(e.target.files[0]),
+                  filetwo: e.target.files[0],
+                });
+              }}
+              required
+            />
+          </Form.Group>
+          <center>
+            {this.state.file && (
+              <Image
+                src={this.state.fileURL}
+                thumbnail
+                fluid
+                style={{ width: "25%" }}
+              />
+            )}{" "}
+            {this.state.filetwo && (
+              <Image
+                src={this.state.filebackupURL}
+                thumbnail
+                fluid
+                style={{ width: "25%" }}
+              />
+            )}
+          </center>
+        </div>
+      );
+    } else {
+      input = (
+        <div>
+          <Form.Group>
+            <Form.File
+              id="fileInput"
+              label="One video, if specified."
+              onChange={(e) => {
+                this.setState({
+                  fileURL: URL.createObjectURL(e.target.files[0]),
+                  file: e.target.files[0],
+                });
+              }}
+              required
+            />
+          </Form.Group>
+          <center>
+            {this.state.file && (
+              <h4>Successfully attached.</h4>
+            )}
+          </center>
+        </div>
+      );
+    }
+
     return (
       <div>
         <center>
@@ -154,29 +281,28 @@ class SubmitPage extends React.Component {
                   />
                 </Form.Group>
 
-                <Form.Group>
-                  <Form.File
-                    id="fileInput"
-                    label="Picture/ video evidence, if specified."
-                    onChange={(e) => {
-                      this.setState({
-                        fileURL: URL.createObjectURL(e.target.files[0]),
-                        file: e.target.files[0],
-                      });
-                    }}
-                    required
-                  />
-                </Form.Group>
+                <br />
                 <center>
-                  {this.state.file && (
-                    <Image
-                      src={this.state.fileURL}
-                      thumbnail
-                      fluid
-                      style={{ width: "60%" }}
-                    />
-                  )}
+                  {" "}
+                  <ButtonGroup toggle>
+                    {this.state.typeSelect.map((type, idx) => (
+                      <ToggleButton
+                        key={idx}
+                        type="radio"
+                        variant="light"
+                        name="radio"
+                        value={type.key}
+                        checked={type.key === this.state.type}
+                        onChange={(e) => this.handleTypeChange(e)}
+                      >
+                        {type.text}
+                      </ToggleButton>
+                    ))}
+                  </ButtonGroup>
                 </center>
+
+                {input}
+
                 <br />
                 <Button variant="primary" type="submit" onClick={this.submit}>
                   Submit
