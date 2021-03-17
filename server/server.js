@@ -34,8 +34,8 @@ const base = Airtable.base("appCbJwTyR6Qw1100");*/
 
 // Serve tasks
 app.get("/api/alltasks", async (request, response, next) => {
-  console.log(request.url);
-  console.log(request.hostname);
+  //console.log(request.url);
+  //console.log(request.hostname);
 
   try {
     const tasks = [];
@@ -57,7 +57,7 @@ app.get("/api/alltasks", async (request, response, next) => {
 
 // Serve Items
 app.get("/api/allitems", async (request, response, next) => {
-  console.log(request.body);
+  //console.log(request.body);
 
   try {
     const items = [];

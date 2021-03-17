@@ -24,6 +24,8 @@ class SubmitPage extends React.Component {
   }
 
   state = {
+    nameone: "",
+    nametwo: "",
     description: "",
     file: null,
     fileUrl: null,
@@ -34,11 +36,16 @@ class SubmitPage extends React.Component {
     e.preventDefault();
     //console.log(this.state.file);
 
+    if (!this.state.file) {
+      this.setState({ showAlert: "Please finish the form" });
+    }
+
     const success = await putSubmission({
-      nameone: "Zaiying Yang",
-      nametwo: "Nick Silva",
+      nameone: this.state.nameone,
+      nametwo: this.state.nametwo,
+      netidone: "", //sessionstorage
+      netidtwo: "",
       description: this.state.description,
-      usrcode: 1,
       tskcode: parseInt(this.props.location.search.substring(6)),
       file: this.state.file,
     });
@@ -46,7 +53,7 @@ class SubmitPage extends React.Component {
     console.log(success);
 
     if (!success) {
-      this.setState({ showAlert: true });
+      this.setState({ showAlert: "Your submission has failed." });
     }
 
     return;
@@ -80,9 +87,9 @@ class SubmitPage extends React.Component {
                 margin: "0 0 1rem 0",
               }}
             >
-              <Alert.Heading>Your submission has failed</Alert.Heading>
+              <Alert.Heading>{this.state.showAlert}</Alert.Heading>
               <hr />
-              <p style={{ margin: 0 }}>Please contact DKU Challenge admin.</p>
+              <p style={{ margin: 0 }}>Please try again or contact DKU Challenge admin.</p>
             </Alert>
           )}
 
@@ -95,11 +102,22 @@ class SubmitPage extends React.Component {
                   <Form.Label>Names</Form.Label>
                   <Row>
                     <Col>
-                      <Form.Control placeholder="First partner name" required />
+                      <Form.Control
+                        placeholder="First partner name"
+                        value={this.state.nameone}
+                        onChange={(e) =>
+                          this.setState({ nameone: e.target.value })
+                        }
+                        required
+                      />
                     </Col>
                     <Col>
                       <Form.Control
                         placeholder="Second partner name"
+                        value={this.state.nametwo}
+                        onChange={(e) =>
+                          this.setState({ nametwo: e.target.value })
+                        }
                         required
                       />
                     </Col>
@@ -130,6 +148,7 @@ class SubmitPage extends React.Component {
                         file: e.target.files[0],
                       });
                     }}
+                    required
                   />
                 </Form.Group>
                 <center>
