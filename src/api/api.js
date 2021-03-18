@@ -45,44 +45,44 @@ export const updateUser = async (usrcode) => {
 export const putSubmission = async (raw_submission, resultCallback) => {
   //console.log(raw_submission.file);
 
-  const type = raw_submission.type;
-  delete raw_submission.type;
+    const type = raw_submission.type;
+    delete raw_submission.type;
 
-  var formdata = new FormData();
-  formdata.append("file", raw_submission.file);
+    var formdata = new FormData();
+    formdata.append("file", raw_submission.file);
 
-  let fileHash =
-    Date.now() +
-    "." +
-    raw_submission.file.type.substring(
-      raw_submission.file.type.indexOf("/") + 1
-    );
+    let fileHash =
+      Date.now() +
+      "." +
+      raw_submission.file.type.substring(
+        raw_submission.file.type.indexOf("/") + 1
+      );
 
-  if (type === 1) {
-    client
-      .post("/temp/" + fileHash, formdata, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((response) => {
-        console.log("Temp host response: ", response);
+    if (type === 1) {
+      client
+        .post("/temp/" + fileHash, formdata, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((response) => {
+          console.log("Temp host response: ", response);
 
-        raw_submission.file = [{ url: baseURL + "temp/" + fileHash }];
+          raw_submission.file = [{ url: baseURL + "temp/" + fileHash }];
 
-        client
-          .put("/submit-one", raw_submission)
-          .then((response) => {
-            console.log("Submission response", response);
-            resultCallback(true);
-          })
-          .catch((error) => {
-            console.log("error", error);
-            resultCallback(false);
-          });
-      })
-      .catch((error) => {
-        console.log("error", error);
-        resultCallback(false);
-      });
+          client
+            .put("/submit-one", raw_submission)
+            .then((response) => {
+              console.log("Submission response", response);
+              resultCallback(true);
+            })
+            .catch((error) => {
+              console.log("error", error);
+              resultCallback(false);
+            });
+        })
+        .catch((error) => {
+          console.log("error", error);
+          resultCallback(false);
+        });
   } else if (type === 2) {
     formdata.append("file", raw_submission.filetwo);
 
