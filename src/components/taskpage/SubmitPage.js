@@ -14,7 +14,7 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { putSubmission } from "../../api/api";
+import { putSubmission, getVideoLink } from "../../api/api";
 import FooterLight from "../navigation/FooterLight";
 import NavBar from "../navigation/NavBar";
 
@@ -25,6 +25,7 @@ class SubmitPage extends React.Component {
     this.submit = this.submit.bind(this);
     this.handleAlertClose = this.handleAlertClose.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
+    this.handleVideoLink = this.handleVideoLink.bind(this);
   }
 
   state = {
@@ -33,14 +34,14 @@ class SubmitPage extends React.Component {
       { text: "Two files", key: 2 },
       { text: "Video", key: 3 },
     ],
-    type: 1,
+    type: 3,
     nameone: "",
     nametwo: "",
     description: "",
     file: null,
     fileUrl: null,
     filetwo: null,
-    filebackupUrl: null,
+    filebackupUrl: "",
     showAlert: false,
     success: true,
   };
@@ -78,7 +79,7 @@ class SubmitPage extends React.Component {
         tskcode: parseInt(this.props.location.search.substring(6)),
         file: this.state.file,
         filetwo: this.state.filetwo,
-        filebackup: this.state.filebackupUrl
+        filebackup: this.state.filebackupUrl,
       },
       resultCallback
     );
@@ -104,6 +105,27 @@ class SubmitPage extends React.Component {
     }
   }
 
+  async handleVideoLink() {
+    let resultCallback = (success) => {
+      if (!success) {
+        this.setState({
+          showAlert: "Your submission has failed.",
+          success: false,
+        });
+      } else {
+        this.setState({
+          showAlert: "Your link has been created.",
+          success: true,
+          filebackupURL: success,
+        });
+      }
+    };
+
+    await getVideoLink(this.state.file, resultCallback);
+
+    return;
+  }
+
   render() {
     let input;
 
@@ -119,6 +141,7 @@ class SubmitPage extends React.Component {
                   fileURL: URL.createObjectURL(e.target.files[0]),
                   file: e.target.files[0],
                 });
+                this.handleVideoLink();
               }}
               required
             />
@@ -185,10 +208,19 @@ class SubmitPage extends React.Component {
     } else {
       input = (
         <div>
+          <br />
           <Form.Group>
+            <Form.Label>Video Link</Form.Label>
+            <Form.Control
+              placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              value={this.state.filebackupUrl}
+              onChange={(e) => this.setState({ filebackupUrl: e.target.value })}
+              required
+            />
+            <br />
             <Form.File
               id="videoInput"
-              label="One video, if specified."
+              label="Don't have a link? Upload your video and generate one (max 50 mb)."
               onChange={(e) => {
                 this.setState({
                   fileURL: URL.createObjectURL(e.target.files[0]),
@@ -198,11 +230,7 @@ class SubmitPage extends React.Component {
               required
             />
           </Form.Group>
-          <center>
-            {this.state.file && (
-              <h4>Successfully attached.</h4>
-            )}
-          </center>
+          <center>{this.state.file && <h4>Successfully attached.</h4>}</center>
         </div>
       );
     }
