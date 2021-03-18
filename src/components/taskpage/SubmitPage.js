@@ -12,7 +12,7 @@ import {
   ButtonGroup,
   ToggleButton,
 } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { putSubmission } from "../../api/api";
 import FooterLight from "../navigation/FooterLight";
@@ -69,6 +69,7 @@ class SubmitPage extends React.Component {
 
     await putSubmission(
       {
+        type: this.state.type,
         nameone: this.state.nameone,
         nametwo: this.state.nametwo,
         netidone: "", //sessionstorage
@@ -76,6 +77,8 @@ class SubmitPage extends React.Component {
         description: this.state.description,
         tskcode: parseInt(this.props.location.search.substring(6)),
         file: this.state.file,
+        filetwo: this.state.filetwo,
+        filebackup: this.state.filebackupUrl
       },
       resultCallback
     );
