@@ -105,7 +105,7 @@ class SubmitPage extends React.Component {
     }
   }
 
-  async handleVideoLink() {
+  async handleVideoLink(e) {
     let resultCallback = (success) => {
       if (!success) {
         this.setState({
@@ -121,7 +121,11 @@ class SubmitPage extends React.Component {
       }
     };
 
-    await getVideoLink(this.state.file, resultCallback);
+    // Wait for file to load
+    setTimeout(
+      async () => await getVideoLink(this.state.file, resultCallback),
+      500
+    );
 
     return;
   }
@@ -141,7 +145,6 @@ class SubmitPage extends React.Component {
                   fileURL: URL.createObjectURL(e.target.files[0]),
                   file: e.target.files[0],
                 });
-                this.handleVideoLink();
               }}
               required
             />
@@ -226,6 +229,7 @@ class SubmitPage extends React.Component {
                   fileURL: URL.createObjectURL(e.target.files[0]),
                   file: e.target.files[0],
                 });
+                this.handleVideoLink(e);
               }}
               required
             />
