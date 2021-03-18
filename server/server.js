@@ -277,8 +277,7 @@ app.post(
         response_type: "code",
       });
 
-      response.header(200);
-      response.redirect(authorize_url);
+      response.redirect(302, authorize_url);
     });
     tempFile.on("error", (err) => {
       next(err);
