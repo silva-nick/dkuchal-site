@@ -57,19 +57,15 @@ function About() {
         {headerText}
 
         <p style={{ padding: "1rem" }}>
-          Counseling and Psychological Services (CAPS) is committed to creating
-          an environment that is educationally inspiring, physically and
-          psychologically safe, and accessible and accepting of all gender
-          expressions and identities, of all races, ethnicities, nationalities,
-          faith communities and sexual orientations. With the hard work and
-          generous support of CAPS and ISS student workers, CAPS has the
-          opportunity to invite you to participate in this DKU Mental Wellness
-          Challenge. This 30-day program aims to promote and nurture positive
-          mental health and happiness in DKU community. We invite pairs of
-          students to participate in this program, so we can maintain and
-          improve the connections between different student populations. We wish
-          you a pleasant journey with your partner in this program. For more
-          information of CAPS services, please visit our website
+          With the hard work and generous support of CAPS and ISS student
+          workers, CAPS has the opportunity to invite you to participate in this
+          DKU Mental Wellness Challenge. This 30-day program aims to promote and
+          nurture positive mental health and happiness in DKU community. We
+          invite pairs of students to participate in this program, so we can
+          maintain and improve the connections between different student
+          populations. We wish you a pleasant journey with your partner in this
+          program. For more information of CAPS services, please visit our
+          website https://dukekunshan.edu.cn/en/caps
           <a href="https://dukekunshan.edu.cn/en/caps">
             {" "}
             https://dukekunshan.edu.cn/en/caps
@@ -97,7 +93,7 @@ function About() {
               {" "}
               CAPS provides face-to-face counseling service to students on
               campus and virtual counseling service to students who cannot
-              travel back to campus in Fall Semester.{" "}
+              travel back to campus.{" "}
             </Card.Title>
             <Card.Text>
               CAPS is committed to creating an environment that is educationally

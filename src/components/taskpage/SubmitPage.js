@@ -29,8 +29,8 @@ class SubmitPage extends React.Component {
 
   state = {
     typeSelect: [
-      { text: "One image", key: 1 },
-      { text: "Two images", key: 2 },
+      { text: "One file", key: 1 },
+      { text: "Two files", key: 2 },
       { text: "Video", key: 3 },
     ],
     type: 1,
@@ -113,7 +113,7 @@ class SubmitPage extends React.Component {
           <Form.Group>
             <Form.File
               id="fileInput"
-              label="One picture/ image, if specified."
+              label="One file/ image, if specified."
               onChange={(e) => {
                 this.setState({
                   fileURL: URL.createObjectURL(e.target.files[0]),
@@ -141,7 +141,7 @@ class SubmitPage extends React.Component {
           <Form.Group>
             <Form.File
               id="fileInput"
-              label="Two pictures/ images, if specified."
+              label="Two files/ images, if specified."
               onChange={(e) => {
                 this.setState({
                   fileURL: URL.createObjectURL(e.target.files[0]),
@@ -187,7 +187,7 @@ class SubmitPage extends React.Component {
         <div>
           <Form.Group>
             <Form.File
-              id="fileInput"
+              id="videoInput"
               label="One video, if specified."
               onChange={(e) => {
                 this.setState({

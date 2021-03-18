@@ -84,13 +84,11 @@ export const putSubmission = async (raw_submission, resultCallback) => {
           resultCallback(false);
         });
   } else if (type === 2) {
-    formdata.append("file", raw_submission.filetwo);
-
     let fileTwoHash =
       Date.now() +
       "." +
-      raw_submission.fileTwo.type.substring(
-        raw_submission.fileTwo.type.indexOf("/") + 1
+      raw_submission.filetwo.type.substring(
+        raw_submission.filetwo.type.indexOf("/") + 1
       );
 
     client
@@ -100,8 +98,11 @@ export const putSubmission = async (raw_submission, resultCallback) => {
       .then((response) => {
         console.log("Temp host response 1: ", response);
 
+        var formdata = new FormData();
+        formdata.append("file", raw_submission.filetwo);
+
         client
-          .post("/temp/" + fileHash, formdata, {
+          .post("/temp/" + fileTwoHash, formdata, {
             headers: { "Content-Type": "multipart/form-data" },
           })
           .then((response) => {

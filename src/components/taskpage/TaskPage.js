@@ -16,7 +16,7 @@ class TaskPage extends React.Component {
   state = {
     loading: true,
     tasks: [],
-    width: window.innerWidth,
+    innerWidth: window.innerWidth,
   };
 
   componentDidMount = async () => {

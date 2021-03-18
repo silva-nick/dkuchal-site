@@ -54,7 +54,9 @@ function Home() {
         <h1 style={{ ...hs, fontSize: "xxx-large", marginTop: "-40%" }}>
           Duke Kunshan University
         </h1>
-        <h2 style={{ ...hs, marginBottom: "30%" }}>[Mental Wellness Challenge]</h2>
+        <h2 style={{ ...hs, marginBottom: "30%" }}>
+          [Mental Wellness Challenge]
+        </h2>
       </center>
     );
   }
@@ -74,29 +76,55 @@ function Home() {
         </div>
         <br />
         <h3>What is DKU Challenge 2.0</h3>
-        <Jumbotron fluid>
+        <Jumbotron style={{ padding: "2rem 0.5rem" }} fluid>
           <Container>
             <p style={{ fontWeight: "bold" }}>
-              DKU CAPS Mental Wellness Challenge is a program for students.
+              DKU CAPS Mental Wellness Challenge is a program for students
+              everywhere to learn about their mental health.
             </p>
             <p>
-              The goal of this event is to add opportunities for DKU students to
-              make new foreign friends or to maintain their old friendship
-              overseas. Though we are apart during this special difficult
-              period, students can still keep active and accompany each other
-              via this meaningful online program.
+              This 30-day program aims to promote and nurture positive mental
+              health and happiness in DKU community. We invite pairs of students
+              to participate in this program, so we can maintain and improve the
+              connections between different student populations.
             </p>
           </Container>
         </Jumbotron>
 
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          This program will cover different areas that contribute to students’
+          mental health and personal development, including mental health,
+          physical health, friendship, fun and hobby and cultural exchange. If
+          you have any question or further inquiry, please email us at
+          dkumwchallenge@outlook.com.
+        </p>
+
+        <Card>
+          <Card.Header>Key Dates</Card.Header>
+          <Card.Body>
+            <Card.Text>
+              <a style={{ fontWeight: "bold" }}>Sign-up</a>: March 23-27
+            </Card.Text>
+            <Card.Text>
+              <a style={{ fontWeight: "bold" }}>Pairing</a>: March 28-30
+            </Card.Text>
+            <Card.Text>
+              <a style={{ fontWeight: "bold" }}>Program</a>: April 1-30
+            </Card.Text>
+            <Card.Text>
+              <a style={{ fontWeight: "bold" }}>Award delivery</a>: May (please
+              consult with admin team for more details)
+            </Card.Text>
+          </Card.Body>
+        </Card>
+        <br />
+
+        <p>
+          This program is to encourage you and your partner to try out new tasks
+          and build connections. If you have disagreements with your partner, we
+          encourage you to talk it through with your partner. We encourage you
+          talk about the tasks you prefer and how to work on disagreement with
+          your partner when you sign up.
         </p>
         <h3>FAQ</h3>
         <Accordion>
