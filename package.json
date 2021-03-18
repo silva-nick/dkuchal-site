@@ -22,7 +22,7 @@
     "react-scripts": "4.0.2"
   },
   "scripts": {
-    "start": "react-scripts build && cd ./server && node server",
+    "start": "cd ./server && node server",
     "local": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
