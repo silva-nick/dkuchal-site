@@ -122,7 +122,7 @@ app.get("/api/temp/:hash", async (request, response, next) => {
 });
 
 // Add new submit requests
-app.put("/api/submit/one", async (request, response, next) => {
+app.put("/api/submit-one", async (request, response, next) => {
   console.log(request.body);
 
   var newRecordID;
@@ -182,7 +182,7 @@ app.put("/api/submit/one", async (request, response, next) => {
 });
 
 // Add new two submit requests
-app.put("/api/submit/two", async (request, response, next) => {
+app.put("/api/submit-two", async (request, response, next) => {
   console.log(request.body);
 
   var newRecordID;

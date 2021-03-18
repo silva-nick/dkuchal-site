@@ -69,7 +69,7 @@ export const putSubmission = async (raw_submission, resultCallback) => {
         raw_submission.file = [{ url: baseURL + "temp/" + fileHash }];
 
         client
-          .put("/submit/one", raw_submission)
+          .put("/submit-one", raw_submission)
           .then((response) => {
             console.log("Submission response", response);
             resultCallback(true);
@@ -111,7 +111,7 @@ export const putSubmission = async (raw_submission, resultCallback) => {
             raw_submission.filetwo = [{ url: baseURL + "temp/" + fileTwoHash }];
 
             client
-              .put("/submit/two", raw_submission)
+              .put("/submit-two", raw_submission)
               .then((response) => {
                 console.log("Submission response", response);
                 resultCallback(true);
