@@ -132,8 +132,11 @@ export const putSubmission = async (raw_submission, resultCallback) => {
         resultCallback(false);
       });
   } else {
+    console.log(raw_submission);
+    raw_submission.file = null;
+    raw_submission.filetwo = null;
     client
-      .put("/submit-one", raw_submission)
+      .put("/submit-vid", raw_submission)
       .then((response) => {
         console.log("Submission response", response);
         resultCallback(true);
@@ -151,20 +154,16 @@ export const getVideoLink = async (video, resultCallback) => {
   formdata.append("file", video);
 
   let fileHash =
-  Date.now() +
-  "." +
-  video.type.substring(
-    video.type.indexOf("/") + 1
-  );
-  
+    Date.now() + "." + video.type.substring(video.type.indexOf("/") + 1);
+
   client
-    .post("/temp/" + fileHash, formdata, {
+    .post("/linkgen/" + fileHash, formdata, {
       headers: { "Content-Type": "multipart/form-data" },
     })
     .then((response) => {
       console.log("Temp host response: ", response);
 
-      let tempLink = [{ url: baseURL + "temp/" + fileHash }];
+      //let tempLink = [{ url: baseURL + "temp/" + fileHash }];
 
       // Box api
     })

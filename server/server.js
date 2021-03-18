@@ -29,6 +29,13 @@ Airtable.configure({
 });
 const base = Airtable.base("appCbJwTyR6Qw1100");*/
 
+// Setup Box-API
+var BoxSDK = require("box-node-sdk");
+var sdk = new BoxSDK({
+  clientID: "ver9gd1kapne7q4bomw9x3bbvbpj30a0",
+  clientSecret: "Hi3U7mOaiLmOcvsHq8XKq9nAiejF8h8A",
+});
+
 /* ======================================================================================== */
 // Endpoints
 
@@ -245,6 +252,40 @@ app.put("/api/submit-two", async (request, response, next) => {
   }, 3000);
 });
 
+// Create video link
+app.post(
+  "/api/linkgen/:hash",
+  upload.single("file"),
+  (request, response, next) => {
+    let file = request.file;
+    console.log("video request request", file);
+
+    if (!file) {
+      const error = new Error("Please upload a video");
+      error.httpStatusCode = 400;
+      return next(error);
+    }
+
+    var tempFile = fs.createReadStream(file.path);
+    var fileDest = fs.createWriteStream("uploads/" + request.params.hash);
+
+    tempFile.pipe(fileDest);
+    fs.unlinkSync(file.path);
+
+    tempFile.on("end", () => {
+      var authorize_url = sdk.getAuthorizeURL({
+        response_type: "code",
+      });
+
+      response.header(200);
+      response.redirect(authorize_url);
+    });
+    tempFile.on("error", (err) => {
+      next(err);
+    });
+  }
+);
+
 // Add new video submit request
 app.put("/api/submit-vid", async (request, response, next) => {
   console.log(request.body);
@@ -261,50 +302,7 @@ app.put("/api/submit-vid", async (request, response, next) => {
       newRecordID = record[0].getId();
     }
   );
-
-  let airtableFinished, checkFinished, checkFinishedLoop;
-  checkFinished = async () => {
-    try {
-      // Check if airtable is finished uploading
-      base("submissions").find(newRecordID, function (err, record) {
-        if (err) {
-          clearInterval(checkFinishedLoop);
-          console.error(err);
-          next(err);
-          return;
-        }
-        record = record._rawJson;
-        console.log(record);
-        airtableFinished = record.file && record.file[0].thumbnails;
-      });
-      airtableFinished = 1;
-
-      if (airtableFinished) {
-        // Delete image on server
-        console.log(request.body.file[0].url);
-        const hash = request.body.file[0].url.substring(
-          request.body.file[0].url.indexOf("temp/") + 5
-        );
-        console.log(hash);
-
-        fs.unlinkSync("./uploads/" + hash);
-        clearInterval(checkFinishedLoop);
-        response.header(200);
-        response.end();
-      }
-    } catch (error) {
-      console.log(error);
-      clearInterval(checkFinishedLoop);
-      next(error);
-      return;
-    }
-  };
-
-  checkFinishedLoop = setInterval(function () {
-    checkFinished();
-  }, 2000);
 });
-
 
 // Backup serve to index, backup for refresh
 const ENDPOINTS = ["/tasks", "/shop", "/login", "/", "/submit", "/signup"];
