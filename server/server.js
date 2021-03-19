@@ -304,7 +304,7 @@ app.get("/api/authcallback", (request, response, next) => {
   });
 
   // Create client and generate link
-  app.get("/api/linkgen", (request, response, next) => {
+  app.put("/api/linkgen", (request, response, next) => {
     console.log(request);
 
     var client = sdk.getPersistentClient(request.data.token);
@@ -318,8 +318,11 @@ app.get("/api/authcallback", (request, response, next) => {
         client.files
           .get(fileObject.id, { fields: "shared_link" })
           .then((file) => {
-            let url = file.shared_link.download_url;
             // Delete temp hosted file
+
+            response.header(200);
+            response.send({ link: file.shared_link.download_url });
+            response.end();
           });
       })
       .catch((error) => {
