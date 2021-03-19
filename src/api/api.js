@@ -170,7 +170,7 @@ export const getBoxToken = async (video, fileHash, resultCallback) => {
 
 export const getVideoLink = async (token, hash, resultCallback) => {
   await client
-    .put("/linkgen2/", { token: token, hash: hash })
+    .put("/linkgen/", { token: token, hash: hash })
     .then((response) => {
       console.log(response);
       resultCallback(response.data.url);

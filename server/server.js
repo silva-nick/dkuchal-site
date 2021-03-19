@@ -302,33 +302,34 @@ app.get("/api/authcallback", (request, response, next) => {
         encodeURIComponent(JSON.stringify(tokenInfo))
     );
   });
+  return;
+});
 
-  // Create client and generate link
-  app.put("/api/linkgen2", (request, response, next) => {
-    console.log(request);
+// Create client and generate link
+app.put("/api/linkgen", (request, response, next) => {
+  console.log(request);
 
-    var client = sdk.getPersistentClient(request.data.token);
-    let hash = request.data.hash;
+  var client = sdk.getPersistentClient(request.data.token);
+  let hash = request.data.hash;
 
-    let upload = fs.createReadStream("./uploads/" + hash);
+  let upload = fs.createReadStream("./uploads/" + hash);
 
-    client.files
-      .uploadFile("mw-challenge", hash, upload)
-      .then((fileObject) => {
-        client.files
-          .get(fileObject.id, { fields: "shared_link" })
-          .then((file) => {
-            // Delete temp hosted file
+  client.files
+    .uploadFile("mw-challenge", hash, upload)
+    .then((fileObject) => {
+      client.files
+        .get(fileObject.id, { fields: "shared_link" })
+        .then((file) => {
+          // Delete temp hosted file
 
-            response.header(200);
-            response.send({ link: file.shared_link.download_url });
-            response.end();
-          });
-      })
-      .catch((error) => {
-        next(error);
-      });
-  });
+          response.header(200);
+          response.send({ link: file.shared_link.download_url });
+          response.end();
+        });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 // Add new video submit request
