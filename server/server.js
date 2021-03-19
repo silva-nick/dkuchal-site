@@ -289,7 +289,7 @@ app.post(
 
 // Deal with accepted user auth
 app.get("/api/authcallback", (request, response, next) => {
-  console.log(request);
+  //console.log(request);
   let code = request.query.code;
 
   sdk.getTokensAuthorizationCodeGrant(code, null, function (err, tokenInfo) {
@@ -307,7 +307,7 @@ app.get("/api/authcallback", (request, response, next) => {
 
 // Create client and generate link
 app.put("/api/linkgen", (request, response, next) => {
-  console.log(request);
+  //console.log(request);
 
   var client = sdk.getPersistentClient(request.body.token);
   let hash = request.body.hash;
