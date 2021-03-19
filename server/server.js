@@ -304,7 +304,7 @@ app.get("/api/authcallback", (request, response, next) => {
   });
 
   // Create client and generate link
-  app.put("/api/linkgen", (request, response, next) => {
+  app.put("/api/linkgen2", (request, response, next) => {
     console.log(request);
 
     var client = sdk.getPersistentClient(request.data.token);
