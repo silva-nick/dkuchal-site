@@ -277,13 +277,24 @@ app.post(
         response_type: "code",
       });
 
-      response.redirect(302, authorize_url);
+      response.header(200);
+      response.json({ redirect: authorize_url });
+      response.end();
     });
     tempFile.on("error", (err) => {
       next(err);
     });
   }
 );
+
+// Deal with accepted user auth
+app.get("/api/authcallback", (request, response) => {
+  console.log(request.url);
+  console.log(__dirname);
+  response.status(200);
+  response.sendFile(path.resolve(__dirname, "../build/index.html"));
+  response.end();
+});
 
 // Add new video submit request
 app.put("/api/submit-vid", async (request, response, next) => {

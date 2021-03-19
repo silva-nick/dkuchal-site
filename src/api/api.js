@@ -149,9 +149,12 @@ export const putSubmission = async (raw_submission, resultCallback) => {
   }
 };
 
-export const getVideoLink = async (video, resultCallback) => {
+export const getVideoLink = async (raw_submission, resultCallback) => {
+  let video = raw_submission.file;
+
   var formdata = new FormData();
   formdata.append("file", video);
+  formdata.append("tskcode", raw_submission.tskcode);
 
   let fileHash =
     Date.now() + "." + video.type.substring(video.type.indexOf("/") + 1);
@@ -162,9 +165,7 @@ export const getVideoLink = async (video, resultCallback) => {
     })
     .then((response) => {
       console.log("Temp host response: ", response);
-
-      //let tempLink = [{ url: baseURL + "temp/" + fileHash }];
-
+      
       // Box api
     })
     .catch((error) => {

@@ -46,6 +46,14 @@ class SubmitPage extends React.Component {
     success: true,
   };
 
+  componentDidMount() {
+    let oldState = sessionStorage.getItem("state");
+    if (oldState) {
+      this.setState(oldState);
+      sessionStorage.removeItem("state");
+    }
+  }
+
   async submit(e) {
     e.preventDefault();
     //console.log(this.state.file);
@@ -122,10 +130,16 @@ class SubmitPage extends React.Component {
     };
 
     // Wait for file to load
-    setTimeout(
-      async () => await getVideoLink(this.state.file, resultCallback),
-      500
-    );
+    setTimeout(async () => {
+      sessionStorage.setItem("state", this.state);
+      await getVideoLink(
+        {
+          file: this.state.file,
+          tskcode: parseInt(this.props.location.search.substring(6)),
+        },
+        resultCallback
+      );
+    }, 500);
 
     return;
   }
