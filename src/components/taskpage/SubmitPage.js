@@ -48,7 +48,7 @@ class SubmitPage extends React.Component {
 
   async componentDidMount() {
     const params = new URLSearchParams(window.location.search);
-    const token = params.get("token");
+    const token = decodeURIComponent(params.get("token"));
     if (token) {
       let hash = sessionStorage.getItem("hash");
       if (!hash) {

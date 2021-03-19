@@ -297,7 +297,9 @@ app.get("/api/authcallback", (request, response, next) => {
       next(err);
     }
     console.log(tokenInfo);
-    response.redirect("../../tasks/submit?token=" + tokenInfo);
+    response.redirect(
+      "../../tasks/submit?token=" + encodeURIComponent(tokenInfo)
+    );
   });
 
   // Create client and generate link
