@@ -22,13 +22,21 @@ class SubmitPage extends React.Component {
   constructor() {
     super();
 
+    let tskcode = sessionStorage.getItem("tskcode");
+    if (tskcode) {
+      setTimeout(() => {
+        sessionStorage.removeItem("tskcode");
+        window.location.href = document.location + "&task=" + tskcode;
+      }, 500);
+    }
+
     let oldState = sessionStorage.getItem("state");
-    console.log(oldState);
     if (oldState) {
-      console.log("nick you idiot");
-      this.state = { ...JSON.parse(oldState) };
-      document.location = document.location + "&task=" + oldState.tskcode;
-      sessionStorage.removeItem("state");
+      oldState = JSON.parse(oldState);
+      this.state = { ...oldState };
+      setTimeout(() => {
+        sessionStorage.removeItem("state");
+      }, 500);
     }
 
     this.submit = this.submit.bind(this);
@@ -123,10 +131,13 @@ class SubmitPage extends React.Component {
         });
       } else {
         sessionStorage.setItem(
+          "tskcode",
+          parseInt(this.props.location.search.substring(6))
+        );
+        sessionStorage.setItem(
           "state",
           JSON.stringify({
             ...this.state,
-            tskcode: parseInt(this.props.location.search.substring(6)),
           })
         );
         window.location.href = success;

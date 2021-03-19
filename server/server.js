@@ -288,10 +288,36 @@ app.post(
 );
 
 // Deal with accepted user auth
-app.get("/api/authcallback", (request, response) => {
+app.get("/api/authcallback", (request, response, next) => {
+  console.log(request);
   console.log(request.url);
-  let = request.url.substring(request.url.indexOf("=") + 1);
-  response.redirect("../../tasks/submit?code=" + code);
+  let code = request.url.substring(request.url.indexOf("=") + 1);
+
+  sdk.getTokensAuthorizationCodeGrant(code, null, function (err, tokenInfo) {
+    if (err) {
+      next(err);
+    }
+
+    var client = sdk.getBasicClient(tokenInfo);
+
+    let hash = "123.jpg";
+    let upload = fs.createReadStream("./uploads/" + hash);
+
+    client.files
+      .uploadFile("mw-challenge", hash, upload)
+      .then((fileObject) => {
+        client.files
+          .get(fileObject.id, { fields: "shared_link" })
+          .then((file) => {
+            let url = file.shared_link.download_url;
+            // Delete temp hosted file
+            response.redirect("../../tasks/submit?url=" + url);
+          });
+      })
+      .catch((error) => {
+        next(error);
+      });
+  });
 });
 
 // Add new video submit request
