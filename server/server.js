@@ -309,8 +309,8 @@ app.get("/api/authcallback", (request, response, next) => {
 app.put("/api/linkgen", (request, response, next) => {
   console.log(request);
 
-  var client = sdk.getPersistentClient(request.data.token);
-  let hash = request.data.hash;
+  var client = sdk.getPersistentClient(request.body.token);
+  let hash = request.body.hash;
 
   let upload = fs.createReadStream("./uploads/" + hash);
 
