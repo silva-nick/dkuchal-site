@@ -298,7 +298,8 @@ app.get("/api/authcallback", (request, response, next) => {
     }
     console.log(tokenInfo);
     response.redirect(
-      "../../tasks/submit?token=" + encodeURIComponent(tokenInfo)
+      "https://mw-challenge.xyz/tasks/submit?token=" +
+        encodeURIComponent(tokenInfo)
     );
   });
 
@@ -346,7 +347,14 @@ app.put("/api/submit-vid", async (request, response, next) => {
 });
 
 // Backup serve to index, backup for refresh
-const ENDPOINTS = ["/tasks", "/shop", "/login", "/", "/submit", "/signup"];
+const ENDPOINTS = [
+  "/tasks",
+  "/shop",
+  "/login",
+  "/",
+  "/tasks/submit",
+  "/signup",
+];
 ENDPOINTS.map((endpoint) => {
   app.get(endpoint, (request, response) => {
     response.sendFile(path.resolve(__dirname, "../build/index.html"));
