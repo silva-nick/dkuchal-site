@@ -22,6 +22,15 @@ class SubmitPage extends React.Component {
   constructor() {
     super();
 
+    let oldState = sessionStorage.getItem("state");
+    console.log(oldState);
+    if (oldState) {
+      console.log("nick you idiot");
+      this.state = { ...JSON.parse(oldState) };
+      document.location = document.location + "&task=" + oldState.tskcode;
+      sessionStorage.removeItem("state");
+    }
+
     this.submit = this.submit.bind(this);
     this.handleAlertClose = this.handleAlertClose.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
@@ -45,14 +54,6 @@ class SubmitPage extends React.Component {
     showAlert: false,
     success: true,
   };
-
-  componentDidMount() {
-    let oldState = sessionStorage.getItem("state");
-    if (oldState) {
-      this.setState(oldState);
-      sessionStorage.removeItem("state");
-    }
-  }
 
   async submit(e) {
     e.preventDefault();
@@ -117,29 +118,34 @@ class SubmitPage extends React.Component {
     let resultCallback = (success) => {
       if (!success) {
         this.setState({
-          showAlert: "Your submission has failed.",
+          showAlert: "Your link generation has failed.",
           success: false,
         });
       } else {
-        this.setState({
-          showAlert: "Your link has been created.",
-          success: true,
-          filebackupURL: success,
-        });
+        sessionStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...this.state,
+            tskcode: parseInt(this.props.location.search.substring(6)),
+          })
+        );
+        window.location.href = success;
       }
     };
 
     // Wait for file to load
-    setTimeout(async () => {
-      sessionStorage.setItem("state", this.state);
-      await getVideoLink(
-        {
-          file: this.state.file,
-          tskcode: parseInt(this.props.location.search.substring(6)),
-        },
-        resultCallback
-      );
-    }, 500);
+    setTimeout(
+      async () =>
+        await getVideoLink(
+          {
+            file: this.state.file,
+            tskcode: parseInt(this.props.location.search.substring(6)),
+          },
+          resultCallback
+        ),
+
+      500
+    );
 
     return;
   }

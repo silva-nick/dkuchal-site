@@ -290,10 +290,8 @@ app.post(
 // Deal with accepted user auth
 app.get("/api/authcallback", (request, response) => {
   console.log(request.url);
-  console.log(__dirname);
-  response.status(200);
-  response.sendFile(path.resolve(__dirname, "../build/index.html"));
-  response.end();
+  let = request.url.substring(request.url.indexOf("=") + 1);
+  response.redirect("../../tasks/submit?code=" + code);
 });
 
 // Add new video submit request
