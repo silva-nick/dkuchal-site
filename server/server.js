@@ -315,12 +315,13 @@ app.put("/api/linkgen", (request, response, next) => {
   let upload = fs.createReadStream("./uploads/" + hash);
 
   client.files
-    .uploadFile("mw-challenge", hash, upload)
+    .uploadFile("0", hash, upload)
     .then((fileObject) => {
       client.files
         .get(fileObject.id, { fields: "shared_link" })
         .then((file) => {
           // Delete temp hosted file
+          fs.unlinkSync("./uploads/" + hash);
 
           response.header(200);
           response.send({ link: file.shared_link.download_url });
@@ -328,6 +329,7 @@ app.put("/api/linkgen", (request, response, next) => {
         });
     })
     .catch((error) => {
+      fs.unlinkSync("./uploads/" + hash);
       next(error);
     });
 });
