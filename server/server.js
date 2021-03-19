@@ -299,7 +299,7 @@ app.get("/api/authcallback", (request, response, next) => {
     console.log(tokenInfo);
     response.redirect(
       "https://mw-challenge.xyz/tasks/submit?token=" +
-        encodeURIComponent(tokenInfo)
+        encodeURIComponent(JSON.stringify(tokenInfo))
     );
   });
 

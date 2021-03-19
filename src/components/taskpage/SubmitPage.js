@@ -48,11 +48,11 @@ class SubmitPage extends React.Component {
 
   async componentDidMount() {
     const params = new URLSearchParams(window.location.search);
-    const token = decodeURIComponent(params.get("token"));
+    const token = JSON.parse(decodeURIComponent(params.get("token")));
     if (token) {
       let hash = sessionStorage.getItem("hash");
       if (!hash) {
-        this.setState({ showAlert: "Critical Error." });
+        this.setState({ showAlert: "Critical Error.", success: false });
       }
 
       let resultCallback = (success) => {
