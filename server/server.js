@@ -290,17 +290,23 @@ app.post(
 // Deal with accepted user auth
 app.get("/api/authcallback", (request, response, next) => {
   console.log(request);
-  console.log(request.url);
-  let code = request.url.substring(request.url.indexOf("=") + 1);
+  let code = request.query.code;
 
   sdk.getTokensAuthorizationCodeGrant(code, null, function (err, tokenInfo) {
     if (err) {
       next(err);
     }
+    console.log(tokenInfo);
+    response.redirect("../../tasks/submit?token=" + tokenInfo);
+  });
 
-    var client = sdk.getBasicClient(tokenInfo);
+  // Create client and generate link
+  app.get("/api/linkgen", (request, response, next) => {
+    console.log(request);
 
-    let hash = "123.jpg";
+    var client = sdk.getPersistentClient(request.data.token);
+    let hash = request.data.hash;
+
     let upload = fs.createReadStream("./uploads/" + hash);
 
     client.files
@@ -311,7 +317,6 @@ app.get("/api/authcallback", (request, response, next) => {
           .then((file) => {
             let url = file.shared_link.download_url;
             // Delete temp hosted file
-            response.redirect("../../tasks/submit?url=" + url);
           });
       })
       .catch((error) => {

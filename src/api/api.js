@@ -149,14 +149,9 @@ export const putSubmission = async (raw_submission, resultCallback) => {
   }
 };
 
-export const getVideoLink = async (raw_submission, resultCallback) => {
-  let video = raw_submission.file;
-
+export const getBoxToken = async (video, fileHash, resultCallback) => {
   var formdata = new FormData();
   formdata.append("file", video);
-
-  let fileHash =
-    Date.now() + "." + video.type.substring(video.type.indexOf("/") + 1);
 
   client
     .post("/linkgen/" + fileHash, formdata, {
@@ -165,11 +160,20 @@ export const getVideoLink = async (raw_submission, resultCallback) => {
     .then((response) => {
       console.log("Temp host response: ", response);
       resultCallback(response.data.redirect);
-      // Box api
     })
     .catch((error) => {
       console.log("error", error);
       resultCallback(false);
+    });
+  return;
+};
+
+export const getVideoLink = async (token, hash, resultCallback) => {
+  await client
+    .get("/api/linkgen", { data: { token: token, hash: hash } })
+    .then((response) => {
+      console.log(response);
+      resultCallback(response.data.url);
     });
   return;
 };
@@ -188,6 +192,7 @@ export default {
   putUser,
   updateUser,
   putSubmission,
+  getBoxToken,
   getVideoLink,
   putClaim,
 };

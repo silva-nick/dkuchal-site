@@ -14,30 +14,13 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import { putSubmission, getVideoLink } from "../../api/api";
+import { putSubmission, getBoxToken, getVideoLink } from "../../api/api";
 import FooterLight from "../navigation/FooterLight";
 import NavBar from "../navigation/NavBar";
 
 class SubmitPage extends React.Component {
   constructor() {
     super();
-
-    let tskcode = sessionStorage.getItem("tskcode");
-    if (tskcode) {
-      setTimeout(() => {
-        sessionStorage.removeItem("tskcode");
-        window.location.href = document.location + "&task=" + tskcode;
-      }, 500);
-    }
-
-    let oldState = sessionStorage.getItem("state");
-    if (oldState) {
-      oldState = JSON.parse(oldState);
-      this.state = { ...oldState };
-      setTimeout(() => {
-        sessionStorage.removeItem("state");
-      }, 500);
-    }
 
     this.submit = this.submit.bind(this);
     this.handleAlertClose = this.handleAlertClose.bind(this);
@@ -62,6 +45,53 @@ class SubmitPage extends React.Component {
     showAlert: false,
     success: true,
   };
+
+  async componentDidMount() {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    if (token) {
+      let hash = sessionStorage.getItem("hash");
+      if (!hash) {
+        this.setState({ showAlert: "Critical Error." });
+      }
+
+      let resultCallback = (success) => {
+        if (!success) {
+          this.setState({
+            showAlert: "Your submission has failed.",
+            success: false,
+          });
+        } else {
+          this.setState({
+            showAlert: "Your submission has succeeded. Congrats!",
+            success: true,
+            filebackupURL: success,
+          });
+        }
+      };
+
+      setTimeout(async () => {
+        getVideoLink(token, hash, resultCallback);
+      }, 500);
+    }
+
+    let tskcode = sessionStorage.getItem("tskcode");
+    if (tskcode) {
+      setTimeout(() => {
+        sessionStorage.removeItem("tskcode");
+        window.location.href = document.location + "&task=" + tskcode;
+      }, 500);
+    }
+
+    let oldState = sessionStorage.getItem("state");
+    if (oldState) {
+      oldState = JSON.parse(oldState);
+      this.state = { ...oldState };
+      setTimeout(() => {
+        sessionStorage.removeItem("state");
+      }, 500);
+    }
+  }
 
   async submit(e) {
     e.preventDefault();
@@ -126,7 +156,7 @@ class SubmitPage extends React.Component {
     let resultCallback = (success) => {
       if (!success) {
         this.setState({
-          showAlert: "Your link generation has failed.",
+          showAlert: "Box Authentication has failed",
           success: false,
         });
       } else {
@@ -145,18 +175,14 @@ class SubmitPage extends React.Component {
     };
 
     // Wait for file to load
-    setTimeout(
-      async () =>
-        await getVideoLink(
-          {
-            file: this.state.file,
-            tskcode: parseInt(this.props.location.search.substring(6)),
-          },
-          resultCallback
-        ),
-
-      500
-    );
+    setTimeout(async () => {
+      let fileHash =
+        Date.now() +
+        "." +
+        this.state.file.type.substring(this.state.file.type.indexOf("/") + 1);
+      sessionStorage.setItem("hash", fileHash);
+      await getBoxToken(this.state.file, fileHash, resultCallback);
+    }, 500);
 
     return;
   }
