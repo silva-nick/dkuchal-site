@@ -19,7 +19,7 @@ function ClaimToast(props) {
   const [show, setShow] = useState(true);
   const toggleShow = () => setShow(!show);
 
-  if (props) {
+  if (props.item) {
     return (
       <Toast show={show} onClose={toggleShow} style={{ zIndex: 1 }}>
         <Toast.Header>
@@ -83,17 +83,17 @@ class ShopPage extends React.Component {
 
   async handleClick(e, item) {
     // Send claim to server.
-    const claimSuccess = await putClaim({
+    const claimSuccess = false; /*await putClaim({
       nameone: "Zaiying Yang",
       nametwo: "Nick Silva",
       usrcode: 1,
       itmcode: item.itmcode,
-    });
+    });*/
 
     let newToast = claimSuccess.success ? (
-      <ClaimToast props={item} key={this.state.toasts.length} />
+      <ClaimToast item={item} key={this.state.toasts.length} />
     ) : (
-      <ClaimToast props={null} key={this.state.toasts.length} />
+      <ClaimToast item={null} key={this.state.toasts.length} />
     );
 
     this.setState({
@@ -102,12 +102,12 @@ class ShopPage extends React.Component {
     });
 
     // Update person's claims
-    updateUser({
+    /*updateUser({
       nameone: "Zaiying Yang",
       nametwo: "Nick Silva",
       usrcode: 1,
       claims: 2,
-    });
+    });*/
   }
 
   handleAlertClose() {
@@ -123,7 +123,11 @@ class ShopPage extends React.Component {
   makeItems(items) {
     let cards = items.map((item, index) => (
       <Card style={{ width: "24rem", margin: ".8rem 2rem" }} key={index}>
-        <Card.Img variant="top" src={item.img[0].thumbnails.large.url} />
+        <Card.Img
+          variant="top"
+          src={item.img[0].thumbnails.large.url}
+          style={{ marginTop: "1rem" }}
+        />
         <Card.Body>
           <Card.Title>{item.name}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
@@ -153,6 +157,7 @@ class ShopPage extends React.Component {
 
     let cardRows = rows.map((row, index) => (
       <div
+        key={index}
         style={{
           padding: ".2rem",
           display: "flex",
@@ -189,6 +194,15 @@ class ShopPage extends React.Component {
         isOpen: "Collapse",
         isClosed: "Expand",
       };
+
+      collapseStyle = {
+        fontSize: "1rem",
+        float: "right",
+        position: "relative",
+        top: "0",
+        right: "0",
+        margin: 0,
+      };
     }
 
     let cards = this.state.items.map((itemGroup, index) => {
@@ -196,7 +210,9 @@ class ShopPage extends React.Component {
       return (
         <div key={index}>
           <div>
-            <h3>{"Tier " + index + "Items"}</h3>
+            <h3 style={{ display: "inline" }}>
+              {"Tier " + (index + 1) + " Items"}
+            </h3>
             <Button
               variant="light"
               onClick={() => {
@@ -261,6 +277,7 @@ class ShopPage extends React.Component {
         <Container style={{ marginTop: "1.2rem" }}>
           <h1>Prize Options:</h1>
           <hr />
+          <br />
           <div>{cards}</div>
         </Container>
 

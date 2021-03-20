@@ -71,7 +71,7 @@ app.get("/api/allitems", async (request, response, next) => {
     const records = await base("items").select({ view: "Grid view" }).all();
     records.map((record) => {
       record = record._rawJson.fields;
-      while (items.length <= record.tier) {
+      while (items.length < record.tier) {
         items.push([]);
       }
       items[record.tier - 1].push(record);
