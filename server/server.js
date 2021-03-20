@@ -297,6 +297,7 @@ app.get("/api/authcallback", (request, response, next) => {
       next(err);
     }
     console.log(tokenInfo);
+    // Encrypt
     response.redirect(
       "https://mw-challenge.xyz/tasks/submit?token=" +
         encodeURIComponent(JSON.stringify(tokenInfo))
@@ -317,6 +318,7 @@ app.put("/api/linkgen", (request, response, next) => {
   client.files
     .uploadFile("0", hash, upload)
     .then((fileObject) => {
+      console.log("File Obhect has been created.");
       client.files
         .get(fileObject.id, { fields: "shared_link" })
         .then((file) => {

@@ -71,7 +71,8 @@ class SubmitPage extends React.Component {
       };
 
       setTimeout(async () => {
-        getVideoLink(token, hash, resultCallback);
+        console.log("getting video link");
+        await getVideoLink(token, hash, resultCallback);
       }, 500);
     }
 
