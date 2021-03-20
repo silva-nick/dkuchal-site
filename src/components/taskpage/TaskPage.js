@@ -1,6 +1,6 @@
 import "../../App.css";
 import React from "react";
-import { Container, Spinner, Card, Button, Row } from "react-bootstrap";
+import { Container, Spinner, Card, Button, Collapse } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
 import Footer from "../navigation/Footer";
@@ -114,7 +114,7 @@ class TaskPage extends React.Component {
     }
 
     let cards = this.state.tasks.map((taskGroup, index) => {
-      const groupCards = this.makeItems(taskGroup);
+      const groupCards = this.makeTasks(taskGroup);
       return (
         <div key={index}>
           <div>
