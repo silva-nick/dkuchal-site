@@ -45,16 +45,31 @@ app.get("/api/alltasks", async (request, response, next) => {
   //console.log(request.hostname);
 
   try {
-    const tasks = [];
+    const tasks = [[]];
     const records = await base("tasks").select({ view: "Grid view" }).all();
     records.map((record) => {
       record = record._rawJson.fields;
-      tasks.push(record);
+      switch (record.week) {
+        case "one":
+          record.week = 1;
+          break;
+        case "two":
+          record.week = 2;
+          break;
+        case "three":
+          record.week = 3;
+          break;
+        default:
+          break;
+      }
+      while (tasks.length < record.week) {
+        tasks.push([]);
+      }
+      tasks[record.week - 1].push(record);
     });
 
     //console.log(tasks);
     response.json({ tasks: tasks });
-
     response.end();
   } catch (error) {
     console.log(error);
@@ -79,7 +94,6 @@ app.get("/api/allitems", async (request, response, next) => {
 
     //console.log(items);
     response.json({ items: items });
-
     response.end();
   } catch (error) {
     console.log(error);

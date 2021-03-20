@@ -275,7 +275,7 @@ class ShopPage extends React.Component {
         )}
 
         <Container style={{ marginTop: "1.2rem" }}>
-          <h1>Prize Options:</h1>
+          {this.state.innerWidth < 500 ? <h3>Prizes:</h3> : <h1>Prizes:</h1>}
           <hr />
           <br />
           <div>{cards}</div>
