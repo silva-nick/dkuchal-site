@@ -232,7 +232,7 @@ class ShopPage extends React.Component {
             <hr />
           </div>
           <Collapse in={this.state.itemsOpen[index]}>
-            <center>{groupCards}</center>
+            <div>{groupCards}</div>
           </Collapse>
         </div>
       );
@@ -274,11 +274,13 @@ class ShopPage extends React.Component {
           </Alert>
         )}
 
-        <Container style={{ marginTop: "1.2rem" }}>
+        <Container style={{ marginTop: "1.2rem", minHeight:"80vh" }}>
           {this.state.innerWidth < 500 ? <h3>Prizes:</h3> : <h1>Prizes:</h1>}
           <hr />
           <br />
           <div>{cards}</div>
+          <br />
+          <br />
         </Container>
 
         <Footer />

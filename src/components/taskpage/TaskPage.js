@@ -1,4 +1,4 @@
-import "../../App.css";
+import "./TaskPage.css";
 import React from "react";
 import { Container, Spinner, Card, Button, Collapse } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
@@ -119,7 +119,7 @@ class TaskPage extends React.Component {
         <div key={index}>
           <div>
             <h3 style={{ display: "inline" }}>
-              {"Tier " + (index + 1) + " Items"}
+              {"Week " + (index + 1) + " Tasks"}
             </h3>
             <Button
               variant="light"
@@ -140,7 +140,10 @@ class TaskPage extends React.Component {
             <hr />
           </div>
           <Collapse in={this.state.tasksOpen[index]}>
-            <center>{groupCards}</center>
+            <div>
+              {groupCards}
+              <br />
+            </div>
           </Collapse>
         </div>
       );
@@ -152,7 +155,7 @@ class TaskPage extends React.Component {
         <center>
           <NavBar />
         </center>
-        <Container style={{ marginTop: "1.2rem" }}>
+        <Container style={{ marginTop: "1.2rem", minHeight: "80vh" }}>
           {this.state.innerWidth < 500 ? (
             <h3>Open Tasks:</h3>
           ) : (
@@ -161,8 +164,12 @@ class TaskPage extends React.Component {
           <hr />
           <br />
           <div>{cards}</div>
+          <br />
+          <br />
         </Container>
-        <Footer />
+        <Footer
+          style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}
+        />
       </div>
     );
   }
