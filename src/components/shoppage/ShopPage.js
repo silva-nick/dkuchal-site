@@ -57,6 +57,7 @@ class ShopPage extends React.Component {
   state = {
     loading: true,
     items: [],
+    itemsOpen: [],
     item: null,
     innerWidth: window.innerWidth,
     toasts: [],
@@ -69,7 +70,8 @@ class ShopPage extends React.Component {
     let items = await getItems();
     //console.log(items);
     items = items ? items : [];
-    this.setState({ loading: false, items: items });
+    let itemsOpen = items.map((item, index) => true);
+    this.setState({ loading: false, items: items, itemsOpen: itemsOpen });
   };
 
   componentDidUpdate = () => {
@@ -117,8 +119,8 @@ class ShopPage extends React.Component {
     return;
   }
 
-  makeItems() {
-    let cards = this.state.items.map((item, index) => (
+  makeItems(items) {
+    let cards = items.map((item, index) => (
       <Card style={{ width: "24rem", margin: ".8rem 2rem" }} key={index}>
         <Card.Img variant="top" src={item.img[0].thumbnails.large.url} />
         <Card.Body>
@@ -171,7 +173,53 @@ class ShopPage extends React.Component {
   }
 
   render() {
-    const cards = this.makeItems();
+    let collapseText, collapseStyle;
+    if (this.innerWidth <= 576) {
+      collapseText = {
+        isOpen: "-",
+        isClosed: "+",
+      };
+
+      collapseStyle = {
+        fontWeight: "bold",
+      };
+    } else {
+      collapseText = {
+        isOpen: "Collapse",
+        isClosed: "Expand",
+      };
+    }
+
+    let cards = this.state.items.map((itemGroup, index) => {
+      const groupCards = this.makeItems(itemGroup);
+      return (
+        <div key={index}>
+          <div>
+            <h3>{"Tier " + index + "Items"}</h3>
+            <Button
+              variant="light"
+              onClick={() => {
+                let temp = this.state.itemsOpen;
+                temp[index] = !temp[index];
+                this.setState({
+                  itemsOpen: temp,
+                });
+              }}
+              style={collapseStyle}
+            >
+              {this.state.itemsOpen[index]
+                ? collapseText.isOpen
+                : collapseText.isClosed}
+            </Button>
+
+            <hr />
+          </div>
+          <Collapse in={team[1].open}>
+            <center>{groupCards}</center>
+          </Collapse>
+        </div>
+      );
+    });
 
     return (
       <div aria-live="polite" aria-atomic="true">

@@ -73,24 +73,40 @@ class SubmitPage extends React.Component {
       setTimeout(async () => {
         console.log("getting video link");
         await getVideoLink(token, hash, resultCallback);
-      }, 500);
-    }
+        let tskcode = sessionStorage.getItem("tskcode");
+        if (tskcode) {
+          setTimeout(() => {
+            sessionStorage.removeItem("tskcode");
+            window.location.href = document.location + "&task=" + tskcode;
+          }, 500);
+        }
 
-    let tskcode = sessionStorage.getItem("tskcode");
-    if (tskcode) {
-      setTimeout(() => {
-        sessionStorage.removeItem("tskcode");
-        window.location.href = document.location + "&task=" + tskcode;
-      }, 500);
-    }
+        let oldState = sessionStorage.getItem("state");
+        if (oldState) {
+          oldState = JSON.parse(oldState);
+          this.state = { ...oldState };
+          setTimeout(() => {
+            sessionStorage.removeItem("state");
+          }, 500);
+        }
+      }, 200);
+    } else {
+      let tskcode = sessionStorage.getItem("tskcode");
+      if (tskcode) {
+        setTimeout(() => {
+          sessionStorage.removeItem("tskcode");
+          window.location.href = document.location + "&task=" + tskcode;
+        }, 500);
+      }
 
-    let oldState = sessionStorage.getItem("state");
-    if (oldState) {
-      oldState = JSON.parse(oldState);
-      this.state = { ...oldState };
-      setTimeout(() => {
-        sessionStorage.removeItem("state");
-      }, 500);
+      let oldState = sessionStorage.getItem("state");
+      if (oldState) {
+        oldState = JSON.parse(oldState);
+        this.state = { ...oldState };
+        setTimeout(() => {
+          sessionStorage.removeItem("state");
+        }, 500);
+      }
     }
   }
 
