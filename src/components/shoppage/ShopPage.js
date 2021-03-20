@@ -180,14 +180,21 @@ class ShopPage extends React.Component {
 
   render() {
     let collapseText, collapseStyle;
-    if (this.innerWidth <= 576) {
+
+    if (this.state.innerWidth <= 576) {
       collapseText = {
-        isOpen: "-",
+        isOpen: "–",
         isClosed: "+",
       };
 
       collapseStyle = {
         fontWeight: "bold",
+        fontSize: "1rem",
+        float: "right",
+        position: "relative",
+        top: "0",
+        right: "0",
+        margin: 0,
       };
     } else {
       collapseText = {
@@ -274,8 +281,8 @@ class ShopPage extends React.Component {
           </Alert>
         )}
 
-        <Container style={{ marginTop: "1.2rem", minHeight:"80vh" }}>
-          {this.state.innerWidth < 500 ? <h3>Prizes:</h3> : <h1>Prizes:</h1>}
+        <Container style={{ marginTop: "1.2rem", minHeight: "80vh" }}>
+          {this.state.innerWidth < 500 ? <h2>Prizes:</h2> : <h1>Prizes:</h1>}
           <hr />
           <br />
           <div>{cards}</div>

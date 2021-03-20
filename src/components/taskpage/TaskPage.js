@@ -88,7 +88,7 @@ class TaskPage extends React.Component {
 
   render() {
     let collapseText, collapseStyle;
-    if (this.innerWidth <= 576) {
+    if (this.state.innerWidth <= 576) {
       collapseText = {
         isOpen: "-",
         isClosed: "+",
@@ -96,6 +96,12 @@ class TaskPage extends React.Component {
 
       collapseStyle = {
         fontWeight: "bold",
+        fontSize: "1rem",
+        float: "right",
+        position: "relative",
+        top: 0,
+        right: 0,
+        margin: 0,
       };
     } else {
       collapseText = {
@@ -107,8 +113,8 @@ class TaskPage extends React.Component {
         fontSize: "1rem",
         float: "right",
         position: "relative",
-        top: "0",
-        right: "0",
+        top: 0,
+        right: 0,
         margin: 0,
       };
     }
