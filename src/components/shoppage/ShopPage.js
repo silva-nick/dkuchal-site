@@ -7,6 +7,7 @@ import {
   Toast,
   Button,
   Alert,
+  Collapse,
 } from "react-bootstrap";
 
 import Footer from "../navigation/Footer";
@@ -214,7 +215,7 @@ class ShopPage extends React.Component {
 
             <hr />
           </div>
-          <Collapse in={team[1].open}>
+          <Collapse in={this.state.itemsOpen[index]}>
             <center>{groupCards}</center>
           </Collapse>
         </div>
