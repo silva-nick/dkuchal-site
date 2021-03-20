@@ -371,13 +371,42 @@ app.put("/api/submit-vid", async (request, response, next) => {
   );
 });
 
+// Get all leaders
+app.get("/api/leaderboard", async (request, response, next) => {
+  console.log(request);
+  try {
+    const leaders = [];
+    const records = await base("people").select({ view: "Grid view" }).all();
+    records.map((record) => {
+      record = record._rawJson.fields;
+
+      delete record.netidone;
+      delete record.netidtwo;
+      delete record.password;
+      delete record.claims;
+      delete record.created;
+
+      leaders.push(record);
+    });
+
+    //console.log(items);
+    response.json({ leaders: leaders });
+    response.end();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 // Backup serve to index, backup for refresh
 const ENDPOINTS = [
-  "/tasks",
-  "/shop",
-  "/login",
   "/",
+  "/tasks",
   "/tasks/submit",
+  "/shop",
+  "/about",
+  "/leaderboard",
+  "/login",
   "/signup",
 ];
 ENDPOINTS.map((endpoint) => {

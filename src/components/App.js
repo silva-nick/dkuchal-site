@@ -7,6 +7,7 @@ import ShopPage from "./shoppage/ShopPage";
 import About from "./about/About";
 import LoginPage from "./loginpage/LoginPage";
 import SignupPage from "./signuppage/SignupPage";
+import Leaderboard from "./leaderboard/Leaderboard";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route exact path="/tasks/submit" component={SubmitPage} />
       <Route exact path="/shop" component={ShopPage} />
       <Route exact path="/about" component={About} />
+      <Route exact path="/leaderboard" component={Leaderboard} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/signup" component={SignupPage} />
     </BrowserRouter>

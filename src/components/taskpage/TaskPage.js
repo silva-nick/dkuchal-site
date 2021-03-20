@@ -170,8 +170,6 @@ class TaskPage extends React.Component {
           <hr />
           <br />
           <div>{cards}</div>
-          <br />
-          <br />
         </Container>
         <Footer
           style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}

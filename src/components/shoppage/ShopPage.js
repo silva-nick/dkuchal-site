@@ -62,7 +62,7 @@ class ShopPage extends React.Component {
     item: null,
     innerWidth: window.innerWidth,
     toasts: [],
-    shopIsOpen: true,
+    shopIsOpen: false,
     showAlert: true,
     claimSuccess: false,
   };
@@ -258,11 +258,9 @@ class ShopPage extends React.Component {
           {" "}
           {this.state.toasts}
         </div>
-
         <center>
           <NavBar />
         </center>
-
         {this.state.showAlert && (
           <Alert
             variant="warning"
@@ -280,16 +278,12 @@ class ShopPage extends React.Component {
             </p>
           </Alert>
         )}
-
         <Container style={{ marginTop: "1.2rem", minHeight: "80vh" }}>
           {this.state.innerWidth < 500 ? <h2>Prizes:</h2> : <h1>Prizes:</h1>}
           <hr />
           <br />
           <div>{cards}</div>
-          <br />
-          <br />
         </Container>
-
         <Footer />
       </div>
     );

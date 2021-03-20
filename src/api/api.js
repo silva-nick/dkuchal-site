@@ -1,4 +1,5 @@
 import axios from "axios";
+import { First } from "react-bootstrap/esm/PageItem";
 
 const baseURL = "https://dku-caps.herokuapp.com/api/";
 //const baseURL = "http://localhost:3001/api/";
@@ -7,15 +8,6 @@ const client = axios.create({
   baseURL: baseURL,
 });
 
-// Return available items
-export const getItems = async () => {
-  const response = await client.get("/allitems");
-  const items = response.data.items;
-
-  console.log(items);
-  return items;
-};
-
 // Return available tasks
 export const getTasks = async () => {
   const response = await client.get("/alltasks");
@@ -23,22 +15,6 @@ export const getTasks = async () => {
 
   console.log(tasks);
   return tasks;
-};
-
-// Create new User
-export const putUser = async (raw_users) => {
-  const response = await client.put("/users", raw_users);
-  console.log(response);
-
-  return response.status === 200 ? 1 : 0;
-};
-
-// update existing User
-export const updateUser = async (usrcode) => {
-  const response = await client.put("/users/update", usrcode);
-  console.log(response);
-
-  return response.status === 200 ? 1 : 0;
 };
 
 // Create new submission
@@ -178,12 +154,46 @@ export const getVideoLink = async (token, hash, resultCallback) => {
   return;
 };
 
+// Return available items
+export const getItems = async () => {
+  const response = await client.get("/allitems");
+  const items = response.data.items;
+
+  console.log(items);
+  return items;
+};
+
 // Create new item claim
 export const putClaim = async (raw_claim) => {
   const response = await client.put("/claim", raw_claim);
   console.log(response);
 
   return response.status === 200 ? 1 : 0;
+};
+
+// Create new User
+export const putUser = async (raw_users) => {
+  const response = await client.put("/users", raw_users);
+  console.log(response);
+
+  return response.status === 200 ? 1 : 0;
+};
+
+// update existing User
+export const updateUser = async (usrcode) => {
+  const response = await client.put("/users/update", usrcode);
+  console.log(response);
+
+  return response.status === 200 ? 1 : 0;
+};
+
+// Get and sort leaders
+export const getLeaders = async () => {
+  const response = await client.get("/leaderboard");
+  console.log(response);
+
+  // Sort by points
+  return response.data.leaders.sort((one, two) => one.points > two.points);
 };
 
 export default {
@@ -195,4 +205,5 @@ export default {
   getBoxToken,
   getVideoLink,
   putClaim,
+  getLeaders,
 };
