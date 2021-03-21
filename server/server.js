@@ -101,6 +101,66 @@ app.get("/api/allitems", async (request, response, next) => {
   }
 });
 
+// Create new user
+app.put("/api/user", async (request, response, next) => {
+  console.log(request.body);
+
+  var newRecordID;
+  base("users").create(
+    [{ fields: request.body }],
+    function (err, record) {
+      if (err) {
+        console.log(err);
+        next(err);
+        return;
+      }
+      newRecordID = record[0].getId();
+    }
+  );
+
+  let airtableFinished, checkFinished, checkFinishedLoop;
+  checkFinished = async () => {
+    try {
+      // Check if airtable is finished uploading
+      base("users").find(newRecordID, function (err, record) {
+        if (err) {
+          clearInterval(checkFinishedLoop);
+          console.error(err);
+          next(err);
+          return;
+        }
+        record = record._rawJson;
+        console.log(record);
+        airtableFinished = record.file && record.file[0].thumbnails;
+      });
+      airtableFinished = 1;
+
+      if (airtableFinished) {
+        // Delete image on server
+        console.log(request.body.file[0].url);
+        const hash = request.body.file[0].url.substring(
+          request.body.file[0].url.indexOf("temp/") + 5
+        );
+        console.log(hash);
+
+        fs.unlinkSync("./uploads/" + hash);
+        clearInterval(checkFinishedLoop);
+        response.header(200);
+        response.end();
+      }
+    } catch (error) {
+      console.log(error);
+      clearInterval(checkFinishedLoop);
+      next(error);
+      return;
+    }
+  };
+
+  checkFinishedLoop = setInterval(function () {
+    checkFinished();
+  }, 2000);
+});
+
 // All new temp upload
 app.post(
   "/api/temp/:hash",

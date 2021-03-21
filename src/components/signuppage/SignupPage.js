@@ -8,9 +8,11 @@ import {
   Row,
   Col,
   Image,
+  Alert,
 } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
+import { putUser } from "../../api/api";
 import FooterLight from "../navigation/FooterLight";
 import NavBar from "../navigation/NavBar";
 
@@ -18,21 +20,74 @@ class LoginPage extends React.Component {
   constructor() {
     super();
     this.submit = this.submit.bind(this);
+    this.handleAlertClose = this.handleAlertClose.bind(this);
   }
 
   state = {
-    name1: "",
-    name2: "",
-    email: "",
+    nameone: "",
+    nametwo: "",
+    netidone: "",
+    netidtwo: "",
     pswd: "",
     file: null,
     fileURL: null,
+    showAlert: false,
+    success: true,
   };
 
   submit(e) {
     e.preventDefault();
     console.log(this.state);
 
+    let resultCallback = (success) => {
+      if (!success) {
+        this.setState({
+          showAlert: "Your submission has failed.",
+          success: false,
+        });
+      } else {
+        this.setState({
+          showAlert: "Your submission has succeeded. Congrats!",
+          success: true,
+        });
+      }
+    };
+
+    if (
+      !(
+        this.state.nameone &&
+        this.state.nametwo &&
+        this.state.netidone &&
+        this.state.netidtwo &&
+        this.state.pswd &&
+        this.state.file
+      )
+    ) {
+      this.setState({
+        showAlert: "Please complete the form",
+        success: false,
+      });
+    } else {
+      putUser(
+        {
+          nameone: this.state.nameone,
+          nametwo: this.state.nametwo,
+          netidone: this.state.netidone,
+          netidtwo: this.state.netidtwo,
+          pswd: this.state.pswd,
+          picture: this.state.file,
+          points: 40,
+          claims: 0,
+        },
+        resultCallback
+      );
+    }
+
+    return;
+  }
+
+  handleAlertClose() {
+    this.setState({ showAlert: false });
     return;
   }
 
@@ -42,6 +97,26 @@ class LoginPage extends React.Component {
         <center>
           <NavBar />
         </center>
+
+        {this.state.showAlert && (
+          <Alert
+            variant={this.state.success ? "success" : "danger"}
+            onClose={() => this.handleAlertClose(false)}
+            dismissible
+            style={{
+              textAlign: "center",
+              margin: "0 0 1rem 0",
+            }}
+          >
+            <Alert.Heading>{this.state.showAlert}</Alert.Heading>
+            <hr />
+            <p style={{ margin: 0 }}>
+              {this.state.success
+                ? "You have been automatically logged in."
+                : "Please try again or contact DKU Challenge admin."}
+            </p>
+          </Alert>
+        )}
 
         <Container>
           <center style={{ margin: "2rem 0 0 0" }}>
@@ -57,12 +132,13 @@ class LoginPage extends React.Component {
                 teammate.
               </Card.Text>
               <Form>
-                <Form.Group controlId="formBasicNames">
+                <Form.Group>
                   <Form.Label>Names</Form.Label>
                   <Row>
                     <Col>
                       <Form.Control
                         placeholder="First partner name"
+                        controlId="formBasicNameOne"
                         value={this.state.nameone}
                         onChange={(e) =>
                           this.setState({ nameone: e.target.value })
@@ -73,6 +149,7 @@ class LoginPage extends React.Component {
                     <Col>
                       <Form.Control
                         placeholder="Second partner name"
+                        controlId="formBasicNameTwo"
                         value={this.state.nametwo}
                         onChange={(e) =>
                           this.setState({ nametwo: e.target.value })
@@ -83,12 +160,13 @@ class LoginPage extends React.Component {
                   </Row>
                 </Form.Group>
 
-                <Form.Group controlId="formBasicNetids">
+                <Form.Group>
                   <Form.Label>Netids</Form.Label>
                   <Row>
                     <Col>
                       <Form.Control
                         placeholder="First partner Netid"
+                        controlId="formBasicNetidOne"
                         value={this.state.netidone}
                         onChange={(e) =>
                           this.setState({ netidone: e.target.value })
@@ -99,6 +177,7 @@ class LoginPage extends React.Component {
                     <Col>
                       <Form.Control
                         placeholder="Second partner Netid"
+                        controlId="formBasicNetidOne"
                         value={this.state.netidtwo}
                         onChange={(e) =>
                           this.setState({ netidtwo: e.target.value })

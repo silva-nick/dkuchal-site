@@ -101,7 +101,7 @@ class Leaderboard extends React.Component {
     });
 
     return this.state.loading ? (
-      <center style={{ width: "100%", height: "100%", padding: "60% 0" }}>
+      <center style={{ width: "100%", height: "100%", padding: "20% 0" }}>
         <Spinner animation="border" size="md" />
       </center>
     ) : (

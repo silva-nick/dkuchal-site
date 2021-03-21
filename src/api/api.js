@@ -149,6 +149,10 @@ export const getVideoLink = async (token, hash, resultCallback) => {
     .then((response) => {
       console.log(response);
       resultCallback(response.data.url);
+    })
+    .catch((err) => {
+      console.log("error", err);
+      resultCallback(false);
     });
   return;
 };
@@ -171,11 +175,44 @@ export const putClaim = async (raw_claim) => {
 };
 
 // Create new User
-export const putUser = async (raw_users) => {
-  const response = await client.put("/users", raw_users);
-  console.log(response);
+export const putUser = async (raw_user, resultCallback) => {
+  var formdata = new FormData();
+  formdata.append("file", raw_user.picture);
 
-  return response.status === 200 ? 1 : 0;
+  let fileHash =
+    Date.now() +
+    "." +
+    raw_user.picture.type.substring(
+      raw_user.picture.type.indexOf("/") + 1
+    );
+
+  client
+    .post("/temp/" + fileHash, formdata, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    .then((response) => {
+      console.log("Temp host response: ", response);
+
+      raw_user.picture = [{ url: baseURL + "temp/" + fileHash }];
+
+      // Todo: hash passwords
+      client
+        .put("/user", raw_user)
+        .then((response) => {
+          console.log("User gen response", response);
+          resultCallback(true);
+        })
+        .catch((err) => {
+          console.log("error", err);
+          resultCallback(false);
+        });
+    })
+    .catch((error) => {
+      console.log("error", error);
+      resultCallback(false);
+    });
+
+  return;
 };
 
 // update existing User
