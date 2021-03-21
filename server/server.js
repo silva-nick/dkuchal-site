@@ -155,7 +155,7 @@ app.put("/api/user", async (request, response, next) => {
 
   checkFinishedLoop = setInterval(function () {
     checkFinished();
-  }, 2000);
+  }, 3000);
 });
 
 // All new temp upload
@@ -234,7 +234,7 @@ app.put("/api/submit-one", async (request, response, next) => {
         console.log(record);
         airtableFinished = record.file && record.file[0].thumbnails;
       });
-      //airtableFinished = 1;
+      airtableFinished = 1;
 
       if (airtableFinished) {
         // Delete image on server
@@ -259,7 +259,7 @@ app.put("/api/submit-one", async (request, response, next) => {
 
   checkFinishedLoop = setInterval(function () {
     checkFinished();
-  }, 2000);
+  }, 3000);
 });
 
 // Add new two submit request
@@ -298,7 +298,7 @@ app.put("/api/submit-two", async (request, response, next) => {
           record.filetwo &&
           record.filetwo.file[0].thumbnails;
       });
-      //airtableFinished = 1;
+      airtableFinished = 1;
 
       if (airtableFinished) {
         // Delete image on server
@@ -323,7 +323,7 @@ app.put("/api/submit-two", async (request, response, next) => {
 
   checkFinishedLoop = setInterval(function () {
     checkFinished();
-  }, 3000);
+  }, 4000);
 });
 
 // Create video link
