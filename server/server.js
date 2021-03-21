@@ -375,16 +375,28 @@ app.put("/api/submit-vid", async (request, response, next) => {
 app.get("/api/leaderboard", async (request, response, next) => {
   console.log(request);
   try {
+    const oldRecords = await base("old-leaderboard")
+      .select({ view: "Grid view" })
+      .all();
+    let oldLeaderboard = {};
+    oldRecords.map((record, index) => {
+      record = record._rawJson.fields;
+      oldLeaderboard[record.nameone] = index;
+    });
+
     const leaders = [];
     const records = await base("people").select({ view: "Grid view" }).all();
-    records.map((record) => {
+
+    records.map((record, index) => {
       record = record._rawJson.fields;
 
       delete record.netidone;
       delete record.netidtwo;
-      delete record.password;
+      delete record.pswd;
       delete record.claims;
       delete record.created;
+
+      record["status"] = index - oldLeaderboard[record.nameone];
 
       leaders.push(record);
     });

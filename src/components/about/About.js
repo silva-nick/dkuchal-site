@@ -32,20 +32,22 @@ function About() {
     headerText = (
       <center>
         {" "}
-        <h4 style={{ marginTop: ".4rem" }}>Duke Kunshan University</h4>
-        <p style={{ fontSize: "large" }}>[CAPS Challenge]</p>
+        <h4 style={{ marginTop: ".4rem" }}>
+          Counseling and Psychological Services
+        </h4>
+        <p style={{ fontSize: "large" }}>About us</p>
       </center>
     );
   } else {
     headerText = (
-      <div>
+      <center>
         {" "}
         <h1 style={{ marginTop: "1.5rem" }}>
           Counseling and Psychological Services
         </h1>
         <h3 style={{ marginTop: "1rem" }}>About us</h3>
         <hr />
-      </div>
+      </center>
     );
   }
 

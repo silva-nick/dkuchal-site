@@ -1,5 +1,4 @@
 import axios from "axios";
-import { First } from "react-bootstrap/esm/PageItem";
 
 const baseURL = "https://dku-caps.herokuapp.com/api/";
 //const baseURL = "http://localhost:3001/api/";
@@ -192,8 +191,7 @@ export const getLeaders = async () => {
   const response = await client.get("/leaderboard");
   console.log(response);
 
-  // Sort by points
-  return response.data.leaders.sort((one, two) => one.points > two.points);
+  return response.data.leaders;
 };
 
 export default {

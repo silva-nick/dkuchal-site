@@ -126,7 +126,7 @@ class LoginPage extends React.Component {
                 <Form.Group>
                   <Form.File
                     id="fileInput"
-                    label="To start, upload a picture of both of you!"
+                    label="To start, upload a profile picture of both of you!"
                     onChange={(e) =>
                       this.setState({
                         file: e.target.files[0],
