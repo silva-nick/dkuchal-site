@@ -42,12 +42,19 @@ class LoginPage extends React.Component {
     let resultCallback = (success) => {
       if (!success) {
         this.setState({
-          showAlert: "Your submission has failed.",
+          showAlert: "Your signup has failed.",
           success: false,
         });
       } else {
+        sessionStorage.setItem("nameone", this.state.nameone);
+        sessionStorage.setItem("nametwo", this.state.nametwo);
+        sessionStorage.setItem("netidone", this.state.netidone);
+        sessionStorage.setItem("netidtwo", this.state.netidtwo);
+        sessionStorage.setItem("netidone", this.state.netidone);
+        sessionStorage.setItem("claims", this.state.claims);
+
         this.setState({
-          showAlert: "Your submission has succeeded. Congrats!",
+          showAlert: "Your signup has succeeded. Congrats!",
           success: true,
         });
       }

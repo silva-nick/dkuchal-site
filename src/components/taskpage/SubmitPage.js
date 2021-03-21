@@ -132,21 +132,30 @@ class SubmitPage extends React.Component {
       }
     };
 
-    await putSubmission(
-      {
-        type: this.state.type,
-        nameone: this.state.nameone,
-        nametwo: this.state.nametwo,
-        netidone: "", //sessionstorage
-        netidtwo: "",
-        description: this.state.description,
-        tskcode: parseInt(this.props.location.search.substring(6)),
-        file: this.state.file,
-        filetwo: this.state.filetwo,
-        filebackup: this.state.filebackupUrl,
-      },
-      resultCallback
-    );
+    const netidone = sessionStorage.getItem("netidone");
+    const netidtwo = sessionStorage.getItem("netidtwo");
+    if (netidone && netidtwo) {
+      await putSubmission(
+        {
+          type: this.state.type,
+          nameone: this.state.nameone,
+          nametwo: this.state.nametwo,
+          netidone: netidone,
+          netidtwo: netidtwo,
+          description: this.state.description,
+          tskcode: parseInt(this.props.location.search.substring(6)),
+          file: this.state.file,
+          filetwo: this.state.filetwo,
+          filebackup: this.state.filebackupUrl,
+        },
+        resultCallback
+      );
+    } else {
+      this.setState({
+        showAlert: "Please log in.",
+        success: false,
+      });
+    }
 
     return;
   }

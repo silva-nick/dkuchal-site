@@ -215,6 +215,14 @@ export const putUser = async (raw_user, resultCallback) => {
   return;
 };
 
+// try new login
+export const putLogin = async (usrcode) => {
+  const response = await client.put("/users/update", usrcode);
+  console.log(response);
+
+  return response.status === 200 ? 1 : 0;
+};
+
 // update existing User
 export const updateUser = async (usrcode) => {
   const response = await client.put("/users/update", usrcode);
@@ -236,6 +244,7 @@ export default {
   getTasks,
   putUser,
   updateUser,
+  putLogin,
   putSubmission,
   getBoxToken,
   getVideoLink,

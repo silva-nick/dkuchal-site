@@ -1,9 +1,10 @@
 import "../../App.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Container, Card, Button, Form } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Container, Card, Button, Form, Alert } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
+import { putLogin } from "../../api/api";
 import FooterLight from "../navigation/FooterLight";
 import NavBar from "../navigation/NavBar";
 
@@ -11,21 +12,63 @@ class LoginPage extends React.Component {
   constructor() {
     super();
     this.submit = this.submit.bind(this);
+    this.handleAlertClose = this.handleAlertClose.bind(this);
   }
 
   state = {
-    email: "",
+    netid: "",
     pswd: "",
+    showAlert: false,
+    success: true,
   };
 
   submit(e) {
     e.preventDefault();
-    // loginUser()..
+    console.log(this.state);
 
-    sessionStorage.setItem(this.state.email);
+    let resultCallback = (success) => {
+      if (!success) {
+        this.setState({
+          showAlert: "Your login has failed.",
+          success: false,
+        });
+      } else {
+        console.log(success);
 
-    console.log(this.state.email);
-    console.log(this.state.pswd);
+        sessionStorage.setItem("nameone", success.nameone);
+        sessionStorage.setItem("nametwo", success.nametwo);
+        sessionStorage.setItem("netidone", success.netidone);
+        sessionStorage.setItem("netidtwo", success.netidtwo);
+        sessionStorage.setItem("netidone", success.netidone);
+        sessionStorage.setItem("claims", success.claims);
+
+        this.setState({
+          showAlert: "Your login has succeeded. Congrats!",
+          success: true,
+        });
+      }
+    };
+
+    if (!(this.state.netid && this.state.pswd)) {
+      this.setState({
+        showAlert: "Please complete the form",
+        success: false,
+      });
+    } else {
+      putLogin(
+        {
+          netid: this.state.netid,
+          pswd: this.state.pswd,
+        },
+        resultCallback
+      );
+    }
+
+    return;
+  }
+
+  handleAlertClose() {
+    this.setState({ showAlert: false });
     return;
   }
 
@@ -35,6 +78,27 @@ class LoginPage extends React.Component {
         <center>
           <NavBar />
         </center>
+
+        {this.state.showAlert && (
+          <Alert
+            variant={this.state.success ? "success" : "danger"}
+            onClose={() => this.handleAlertClose(false)}
+            dismissible
+            style={{
+              textAlign: "center",
+              margin: "0 0 1rem 0",
+            }}
+          >
+            <Alert.Heading>{this.state.showAlert}</Alert.Heading>
+            <hr />
+            <p style={{ margin: 0 }}>
+              {this.state.success
+                ? "You have been automatically logged in."
+                : "Please try again or contact DKU Challenge admin."}
+            </p>
+          </Alert>
+        )}
+
         <Container>
           <center>
             <Card

@@ -158,6 +158,35 @@ app.put("/api/user", async (request, response, next) => {
   }, 3000);
 });
 
+// Try new login
+app.put("/api/login", async (request, response, next) => {
+  console.log(request.body);
+
+  let netid = request.body.netid;
+  let pswd = request.body.pswd;
+
+  const records = await base("users").select({ view: "Grid view" }).all();
+
+  for (record of records) {
+    record = record._rawJson.fields;
+    if (
+      (record.netidone === netid || record.netidtwo === netid) &&
+      record.pswd === pswd
+    ) {
+      delete record.pswd;
+      delete record.points;
+      delete record.created;
+      delete record.picture;
+      request.header(200);
+      request.json(record);
+      request.end();
+    }
+  }
+
+  request.header(404);
+  request.end();
+});
+
 // All new temp upload
 app.post(
   "/api/temp/:hash",
@@ -440,7 +469,7 @@ app.get("/api/leaderboard", async (request, response, next) => {
     });
 
     const leaders = [];
-    const records = await base("people").select({ view: "Grid view" }).all();
+    const records = await base("users").select({ view: "Grid view" }).all();
 
     records.map((record, index) => {
       record = record._rawJson.fields;
