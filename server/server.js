@@ -133,7 +133,6 @@ app.put("/api/user", async (request, response, next) => {
         console.log(record);
         airtableFinished = record.file && record.file[0].thumbnails;
       });
-      airtableFinished = 1;
 
       if (airtableFinished) {
         // Delete image on server
@@ -237,7 +236,7 @@ app.put("/api/submit-one", async (request, response, next) => {
         console.log(record);
         airtableFinished = record.file && record.file[0].thumbnails;
       });
-      airtableFinished = 1;
+      //airtableFinished = 1;
 
       if (airtableFinished) {
         // Delete image on server
@@ -301,7 +300,7 @@ app.put("/api/submit-two", async (request, response, next) => {
           record.filetwo &&
           record.filetwo.file[0].thumbnails;
       });
-      airtableFinished = 1;
+      //airtableFinished = 1;
 
       if (airtableFinished) {
         // Delete image on server
@@ -417,7 +416,6 @@ app.put("/api/linkgen", (request, response, next) => {
 app.put("/api/submit-vid", async (request, response, next) => {
   console.log(request.body);
 
-  var newRecordID;
   base("submissions").create(
     [{ fields: request.body }],
     function (err, record) {
@@ -426,7 +424,6 @@ app.put("/api/submit-vid", async (request, response, next) => {
         next(err);
         return;
       }
-      newRecordID = record[0].getId();
     }
   );
 });
