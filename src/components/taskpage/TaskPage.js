@@ -123,7 +123,7 @@ class TaskPage extends React.Component {
       const groupCards = this.makeTasks(taskGroup);
       return (
         <div key={index}>
-          <div>
+          <div style={{ marginTop: "3rem" }}>
             <h3 style={{ display: "inline" }}>
               {"Week " + (index + 1) + " Tasks"}
             </h3>
@@ -168,7 +168,6 @@ class TaskPage extends React.Component {
             <h1>Open Tasks:</h1>
           )}
           <hr />
-          <br />
           <div>{cards}</div>
         </Container>
         <Footer

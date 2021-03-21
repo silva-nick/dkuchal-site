@@ -63,7 +63,9 @@ function Home() {
 
   return (
     <div>
-      <NavBar />
+      <center>
+        <NavBar />
+      </center>
 
       <Container>
         <div>

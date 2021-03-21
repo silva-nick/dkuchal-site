@@ -122,7 +122,7 @@ class ShopPage extends React.Component {
 
   makeItems(items) {
     let cards = items.map((item, index) => (
-      <Card style={{ width: "24rem", margin: ".8rem 2rem" }} key={index}>
+      <Card style={{ width: "24rem", margin: "1rem 1rem" }} key={index}>
         <Card.Img
           variant="top"
           src={item.img[0].thumbnails.large.url}
@@ -216,7 +216,7 @@ class ShopPage extends React.Component {
       const groupCards = this.makeItems(itemGroup);
       return (
         <div key={index}>
-          <div>
+          <div style={{ marginTop: "3rem" }}>
             <h3 style={{ display: "inline" }}>
               {"Tier " + (index + 1) + " Items"}
             </h3>
@@ -281,7 +281,6 @@ class ShopPage extends React.Component {
         <Container style={{ marginTop: "1.2rem", minHeight: "80vh" }}>
           {this.state.innerWidth < 500 ? <h2>Prizes:</h2> : <h1>Prizes:</h1>}
           <hr />
-          <br />
           <div>{cards}</div>
         </Container>
         <Footer />

@@ -14,8 +14,4 @@ export function Circle(props) {
   return <a href={props.href} className="circle" />;
 }
 
-export function Flag(props) {
-  return <a href={props.href} className="flag" />;
-}
-
-export default { UpArrow, DownArrow, Circle, Flag };
+export default { UpArrow, DownArrow, Circle };

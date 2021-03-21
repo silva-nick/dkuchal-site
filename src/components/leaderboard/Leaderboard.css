@@ -24,12 +24,3 @@
   background-image: url("./circle.svg");
   float: right;
 }
-
-.flag {
-  height: 1.4rem;
-  width: 1.4rem;
-  margin: 0.4rem;
-  background-repeat: no-repeat;
-  background-image: url("./flag.svg");
-  float: right;
-}

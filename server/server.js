@@ -396,7 +396,7 @@ app.get("/api/leaderboard", async (request, response, next) => {
       delete record.claims;
       delete record.created;
 
-      record["status"] = index - oldLeaderboard[record.nameone];
+      record["status"] = oldLeaderboard[record.nameone] - index;
 
       leaders.push(record);
     });
