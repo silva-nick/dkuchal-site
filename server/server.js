@@ -106,17 +106,14 @@ app.put("/api/user", async (request, response, next) => {
   console.log(request.body);
 
   var newRecordID;
-  base("users").create(
-    [{ fields: request.body }],
-    function (err, record) {
-      if (err) {
-        console.log(err);
-        next(err);
-        return;
-      }
-      newRecordID = record[0].getId();
+  base("users").create([{ fields: request.body }], function (err, record) {
+    if (err) {
+      console.log(err);
+      next(err);
+      return;
     }
-  );
+    newRecordID = record[0].getId();
+  });
 
   let airtableFinished, checkFinished, checkFinishedLoop;
   checkFinished = async () => {
@@ -133,6 +130,7 @@ app.put("/api/user", async (request, response, next) => {
         console.log(record);
         airtableFinished = record.file && record.file[0].thumbnails;
       });
+      airtableFinished = 1;
 
       if (airtableFinished) {
         // Delete image on server
