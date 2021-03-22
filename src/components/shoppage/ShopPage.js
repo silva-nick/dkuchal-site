@@ -12,7 +12,6 @@ import {
 
 import Footer from "../navigation/Footer";
 import NavBar from "../navigation/NavBar";
-
 import { getItems, putClaim, updateUser } from "../../api/api";
 
 function ClaimToast(props) {
@@ -125,11 +124,11 @@ class ShopPage extends React.Component {
       <Card style={{ width: "24rem", margin: "1rem 1rem" }} key={index}>
         <Card.Img
           variant="top"
-          src={item.img[0].thumbnails.large.url}
-          style={{ marginTop: "1rem" }}
+          src={item.img ? item.img[0].thumbnails.large.url : null}
+          style={{ padding: "0rem", paddingBottom: 0 }}
         />
         <Card.Body>
-          <Card.Title>{item.name}</Card.Title>
+          <Card.Title style={{paddingTop:"0"}}>{item.name}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
             {"Tier " + item.tier}
           </Card.Subtitle>
@@ -217,6 +216,7 @@ class ShopPage extends React.Component {
       return (
         <div key={index}>
           <div style={{ marginTop: "3rem" }}>
+            {" "}
             <h3 style={{ display: "inline" }}>
               {"Tier " + (index + 1) + " Items"}
             </h3>
@@ -235,7 +235,6 @@ class ShopPage extends React.Component {
                 ? collapseText.isOpen
                 : collapseText.isClosed}
             </Button>
-
             <hr />
           </div>
           <Collapse in={this.state.itemsOpen[index]}>
