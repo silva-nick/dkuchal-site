@@ -128,15 +128,15 @@ app.put("/api/user", async (request, response, next) => {
         }
         record = record._rawJson;
         console.log(record);
-        airtableFinished = record.file && record.file[0].thumbnails;
+        airtableFinished = record.picture && record.picture[0].thumbnails;
       });
-      airtableFinished = 1;
+      //airtableFinished = 1;
 
       if (airtableFinished) {
         // Delete image on server
-        console.log(request.body.file[0].url);
-        const hash = request.body.file[0].url.substring(
-          request.body.file[0].url.indexOf("temp/") + 5
+        console.log(request.body.picture[0].url);
+        const hash = request.body.picture[0].url.substring(
+          request.body.picture[0].url.indexOf("temp/") + 5
         );
         console.log(hash);
 
