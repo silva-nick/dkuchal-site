@@ -130,7 +130,7 @@ app.put("/api/user", async (request, response, next) => {
         console.log(record);
         airtableFinished = record.picture && record.picture[0].thumbnails;
       });
-      //airtableFinished = 1;
+      airtableFinished = 1;
 
       if (airtableFinished) {
         // Delete image on server
