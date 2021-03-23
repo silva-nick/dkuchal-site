@@ -95,7 +95,8 @@ class SubmitPage extends React.Component {
       if (tskcode) {
         setTimeout(() => {
           sessionStorage.removeItem("tskcode");
-          window.location.href = document.location + "&task=" + tskcode;
+          window.location.href =
+            "https://mw-challenge.xyz/tasks/submit" + "&task=" + tskcode;
         }, 500);
       }
 
@@ -114,7 +115,7 @@ class SubmitPage extends React.Component {
     e.preventDefault();
     //console.log(this.state.file);
 
-    if (!this.state.file) {
+    if (!(this.state.file || this.state.type === 3)) {
       this.setState({ showAlert: "Please finish the form", success: false });
     }
 

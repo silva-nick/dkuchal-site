@@ -26,12 +26,15 @@ export const putSubmission = async (raw_submission, resultCallback) => {
   var formdata = new FormData();
   formdata.append("file", raw_submission.file);
 
-  let fileHash =
-    Date.now() +
-    "." +
-    raw_submission.file.type.substring(
-      raw_submission.file.type.indexOf("/") + 1
-    );
+  let fileHash;
+  if (raw_submission.file) {
+    fileHash =
+      Date.now() +
+      "." +
+      raw_submission.file.type.substring(
+        raw_submission.file.type.indexOf("/") + 1
+      );
+  }
 
   if (type === 1) {
     client
@@ -182,9 +185,7 @@ export const putUser = async (raw_user, resultCallback) => {
   let fileHash =
     Date.now() +
     "." +
-    raw_user.picture.type.substring(
-      raw_user.picture.type.indexOf("/") + 1
-    );
+    raw_user.picture.type.substring(raw_user.picture.type.indexOf("/") + 1);
 
   client
     .post("/temp/" + fileHash, formdata, {
@@ -217,7 +218,7 @@ export const putUser = async (raw_user, resultCallback) => {
 
 // try new login
 export const putLogin = async (usrcode) => {
-  const response = await client.put("/users/update", usrcode);
+  const response = await client.put("/users", usrcode);
   console.log(response);
 
   return response.status === 200 ? 1 : 0;

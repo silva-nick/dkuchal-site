@@ -55,13 +55,21 @@ class LoginPage extends React.Component {
         success: false,
       });
     } else {
-      putLogin(
-        {
-          netid: this.state.netid,
-          pswd: this.state.pswd,
-        },
-        resultCallback
-      );
+      try {
+        putLogin(
+          {
+            netid: this.state.netid,
+            pswd: this.state.pswd,
+          },
+          resultCallback
+        );
+      } catch (error) {
+        console.log(error);
+        this.setState({
+          showAlert: "Your login has failed.",
+          success: false,
+        });
+      }
     }
 
     return;

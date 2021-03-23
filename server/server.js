@@ -450,6 +450,9 @@ app.put("/api/submit-vid", async (request, response, next) => {
         console.log(err);
         next(err);
         return;
+      } else {
+        request.header(200);
+        request.end();
       }
     }
   );
