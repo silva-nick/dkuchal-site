@@ -114,7 +114,7 @@ class LoginPage extends React.Component {
                       type="email"
                       placeholder="Enter netid"
                       value={this.state.email}
-                      onChange={(e) => this.setState({ email: e.target.value })}
+                      onChange={(e) => this.setState({ netid: e.target.value })}
                       required
                     />
                     <Form.Text className="text-muted">

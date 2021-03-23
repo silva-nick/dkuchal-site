@@ -34,7 +34,7 @@ class SubmitPage extends React.Component {
       { text: "Two files", key: 2 },
       { text: "Video", key: 3 },
     ],
-    type: 3,
+    type: 1,
     nameone: "",
     nametwo: "",
     description: "",

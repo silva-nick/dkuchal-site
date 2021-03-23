@@ -24,6 +24,7 @@ function FooterLight() {
           />
         </a>
       </center>
+      <br/>
     </Container>
   );
 }
