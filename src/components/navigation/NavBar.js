@@ -26,10 +26,10 @@ function NavBar() {
             </Nav.Link>
             {/*<Nav.Link as={Link} to="/leaderboard">
               Leaderboard
-            </Nav.Link>*/}
+            </Nav.Link>
             <Nav.Link as={Link} to="/login" style={{ color: "#5289ff" }}>
               Login
-            </Nav.Link>
+            </Nav.Link>*/}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

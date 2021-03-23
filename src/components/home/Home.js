@@ -14,7 +14,7 @@ import { Link, Redirect } from "react-router-dom";
 import Footer from "../navigation/Footer";
 import NavBar from "../navigation/NavBar";
 import MainBackground from "./img/schedule-background-md.jpg";
-//import MainBackgroundSmall from "./img/schedule-background-sm.jpg";
+import MainBackgroundSmall from "./img/schedule-background-sm.jpg";
 
 function Home() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -71,8 +71,7 @@ function Home() {
         <div>
           <Image
             src={MainBackground}
-            style={{ backgroundSize: "cover" }}
-            fluid
+            style={{ backgroundSize: "cover", width: "100%" }}
           />
           {headerText}
         </div>
