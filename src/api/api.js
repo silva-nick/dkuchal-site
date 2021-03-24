@@ -127,7 +127,7 @@ export const putSubmission = async (raw_submission, resultCallback) => {
   }
 };
 
-export const getBoxToken = async (video, fileHash, resultCallback) => {
+export const getBoxToken = async (video, fileHash) => {
   var formdata = new FormData();
   formdata.append("file", video);
 
@@ -137,11 +137,11 @@ export const getBoxToken = async (video, fileHash, resultCallback) => {
     })
     .then((response) => {
       console.log("Temp host response: ", response);
-      resultCallback(response.data.redirect);
+      //resultCallback(response.data.redirect);
     })
     .catch((error) => {
       console.log("error", error);
-      resultCallback(false);
+      //resultCallback(false);
     });
   return;
 };

@@ -51,7 +51,8 @@ class LoginPage extends React.Component {
 
     if (!(this.state.netid && this.state.pswd)) {
       this.setState({
-        showAlert: "Please complete the form",
+        showAlert:
+          "Please complete the login information, you may have to refresh the page.",
         success: false,
       });
     } else {

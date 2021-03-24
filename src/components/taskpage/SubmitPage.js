@@ -62,52 +62,40 @@ class SubmitPage extends React.Component {
             success: false,
           });
         } else {
+          let tskcode = sessionStorage.getItem("tskcode");
+          let oldState = sessionStorage.getItem("state");
+
+          if (tskcode) {
+            var newurl =
+              window.location.protocol +
+              "//" +
+              window.location.host +
+              window.location.pathname +
+              "?task=" +
+              tskcode;
+            window.history.pushState({ path: newurl }, "", newurl);
+          }
+
+          if (oldState) {
+            oldState = JSON.parse(oldState);
+          }
+
           this.setState({
+            ...oldState,
             showAlert: "Your submission has succeeded. Congrats!",
             success: true,
             filebackupURL: success,
           });
+
+          setTimeout(() => {
+            sessionStorage.removeItem("tskcode");
+            sessionStorage.removeItem("state");
+            sessionStorage.removeItem("hash");
+          }, 100);
         }
       };
 
-      setTimeout(async () => {
-        console.log("getting video link");
-        await getVideoLink(token, hash, resultCallback);
-        let tskcode = sessionStorage.getItem("tskcode");
-        if (tskcode) {
-          setTimeout(() => {
-            sessionStorage.removeItem("tskcode");
-            window.location.href = document.location + "&task=" + tskcode;
-          }, 500);
-        }
-
-        let oldState = sessionStorage.getItem("state");
-        if (oldState) {
-          oldState = JSON.parse(oldState);
-          this.state = { ...oldState };
-          setTimeout(() => {
-            sessionStorage.removeItem("state");
-          }, 500);
-        }
-      }, 200);
-    } else {
-      let tskcode = sessionStorage.getItem("tskcode");
-      if (tskcode) {
-        setTimeout(() => {
-          sessionStorage.removeItem("tskcode");
-          window.location.href =
-            "https://mw-challenge.xyz/tasks/submit" + "&task=" + tskcode;
-        }, 500);
-      }
-
-      let oldState = sessionStorage.getItem("state");
-      if (oldState) {
-        oldState = JSON.parse(oldState);
-        this.state = { ...oldState };
-        setTimeout(() => {
-          sessionStorage.removeItem("state");
-        }, 500);
-      }
+      await getVideoLink(token, hash, resultCallback);
     }
   }
 
@@ -180,27 +168,6 @@ class SubmitPage extends React.Component {
   }
 
   async handleVideoLink(e) {
-    let resultCallback = (success) => {
-      if (!success) {
-        this.setState({
-          showAlert: "Box Authentication has failed",
-          success: false,
-        });
-      } else {
-        sessionStorage.setItem(
-          "tskcode",
-          parseInt(this.props.location.search.substring(6))
-        );
-        sessionStorage.setItem(
-          "state",
-          JSON.stringify({
-            ...this.state,
-          })
-        );
-        window.location.href = success;
-      }
-    };
-
     // Wait for file to load
     setTimeout(async () => {
       let fileHash =
@@ -208,7 +175,17 @@ class SubmitPage extends React.Component {
         "." +
         this.state.file.type.substring(this.state.file.type.indexOf("/") + 1);
       sessionStorage.setItem("hash", fileHash);
-      await getBoxToken(this.state.file, fileHash, resultCallback);
+      sessionStorage.setItem(
+        "tskcode",
+        parseInt(this.props.location.search.substring(6))
+      );
+      sessionStorage.setItem(
+        "state",
+        JSON.stringify({
+          ...this.state,
+        })
+      );
+      await getBoxToken(this.state.file, fileHash);
     }, 500);
 
     return;

@@ -177,14 +177,14 @@ app.put("/api/login", async (request, response, next) => {
       delete record.points;
       delete record.created;
       delete record.picture;
-      request.header(200);
-      request.json(record);
-      request.end();
+      response.header(200);
+      response.json(record);
+      response.end();
     }
   }
 
-  request.header(404);
-  request.end();
+  response.header(404);
+  response.end();
 });
 
 // All new temp upload
@@ -421,7 +421,7 @@ app.put("/api/linkgen", (request, response, next) => {
   client.files
     .uploadFile("0", hash, upload)
     .then((fileObject) => {
-      console.log("File Obhect has been created.");
+      console.log("File Object has been created.", fileObject.id, fileObject);
       client.files
         .get(fileObject.id, { fields: "shared_link" })
         .then((file) => {
