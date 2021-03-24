@@ -10,7 +10,7 @@ import {
 
 import Footer from "../navigation/Footer";
 import NavBar from "../navigation/NavBar";
-import MainBackground from "./img/event-background.jpg";
+import MainBackground from "./img/new-background.jpg";
 import CapsLogo from "../navigation/caps-logo.svg";
 //import MainBackgroundSmall from "./img/schedule-background-sm.jpg";
 
@@ -40,14 +40,14 @@ function About() {
     );
   } else {
     headerText = (
-      <center>
+      <div>
         {" "}
         <h1 style={{ marginTop: "1.5rem" }}>
           Counseling and Psychological Services
         </h1>
-        <h3 style={{ marginTop: "1rem" }}>About us</h3>
         <hr />
-      </center>
+        
+      </div>
     );
   }
 
@@ -58,22 +58,30 @@ function About() {
       <Container>
         {headerText}
 
-        <p style={{ padding: "1rem" }}>
-          With the hard work and generous support of CAPS and ISS student
-          workers, CAPS has the opportunity to invite you to participate in this
-          DKU Mental Wellness Challenge. This 30-day program aims to promote and
-          nurture positive mental health and happiness in DKU community. We
-          invite pairs of students to participate in this program, so we can
-          maintain and improve the connections between different student
-          populations. We wish you a pleasant journey with your partner in this
-          program. For more information of CAPS services, please visit our
-          website https://dukekunshan.edu.cn/en/caps
-          <a href="https://dukekunshan.edu.cn/en/caps">
-            {" "}
-            https://dukekunshan.edu.cn/en/caps
-          </a>
-          .
-        </p>
+        <h3>About us</h3>
+        <Card>
+          <Card.Body>
+            <p style={{ margin: 0 }}>
+              With the hard work and generous support of CAPS and ISS student
+              workers, CAPS has the opportunity to invite you to participate in
+              this DKU Mental Wellness Challenge. This 30-day program aims to
+              promote and nurture positive mental health and happiness in DKU
+              community. We invite pairs of students to participate in this
+              program, so we can maintain and improve the connections between
+              different student populations. We wish you a pleasant journey with
+              your partner in this program.
+            </p>
+          </Card.Body>
+          <Card.Footer className="text-muted">
+            For more information of CAPS services, please visit our website
+            <a href="https://dukekunshan.edu.cn/en/caps">
+              {" "}
+              https://dukekunshan.edu.cn/en/caps
+            </a>
+          </Card.Footer>
+        </Card>
+
+        <br />
 
         <Card>
           <Card.Img
@@ -82,14 +90,14 @@ function About() {
             style={{ backgroundSize: "cover" }}
           />
           <Card.Body>
-            <Card.Text>A mental wellness event held Fall 2020.</Card.Text>
+            <Card.Text>CAPS Office located in the CC, rooms 2081-2084.</Card.Text>
           </Card.Body>
         </Card>
 
         <br />
 
+        <h3>What is DKU CAPS</h3>
         <Card>
-          <Card.Header>What is DKU CAPS</Card.Header>
           <Card.Body>
             <Card.Title>
               {" "}

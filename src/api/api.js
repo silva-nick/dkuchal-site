@@ -218,7 +218,7 @@ export const putUser = async (raw_user, resultCallback) => {
 
 // try new login
 export const putLogin = async (usrcode) => {
-  const response = await client.put("/users", usrcode);
+  const response = await client.put("/login", usrcode);
   console.log(response);
 
   return response.status === 200 ? 1 : 0;
@@ -226,7 +226,7 @@ export const putLogin = async (usrcode) => {
 
 // update existing User
 export const updateUser = async (usrcode) => {
-  const response = await client.put("/users/update", usrcode);
+  const response = await client.put("/user/update", usrcode);
   console.log(response);
 
   return response.status === 200 ? 1 : 0;
