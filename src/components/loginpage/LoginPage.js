@@ -24,7 +24,7 @@ class LoginPage extends React.Component {
 
   submit(e) {
     e.preventDefault();
-    console.log(this.state);
+    //console.log(this.state);
 
     let resultCallback = (success) => {
       if (!success) {
@@ -34,6 +34,7 @@ class LoginPage extends React.Component {
         });
       } else {
         console.log(success);
+
 
         sessionStorage.setItem("nameone", success.nameone);
         sessionStorage.setItem("nametwo", success.nametwo);

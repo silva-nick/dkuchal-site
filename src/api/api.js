@@ -127,7 +127,7 @@ export const putSubmission = async (raw_submission, resultCallback) => {
   }
 };
 
-export const getBoxToken = async (video, fileHash) => {
+export const getBoxToken = async (video, fileHash, resultCallback) => {
   var formdata = new FormData();
   formdata.append("file", video);
 
@@ -137,11 +137,11 @@ export const getBoxToken = async (video, fileHash) => {
     })
     .then((response) => {
       console.log("Temp host response: ", response);
-      //resultCallback(response.data.redirect);
+      resultCallback(response.data.redirect);
     })
     .catch((error) => {
       console.log("error", error);
-      //resultCallback(false);
+      resultCallback(false);
     });
   return;
 };
@@ -217,11 +217,18 @@ export const putUser = async (raw_user, resultCallback) => {
 };
 
 // try new login
-export const putLogin = async (usrcode) => {
-  const response = await client.put("/login", usrcode);
-  console.log(response);
+export const putLogin = async (usrcode, resultCallback) => {
+  await client
+    .put("/login", usrcode)
+    .then((response) => {
+      resultCallback(response.data ? response : false);
+    })
+    .catch((err) => {
+      console.log(err);
+      resultCallback(false);
+    });
 
-  return response.status === 200 ? 1 : 0;
+  return;
 };
 
 // update existing User

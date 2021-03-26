@@ -18,6 +18,7 @@ class TaskPage extends React.Component {
     tasks: [],
     tasksOpen: [],
     innerWidth: window.innerWidth,
+    week: 1,
   };
 
   componentDidMount = async () => {
@@ -36,19 +37,44 @@ class TaskPage extends React.Component {
 
   makeTasks(tasks) {
     let cards = tasks.map((task, index) => (
-      <Card style={{ width: "18rem", margin: ".4rem" }} key={index}>
+      <Card
+        style={{ width: "18rem", margin: ".4rem" }}
+        border={task.wkshp && "warning"}
+        key={index}
+      >
         <Card.Body>
           <Card.Title>{task.title}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
             {task.points + " points"}
           </Card.Subtitle>
-          <Card.Text>{task.text}</Card.Text>
-          <center>
+          <Card.Text style={{ marginBottom: "2rem" }}>{task.text}</Card.Text>
+          <center
+            style={{
+              position: "absolute",
+              left: "25%",
+              bottom: "1rem",
+            }}
+          >
             {" "}
-            <Card.Link href={task.description ? task.description[0].url : "#"}>
+            <Card.Link
+              href={task.description ? task.description[0].url : "#"}
+              style={
+                task.week === this.state.week
+                  ? {}
+                  : { pointerEvents: "none", color: "grey" }
+              }
+            >
               Sign up
             </Card.Link>
-            <Card.Link as={Link} to={"/tasks/submit?task=" + task.tskcode}>
+            <Card.Link
+              as={Link}
+              to={"/tasks/submit?task=" + task.tskcode}
+              style={
+                task.week === this.state.week
+                  ? {}
+                  : { pointerEvents: "none", color: "grey" }
+              }
+            >
               Submit
             </Card.Link>
           </center>

@@ -124,11 +124,17 @@ class ShopPage extends React.Component {
       <Card style={{ width: "24rem", margin: "1rem 1rem" }} key={index}>
         <Card.Img
           variant="top"
-          src={item.img ? item.img[0].thumbnails.large.url : null}
+          src={
+            item.img
+              ? item.img[0].thumbnails
+                ? item.img[0].thumbnails.large.url
+                : item.img[0]
+              : null
+          }
           style={{ padding: "0rem", paddingBottom: 0 }}
         />
         <Card.Body>
-          <Card.Title style={{paddingTop:"0"}}>{item.name}</Card.Title>
+          <Card.Title style={{ paddingTop: "0" }}>{item.name}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
             {"Tier " + item.tier}
           </Card.Subtitle>
