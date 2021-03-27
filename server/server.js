@@ -36,6 +36,9 @@ var sdk = new BoxSDK({
   clientSecret: "Hi3U7mOaiLmOcvsHq8XKq9nAiejF8h8A",
 });
 
+// Setup bcrypt for hashing
+const bcrypt = require("bcrypt");
+
 /* ======================================================================================== */
 // Endpoints
 
@@ -105,14 +108,28 @@ app.get("/api/allitems", async (request, response, next) => {
 app.put("/api/user", async (request, response, next) => {
   console.log(request.body);
 
+  const saltRounds = 8;
+
   var newRecordID;
-  base("users").create([{ fields: request.body }], function (err, record) {
+
+  bcrypt.genSalt(saltRounds, function (err, salt) {
     if (err) {
-      console.log(err);
       next(err);
-      return;
     }
-    newRecordID = record[0].getId();
+    bcrypt.hash(request.body.pswd, salt, function (err, hash) {
+      if (err) {
+        next(err);
+      }
+      request.body.pswd = hash;
+      base("users").create([{ fields: request.body }], function (err, record) {
+        if (err) {
+          console.log(err);
+          next(err);
+          return;
+        }
+        newRecordID = record[0].getId();
+      });
+    });
   });
 
   let airtableFinished, checkFinished, checkFinishedLoop;
@@ -169,17 +186,25 @@ app.put("/api/login", async (request, response, next) => {
 
   for (record of records) {
     record = record._rawJson.fields;
-    if (
-      (record.netidone === netid || record.netidtwo === netid) &&
-      record.pswd === pswd
-    ) {
-      delete record.pswd;
-      delete record.points;
-      delete record.created;
-      delete record.picture;
-      response.header(200);
-      response.json(record);
-      response.end();
+    if (record.netidone === netid || record.netidtwo === netid) {
+      bcrypt.compare(pswd, record.pswd, function (err, result) {
+        if (err) {
+          next(err);
+        }
+        if (result) {
+          delete record.pswd;
+          delete record.points;
+          delete record.created;
+          delete record.picture;
+          response.header(200);
+          response.json(record);
+          response.end();
+        } else {
+          response.hasHeader(404);
+          response.send("No account found/ incorrect password.");
+          response.end();
+        }
+      });
     }
   }
 

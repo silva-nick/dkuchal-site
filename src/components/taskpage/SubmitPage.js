@@ -322,7 +322,7 @@ class SubmitPage extends React.Component {
           <NavBar />
         </center>
         {this.state.loading ? (
-          <center style={{ width: "100%", height: "100%", padding: "60% 0" }}>
+          <center style={{ width: "100%", height: "100%", padding: "25% 0" }}>
             <Spinner animation="border" size="md" />
           </center>
         ) : (

@@ -19,6 +19,7 @@ export const getTasks = async () => {
 // Create new submission
 export const putSubmission = async (raw_submission, resultCallback) => {
   //console.log(raw_submission.file);
+  // Check that the netids match
 
   const type = raw_submission.type;
   delete raw_submission.type;
@@ -151,7 +152,7 @@ export const getVideoLink = async (token, hash, resultCallback) => {
     .put("/linkgen/", { token: token, hash: hash })
     .then((response) => {
       console.log(response);
-      resultCallback(response.data.url);
+      resultCallback(response.data.link);
     })
     .catch((err) => {
       console.log("error", err);
