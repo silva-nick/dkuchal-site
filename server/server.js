@@ -426,11 +426,7 @@ app.put("/api/linkgen", (request, response, next) => {
         .then((file) => {
           // Delete temp hosted file
           fs.unlinkSync("./uploads/" + hash);
-          console.log(
-            "File Object has been getted.",
-            file.shared_link.download_url,
-            file
-          );
+          console.log("File Object has been getted.", file);
           response.header(200);
           response.send({ link: file.shared_link.download_url });
           response.end();
