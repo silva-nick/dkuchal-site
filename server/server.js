@@ -422,7 +422,14 @@ app.put("/api/linkgen", (request, response, next) => {
     .uploadFile("0", hash, upload)
     .then((fileObject) => {
       client.files
-        .get(fileObject.entries[0].id, { fields: "shared_link" })
+        .update(fileObject.entries[0].id, {
+          shared_link: {
+            access: "open",
+            permissions: {
+              can_download: true,
+            },
+          },
+        })
         .then((file) => {
           // Delete temp hosted file
           fs.unlinkSync("./uploads/" + hash);
