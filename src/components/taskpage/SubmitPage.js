@@ -49,6 +49,7 @@ class SubmitPage extends React.Component {
   async componentDidMount() {
     const params = new URLSearchParams(window.location.search);
     const token = JSON.parse(decodeURIComponent(params.get("token")));
+
     if (token) {
       let hash = sessionStorage.getItem("hash");
       if (!hash) {
@@ -168,6 +169,17 @@ class SubmitPage extends React.Component {
   }
 
   async handleVideoLink(e) {
+    let resultCallback = (success) => {
+      if (!success) {
+        this.setState({
+          showAlert: "Box Authentication has failed",
+          success: false,
+        });
+      } else {
+        window.location.href = success;
+      }
+    };
+
     // Wait for file to load
     setTimeout(async () => {
       let fileHash =
@@ -185,7 +197,7 @@ class SubmitPage extends React.Component {
           ...this.state,
         })
       );
-      await getBoxToken(this.state.file, fileHash);
+      await getBoxToken(this.state.file, fileHash, resultCallback);
     }, 500);
 
     return;
