@@ -421,9 +421,9 @@ app.put("/api/linkgen", (request, response, next) => {
   client.files
     .uploadFile("0", hash, upload)
     .then((fileObject) => {
-      console.log("File Object has been created.", fileObject.id, fileObject);
+      console.log("File Object has been created.", fileObject.entries[0].id, fileObject);
       client.files
-        .get(fileObject.id, { fields: "shared_link" })
+        .get(fileObject.entries[0].id, { fields: "shared_link" })
         .then((file) => {
           // Delete temp hosted file
           fs.unlinkSync("./uploads/" + hash);
