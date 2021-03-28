@@ -24,9 +24,9 @@ function NavBar() {
             <Nav.Link as={Link} to="/about">
               About
             </Nav.Link>
-            {/*<Nav.Link as={Link} to="/leaderboard">
+            <Nav.Link as={Link} to="/leaderboard">
               Leaderboard
-            </Nav.Link>*/}
+            </Nav.Link>
             <Nav.Link as={Link} to="/login" style={{ color: "#5289ff" }}>
               Login
             </Nav.Link>
