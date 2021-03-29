@@ -192,13 +192,11 @@ app.put("/api/login", async (request, response, next) => {
   index = 0;
   for (record of records) {
     record = record._rawJson.fields;
-    console.log(record);
     if (record.netidone === netid || record.netidtwo === netid) {
       console.log("hit!");
       bcrypt.compare(pswd, record.pswd, function (err, result) {
         if (err) {
           next(err);
-          return;
         } else if (result) {
           delete record.pswd;
           delete record.points;
