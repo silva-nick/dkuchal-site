@@ -147,13 +147,15 @@ class TaskPage extends React.Component {
       };
     }
 
+    const fan = ["(April 1-12)", "(April 12-19)", "(April 19-26)"];
+
     let cards = this.state.tasks.map((taskGroup, index) => {
       const groupCards = this.makeTasks(taskGroup);
       return (
         <div key={index}>
           <div style={{ marginTop: "3rem" }}>
             <h3 style={{ display: "inline" }}>
-              {"Week " + (index + 1) + " Tasks"}
+              {"Week " + (index + 1) + " Tasks" + fan[index]}
             </h3>
             <Button
               variant="light"
