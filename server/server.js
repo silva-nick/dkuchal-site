@@ -74,9 +74,11 @@ app.get("/api/alltasks", async (request, response, next) => {
     //console.log(tasks);
     response.json({ tasks: tasks });
     response.end();
+    return;
   } catch (error) {
     console.log(error);
     next(error);
+    return;
   }
 });
 
@@ -98,9 +100,11 @@ app.get("/api/allitems", async (request, response, next) => {
     //console.log(items);
     response.json({ items: items });
     response.end();
+    return;
   } catch (error) {
     console.log(error);
     next(error);
+    return;
   }
 });
 
@@ -161,6 +165,7 @@ app.put("/api/user", async (request, response, next) => {
         clearInterval(checkFinishedLoop);
         response.header(200);
         response.end();
+        return;
       }
     } catch (error) {
       console.log(error);
@@ -190,6 +195,7 @@ app.put("/api/login", async (request, response, next) => {
       bcrypt.compare(pswd, record.pswd, function (err, result) {
         if (err) {
           next(err);
+          return;
         }
         if (result) {
           delete record.pswd;
@@ -199,10 +205,12 @@ app.put("/api/login", async (request, response, next) => {
           response.header(200);
           response.json(record);
           response.end();
+          return;
         } else {
           response.hasHeader(404);
           response.send("No account found/ incorrect password.");
           response.end();
+          return;
         }
       });
     }
@@ -210,6 +218,7 @@ app.put("/api/login", async (request, response, next) => {
 
   response.header(404);
   response.end();
+  return;
 });
 
 // All new temp upload
@@ -235,9 +244,11 @@ app.post(
     tempFile.on("end", () => {
       response.header(200);
       response.end();
+      return;
     });
     tempFile.on("error", (err) => {
       next(err);
+      return;
     });
   }
 );
@@ -408,9 +419,11 @@ app.post(
       response.header(200);
       response.json({ redirect: authorize_url });
       response.end();
+      return;
     });
     tempFile.on("error", (err) => {
       next(err);
+      return;
     });
   }
 );
