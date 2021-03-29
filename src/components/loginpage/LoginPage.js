@@ -45,6 +45,11 @@ class LoginPage extends React.Component {
           showAlert: "Your login has succeeded. Congrats!",
           success: true,
         });
+
+        setTimeout(() => {
+          window.location.href = "https://www.mw-challenge.xyz/tasks";
+          return;
+        }, 50);
       }
     };
 
@@ -111,7 +116,7 @@ class LoginPage extends React.Component {
           <center>
             <Card
               className="text-left"
-              style={{ margin: "4rem 0 0 0", width: "28rem" }}
+              style={{ margin: "4rem 0 0 0", maxWidth: "28rem" }}
             >
               <Card.Header>Login</Card.Header>
               <Card.Body>
