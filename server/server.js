@@ -216,7 +216,6 @@ app.put("/api/login", async (request, response, next) => {
     }
   }
 
-  response.header(404);
   response.end();
   return;
 });
