@@ -189,8 +189,9 @@ app.put("/api/login", async (request, response, next) => {
 
   const records = await base("users").select({ view: "Grid view" }).all();
 
-  for (let index of records) {
-    let record = records[index]._rawJson.fields;
+  index = 0;
+  for (record of records) {
+    record = record._rawJson.fields;
     if (record.netidone === netid || record.netidtwo === netid) {
       bcrypt.compare(pswd, record.pswd, function (err, result) {
         if (err) {
@@ -214,7 +215,7 @@ app.put("/api/login", async (request, response, next) => {
         }
       });
     }
-    if (index === records.length - 1) {
+    if (index++ === records.length - 1) {
       console.log("404");
       response.status(404);
       response.end();

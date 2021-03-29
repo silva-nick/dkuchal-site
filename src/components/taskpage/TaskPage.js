@@ -155,7 +155,7 @@ class TaskPage extends React.Component {
         <div key={index}>
           <div style={{ marginTop: "3rem" }}>
             <h3 style={{ display: "inline" }}>
-              {"Week " + (index + 1) + " Tasks" + fan[index]}
+              {"Week " + (index + 1) + " Tasks " + fan[index]}
             </h3>
             <Button
               variant="light"
