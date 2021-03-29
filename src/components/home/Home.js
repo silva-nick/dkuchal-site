@@ -76,7 +76,7 @@ function Home() {
           {headerText}
         </div>
         <br />
-        <h3>What is DKU Challenge 2.0</h3>
+        <h3>What is DKU Mental Wellness Challenge</h3>
         <Jumbotron
           style={{ padding: "2rem 0.5rem", marginBottom: "1rem" }}
           fluid
