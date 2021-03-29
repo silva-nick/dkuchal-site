@@ -216,8 +216,9 @@ app.put("/api/login", async (request, response, next) => {
     }
   }
 
+  console.log("404");
+  response.status(404);
   response.end();
-  return;
 });
 
 // All new temp upload
