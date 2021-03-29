@@ -16,7 +16,7 @@ class TaskPage extends React.Component {
   state = {
     loading: true,
     tasks: [],
-    tasksOpen: [],
+    tasksOpen: [1, 0, 0],
     innerWidth: window.innerWidth,
     week: 1,
   };
@@ -25,8 +25,8 @@ class TaskPage extends React.Component {
     let tasks = await getTasks();
     //console.log(tasks);
     tasks = tasks ? tasks : [];
-    let tasksOpen = tasks.map((task, index) => true);
-    this.setState({ loading: false, tasks: tasks, tasksOpen: tasksOpen });
+    //let tasksOpen = tasks.map((task, index) => true); ..., tasksOpen: tasksOpen
+    this.setState({ loading: false, tasks: tasks });
   };
 
   componentDidUpdate = () => {
@@ -66,17 +66,19 @@ class TaskPage extends React.Component {
             >
               Sign up
             </Card.Link>
-            <Card.Link
-              as={Link}
-              to={"/tasks/submit?task=" + task.tskcode}
-              style={
-                task.week === this.state.week
-                  ? {}
-                  : { pointerEvents: "none", color: "grey" }
-              }
-            >
-              Submit
-            </Card.Link>
+            {task.wkshp && (
+              <Card.Link
+                as={Link}
+                to={"/tasks/submit?task=" + task.tskcode}
+                style={
+                  task.week === this.state.week
+                    ? {}
+                    : { pointerEvents: "none", color: "grey" }
+                }
+              >
+                Submit
+              </Card.Link>
+            )}
           </center>
         </Card.Body>
       </Card>
