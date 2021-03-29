@@ -66,7 +66,7 @@ class TaskPage extends React.Component {
             >
               Sign up
             </Card.Link>
-            {task.wkshp && (
+            {!task.wkshp && (
               <Card.Link
                 as={Link}
                 to={"/tasks/submit?task=" + task.tskcode}
