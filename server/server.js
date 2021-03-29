@@ -163,7 +163,7 @@ app.put("/api/user", async (request, response, next) => {
 
         fs.unlinkSync("./uploads/" + hash);
         clearInterval(checkFinishedLoop);
-        response.header(200);
+        response.status(200);
         response.end();
         return;
       }
@@ -202,12 +202,12 @@ app.put("/api/login", async (request, response, next) => {
           delete record.points;
           delete record.created;
           delete record.picture;
-          response.header(200);
+          response.status(200);
           response.json(record);
           response.end();
           return;
         } else {
-          response.header(404);
+          response.status(404);
           response.send("No account found/ incorrect password.");
           response.end();
           return;
@@ -241,7 +241,7 @@ app.post(
     fs.unlinkSync(file.path);
 
     tempFile.on("end", () => {
-      response.header(200);
+      response.status(200);
       response.end();
       return;
     });
@@ -257,7 +257,7 @@ app.get("/api/temp/:hash", async (request, response, next) => {
   const hash = request.params.hash;
   try {
     const data = await fs.promises.readFile("./uploads/" + hash);
-    response.header(200);
+    response.status(200);
     response.send(data);
     response.end();
   } catch (err) {
@@ -310,7 +310,7 @@ app.put("/api/submit-one", async (request, response, next) => {
 
         fs.unlinkSync("./uploads/" + hash);
         clearInterval(checkFinishedLoop);
-        response.header(200);
+        response.status(200);
         response.end();
       }
     } catch (error) {
@@ -374,7 +374,7 @@ app.put("/api/submit-two", async (request, response, next) => {
 
         fs.unlinkSync("./uploads/" + hash);
         clearInterval(checkFinishedLoop);
-        response.header(200);
+        response.status(200);
         response.end();
       }
     } catch (error) {
@@ -415,7 +415,7 @@ app.post(
         response_type: "code",
       });
 
-      response.header(200);
+      response.status(200);
       response.json({ redirect: authorize_url });
       response.end();
       return;
@@ -471,7 +471,7 @@ app.put("/api/linkgen", (request, response, next) => {
           // Delete temp hosted file
           fs.unlinkSync("./uploads/" + hash);
           //console.log("File Object has been getted.", file);
-          response.header(200);
+          response.status(200);
           response.send({ link: file.shared_link.download_url });
           response.end();
         });
@@ -494,7 +494,7 @@ app.put("/api/submit-vid", async (request, response, next) => {
         next(err);
         return;
       } else {
-        request.header(200);
+        request.status(200);
         request.end();
       }
     }
