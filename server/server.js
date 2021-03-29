@@ -192,13 +192,14 @@ app.put("/api/login", async (request, response, next) => {
   index = 0;
   for (record of records) {
     record = record._rawJson.fields;
+    console.log(record);
     if (record.netidone === netid || record.netidtwo === netid) {
+      console.log("hit!");
       bcrypt.compare(pswd, record.pswd, function (err, result) {
         if (err) {
           next(err);
           return;
-        }
-        if (result) {
+        } else if (result) {
           delete record.pswd;
           delete record.points;
           delete record.created;
@@ -206,14 +207,13 @@ app.put("/api/login", async (request, response, next) => {
           response.status(200);
           response.json(record);
           response.end();
-          return;
         } else {
           response.status(404);
           response.send("No account found/ incorrect password.");
           response.end();
-          return;
         }
       });
+      return;
     }
     if (index++ === records.length - 1) {
       console.log("404");
