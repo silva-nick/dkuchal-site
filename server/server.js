@@ -207,7 +207,7 @@ app.put("/api/login", async (request, response, next) => {
           response.end();
           return;
         } else {
-          response.hasHeader(404);
+          response.header(404);
           response.send("No account found/ incorrect password.");
           response.end();
           return;
