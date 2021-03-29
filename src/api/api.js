@@ -222,7 +222,7 @@ export const putLogin = async (usrcode, resultCallback) => {
   await client
     .put("/login", usrcode)
     .then((response) => {
-      resultCallback(response.data.nameone ? response : false);
+      resultCallback(response.data.nameone ? response.data : false);
     })
     .catch((err) => {
       console.log(err);

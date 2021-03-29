@@ -34,8 +34,6 @@ class LoginPage extends React.Component {
         });
       } else {
         console.log(success);
-
-
         sessionStorage.setItem("nameone", success.nameone);
         sessionStorage.setItem("nametwo", success.nametwo);
         sessionStorage.setItem("netidone", success.netidone);
