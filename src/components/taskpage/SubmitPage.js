@@ -291,6 +291,12 @@ class SubmitPage extends React.Component {
           <br />
           <Form.Group>
             <Form.Label>Video Link</Form.Label>
+            <br />
+            <Form.Label class="text-danger">
+              Videos must be submitted as links. Feel free to use the link
+              generator for smaller videos. Otherwise, please upload the file to
+              Box, Zoom, etc. and share the link here.
+            </Form.Label>
             <Form.Control
               placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
               value={this.state.filebackupUrl}
