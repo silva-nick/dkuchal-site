@@ -238,7 +238,7 @@ class LoginPage extends React.Component {
                         src={this.state.fileURL}
                         thumbnail
                         fluid
-                        style={{ width: "60%" }}
+                        style={{ width: "30%" }}
                       />
                     )}
                   </center>
