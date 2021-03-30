@@ -20,17 +20,21 @@ class LoginPage extends React.Component {
     pswd: "",
     showAlert: false,
     success: true,
+    loading: false,
   };
 
   submit(e) {
     e.preventDefault();
     //console.log(this.state);
 
+    this.setState({ loading: true });
+
     let resultCallback = (success) => {
       if (!success) {
         this.setState({
           showAlert: "Your login has failed.",
           success: false,
+          loading: false,
         });
       } else {
         console.log(success);
@@ -44,6 +48,7 @@ class LoginPage extends React.Component {
         this.setState({
           showAlert: "Your login has succeeded. Congrats!",
           success: true,
+          loading: false,
         });
 
         setTimeout(() => {
@@ -58,6 +63,7 @@ class LoginPage extends React.Component {
         showAlert:
           "Please complete the login information, you may have to refresh the page.",
         success: false,
+        loading: false,
       });
     } else {
       try {
@@ -73,6 +79,7 @@ class LoginPage extends React.Component {
         this.setState({
           showAlert: "Your login has failed.",
           success: false,
+          loading: false,
         });
       }
     }

@@ -33,17 +33,21 @@ class LoginPage extends React.Component {
     fileURL: null,
     showAlert: false,
     success: true,
+    loading: false,
   };
 
   submit(e) {
     e.preventDefault();
     console.log(this.state);
 
+    this.setState({ loading: true });
+
     let resultCallback = (success) => {
       if (!success) {
         this.setState({
           showAlert: "Your signup has failed.",
           success: false,
+          loading: false,
         });
       } else {
         sessionStorage.setItem("nameone", this.state.nameone);
@@ -56,6 +60,7 @@ class LoginPage extends React.Component {
         this.setState({
           showAlert: "Your signup has succeeded. Congrats!",
           success: true,
+          loading: false,
         });
       }
     };
@@ -73,6 +78,7 @@ class LoginPage extends React.Component {
       this.setState({
         showAlert: "Please complete the form",
         success: false,
+        loading: false,
       });
     } else {
       putUser(
@@ -124,126 +130,135 @@ class LoginPage extends React.Component {
             </p>
           </Alert>
         )}
-
-        <Container>
-          <center style={{ margin: "2rem 0 0 0" }}>
-            <h1>Create your account</h1>
-            <p>Join DKU Challenge 2.0</p>
+        {this.state.loading ? (
+          <center style={{ width: "100%", height: "100%", padding: "25% 0" }}>
+            <Spinner animation="border" size="md" />
           </center>
+        ) : (
+          <Container>
+            <center style={{ margin: "2rem 0 0 0" }}>
+              <h1>Create your account</h1>
+              <p>Join DKU Challenge 2.0</p>
+            </center>
 
-          <Card className="text-left" style={{ margin: "0 0 2% 0" }}>
-            <Card.Header>Signup</Card.Header>
-            <Card.Body>
-              <Card.Text className="text-muted">
-                You only need to make one account for both you and your
-                teammate.
-              </Card.Text>
-              <Form>
-                <Form.Group>
-                  <Form.Label>Names</Form.Label>
-                  <Row>
-                    <Col>
-                      <Form.Control
-                        placeholder="First partner name"
-                        controlId="formBasicNameOne"
-                        value={this.state.nameone}
-                        onChange={(e) =>
-                          this.setState({ nameone: e.target.value })
-                        }
-                        required
-                      />
-                    </Col>
-                    <Col>
-                      <Form.Control
-                        placeholder="Second partner name"
-                        controlId="formBasicNameTwo"
-                        value={this.state.nametwo}
-                        onChange={(e) =>
-                          this.setState({ nametwo: e.target.value })
-                        }
-                        required
-                      />
-                    </Col>
-                  </Row>
-                </Form.Group>
+            <Card className="text-left" style={{ margin: "0 0 2% 0" }}>
+              <Card.Header>Signup</Card.Header>
+              <Card.Body>
+                <Card.Text className="text-muted">
+                  You only need to make one account for both you and your
+                  teammate.
+                </Card.Text>
+                <Form>
+                  <Form.Group>
+                    <Form.Label>Names</Form.Label>
+                    <Row>
+                      <Col>
+                        <Form.Control
+                          placeholder="First partner name"
+                          controlId="formBasicNameOne"
+                          value={this.state.nameone}
+                          onChange={(e) =>
+                            this.setState({ nameone: e.target.value })
+                          }
+                          required
+                        />
+                      </Col>
+                      <Col>
+                        <Form.Control
+                          placeholder="Second partner name"
+                          controlId="formBasicNameTwo"
+                          value={this.state.nametwo}
+                          onChange={(e) =>
+                            this.setState({ nametwo: e.target.value })
+                          }
+                          required
+                        />
+                      </Col>
+                    </Row>
+                  </Form.Group>
 
-                <Form.Group>
-                  <Form.Label>Netids</Form.Label>
-                  <Row>
-                    <Col>
-                      <Form.Control
-                        placeholder="First partner Netid"
-                        controlId="formBasicNetidOne"
-                        value={this.state.netidone}
-                        onChange={(e) =>
-                          this.setState({ netidone: e.target.value })
-                        }
-                        required
-                      />
-                    </Col>
-                    <Col>
-                      <Form.Control
-                        placeholder="Second partner Netid"
-                        controlId="formBasicNetidOne"
-                        value={this.state.netidtwo}
-                        onChange={(e) =>
-                          this.setState({ netidtwo: e.target.value })
-                        }
-                        required
-                      />
-                    </Col>
-                  </Row>
-                  <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                  </Form.Text>
-                </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Netids</Form.Label>
+                    <Row>
+                      <Col>
+                        <Form.Control
+                          placeholder="First partner Netid"
+                          controlId="formBasicNetidOne"
+                          value={this.state.netidone}
+                          onChange={(e) =>
+                            this.setState({ netidone: e.target.value })
+                          }
+                          required
+                        />
+                      </Col>
+                      <Col>
+                        <Form.Control
+                          placeholder="Second partner Netid"
+                          controlId="formBasicNetidOne"
+                          value={this.state.netidtwo}
+                          onChange={(e) =>
+                            this.setState({ netidtwo: e.target.value })
+                          }
+                          required
+                        />
+                      </Col>
+                    </Row>
+                    <Form.Text className="text-muted">
+                      We'll never share your email with anyone else.
+                    </Form.Text>
+                  </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    value={this.state.pswd}
-                    onChange={(e) => this.setState({ pswd: e.target.value })}
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group>
-                  <Form.File
-                    id="fileInput"
-                    label="To start, upload a profile picture of both of you!"
-                    onChange={(e) =>
-                      this.setState({
-                        file: e.target.files[0],
-                        fileURL: URL.createObjectURL(e.target.files[0]),
-                      })
-                    }
-                  />
-                </Form.Group>
-                <center>
-                  {this.state.file && (
-                    <Image
-                      src={this.state.fileURL}
-                      thumbnail
-                      fluid
-                      style={{ width: "60%" }}
+                  <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      value={this.state.pswd}
+                      onChange={(e) => this.setState({ pswd: e.target.value })}
+                      required
                     />
-                  )}
-                </center>
-                <br />
-                <center>
-                  <Button variant="primary" type="submit" onClick={this.submit}>
-                    Signup
-                  </Button>
-                </center>
-              </Form>
-            </Card.Body>
-            <Card.Footer className="text-muted">
-              Already have an account? <Link to="/login">Login here.</Link>
-            </Card.Footer>
-          </Card>
-        </Container>
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.File
+                      id="fileInput"
+                      label="To start, upload a profile picture of both of you!"
+                      onChange={(e) =>
+                        this.setState({
+                          file: e.target.files[0],
+                          fileURL: URL.createObjectURL(e.target.files[0]),
+                        })
+                      }
+                    />
+                  </Form.Group>
+                  <center>
+                    {this.state.file && (
+                      <Image
+                        src={this.state.fileURL}
+                        thumbnail
+                        fluid
+                        style={{ width: "60%" }}
+                      />
+                    )}
+                  </center>
+                  <br />
+                  <center>
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      onClick={this.submit}
+                    >
+                      Signup
+                    </Button>
+                  </center>
+                </Form>
+              </Card.Body>
+              <Card.Footer className="text-muted">
+                Already have an account? <Link to="/login">Login here.</Link>
+              </Card.Footer>
+            </Card>
+          </Container>
+        )}
         <FooterLight />
       </div>
     );
