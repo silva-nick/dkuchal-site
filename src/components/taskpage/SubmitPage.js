@@ -216,7 +216,7 @@ class SubmitPage extends React.Component {
           <Form.Group>
             <Form.File
               id="fileInput"
-              label="One file/ image, if specified."
+              label="One file/ image, if specified. (Max 16 mb)"
               onChange={(e) => {
                 this.setState({
                   fileURL: URL.createObjectURL(e.target.files[0]),
