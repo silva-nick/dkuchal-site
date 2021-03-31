@@ -107,9 +107,14 @@ class SubmitPage extends React.Component {
   async submit(e) {
     e.preventDefault();
     //console.log(this.state.file);
+    this.setState({ loading: "true" });
 
     if (!(this.state.file || this.state.type === 3)) {
-      this.setState({ showAlert: "Please finish the form", success: false });
+      this.setState({
+        showAlert: "Please finish the form",
+        success: false,
+        loading: false,
+      });
     }
 
     let resultCallback = (success) => {
@@ -117,11 +122,13 @@ class SubmitPage extends React.Component {
         this.setState({
           showAlert: "Your submission has failed.",
           success: false,
+          loading: false,
         });
       } else {
         this.setState({
           showAlert: "Your submission has succeeded. Congrats!",
           success: true,
+          loading: false,
         });
       }
     };
@@ -148,6 +155,7 @@ class SubmitPage extends React.Component {
       this.setState({
         showAlert: "Please log in.",
         success: false,
+        loading: false,
       });
     }
 
