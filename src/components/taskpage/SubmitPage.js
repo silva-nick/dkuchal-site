@@ -210,7 +210,7 @@ class SubmitPage extends React.Component {
         })
       );
       await getBoxToken(this.state.file, fileHash, resultCallback);
-    }, 500);
+    }, 300);
 
     return;
   }

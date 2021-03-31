@@ -495,8 +495,8 @@ app.put("/api/submit-vid", async (request, response, next) => {
         next(err);
         return;
       } else {
-        request.status(200);
-        request.end();
+        response.status(200);
+        response.end();
       }
     }
   );
