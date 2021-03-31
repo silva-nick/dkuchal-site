@@ -64,7 +64,7 @@ class TaskPage extends React.Component {
                   : { pointerEvents: "none", color: "grey" }
               }
             >
-              Sign up
+              Details
             </Card.Link>
             {!task.wkshp && (
               <Card.Link
