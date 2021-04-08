@@ -39,7 +39,7 @@ class TaskPage extends React.Component {
     let cards = tasks.map((task, index) => (
       <Card
         style={{ width: "18rem", margin: ".4rem" }}
-        border={task.wkshp && "warning"}
+        border={task.wkshp ? "warning" : task.spcl ? "success" : ""}
         key={index}
       >
         <Card.Body>
