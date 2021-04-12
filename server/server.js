@@ -21,13 +21,13 @@ var upload = multer({ dest: "uploads/" });
 const fs = require("fs");
 
 // Setup Airtable
-const base = require("airtable").base("appCbJwTyR6Qw1100");
-/*var Airtable = require("airtable");
+//const base = require("airtable").base("appCbJwTyR6Qw1100");
+var Airtable = require("airtable");
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
   apiKey: "key1yVlhEldCllEqO",
 });
-const base = Airtable.base("appCbJwTyR6Qw1100");*/
+const base = Airtable.base("appCbJwTyR6Qw1100");
 
 // Setup Box-API
 var BoxSDK = require("box-node-sdk");
@@ -504,7 +504,6 @@ app.put("/api/submit-vid", async (request, response, next) => {
 
 // Get all leaders
 app.get("/api/leaderboard", async (request, response, next) => {
-  console.log(request);
   try {
     const oldRecords = await base("old-leaderboard")
       .select({ view: "Grid view" })
@@ -517,6 +516,19 @@ app.get("/api/leaderboard", async (request, response, next) => {
 
     const leaders = [];
     const records = await base("users").select({ view: "Grid view" }).all();
+
+    for (let rIndex in records) {
+      if (rIndex == 0) rIndex++;
+      if (
+        records[rIndex - 1]._rawJson.fields.points <
+        records[rIndex]._rawJson.fields.points
+      ) {
+        records.sort((a, b) => {
+          return b._rawJson.fields.points - a._rawJson.fields.points;
+        });
+        break;
+      }
+    }
 
     records.map((record, index) => {
       record = record._rawJson.fields;

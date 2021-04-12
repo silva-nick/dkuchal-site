@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseURL = "https://dku-caps.herokuapp.com/api/";
-//const baseURL = "http://localhost:3001/api/";
+//const baseURL = "https://dku-caps.herokuapp.com/api/";
+const baseURL = "http://localhost:3001/api/";
 
 const client = axios.create({
   baseURL: baseURL,
@@ -251,7 +251,7 @@ export const updateUser = async (usrcode) => {
 // Get and sort leaders
 export const getLeaders = async () => {
   const response = await client.get("/leaderboard");
-  console.log(response);
+  console.log("leaders", response);
 
   return response.data.leaders;
 };
