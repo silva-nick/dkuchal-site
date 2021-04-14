@@ -21,13 +21,13 @@ var upload = multer({ dest: "uploads/" });
 const fs = require("fs");
 
 // Setup Airtable
-//const base = require("airtable").base("appCbJwTyR6Qw1100");
-var Airtable = require("airtable");
+const base = require("airtable").base("appCbJwTyR6Qw1100");
+/*var Airtable = require("airtable");
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
   apiKey: "key1yVlhEldCllEqO",
 });
-const base = Airtable.base("appCbJwTyR6Qw1100");
+const base = Airtable.base("appCbJwTyR6Qw1100");/*
 
 // Setup Box-API
 var BoxSDK = require("box-node-sdk");
