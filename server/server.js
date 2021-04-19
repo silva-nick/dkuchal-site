@@ -558,6 +558,7 @@ const ENDPOINTS = [
   "/",
   "/tasks",
   "/tasks/submit",
+  "/tasks/submitbackup",
   "/shop",
   "/about",
   "/leaderboard",
