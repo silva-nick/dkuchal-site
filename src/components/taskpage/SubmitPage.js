@@ -440,8 +440,8 @@ class SubmitPage extends React.Component {
                 </Form>
               </Card.Body>
               <Card.Footer className="text-muted">
-                Ready to get some prizes?{" "}
-                <Link to="/shop">Check them out here.</Link>
+                Having trouble submitting?{" "}
+                <Link to="/tasks/submitbackup">Try out the backup here.</Link>
               </Card.Footer>
             </Card>
           </Container>
