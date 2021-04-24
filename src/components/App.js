@@ -9,6 +9,7 @@ import About from "./about/About";
 import LoginPage from "./loginpage/LoginPage";
 import SignupPage from "./signuppage/SignupPage";
 import Leaderboard from "./leaderboard/Leaderboard";
+import ProfilePage from "./profile/ProfilePage";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
       <Route exact path="/leaderboard" component={Leaderboard} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/signup" component={SignupPage} />
+      {sessionStorage.getItem("netidone") && (
+        <Route exact path="/profile" component={ProfilePage} />
+      )}
     </BrowserRouter>
   );
 }

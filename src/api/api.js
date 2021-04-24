@@ -256,6 +256,27 @@ export const getLeaders = async () => {
   return response.data.leaders;
 };
 
+// Get and a submission
+export const getSubmissions = async (netid) => {
+  const response = await client.get("/submissions", {
+    params: { netid: netid },
+  });
+  console.log("Submission", response);
+
+  return response.data.submissions;
+};
+
+// Get one user
+export const getUser = async (netid) => {
+  const response = await client.get("/user", {
+    params: { netid: netid },
+  });
+  console.log("User", response);
+
+  return response.data.user;
+};
+
+
 export default {
   getItems,
   getTasks,
@@ -263,6 +284,7 @@ export default {
   updateUser,
   putLogin,
   putSubmission,
+  getSubmissions,
   getBoxToken,
   getVideoLink,
   putClaim,

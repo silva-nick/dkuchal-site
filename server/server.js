@@ -553,6 +553,62 @@ app.get("/api/leaderboard", async (request, response, next) => {
   }
 });
 
+// Get a user's submissions
+app.get("/api/submissions", async (request, response, next) => {
+  try {
+    const userNetid = request.params.netid;
+    const submissions = [];
+    const records = await base("submissions")
+      .select({ view: "Grid view" })
+      .all();
+
+    records.map((record, index) => {
+      record = record._rawJson.fields;
+
+      if (record.netidone == userNetid || record.netidtwo == userNetid) {
+        delete record.netidone;
+        delete record.netidtwo;
+        delete record.nameone;
+        delete record.nametwo;
+        delete record.filetwo;
+        delete record.filebackup;
+        submissions.push(record);
+      }
+    });
+
+    //console.log(items);
+    response.json({ submissions: submissions });
+    response.end();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+// Get a single user
+app.get("/api/user", async (request, response, next) => {
+  try {
+    const userNetid = request.params.netid;
+    const user = [];
+    const records = await base("users").select({ view: "Grid view" }).all();
+
+    for (let record of records) {
+      record = record._rawJson.fields;
+      if (record.netidone == userNetid || record.netidtwo == userNetid) {
+        user.push(record);
+        break;
+      }
+    }
+
+    //console.log(items);
+    response.json({ user: user });
+    response.end();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 // Backup serve to index, backup for refresh
 const ENDPOINTS = [
   "/",
@@ -564,6 +620,7 @@ const ENDPOINTS = [
   "/leaderboard",
   "/login",
   "/signup",
+  "/profile",
 ];
 ENDPOINTS.map((endpoint) => {
   app.get(endpoint, (request, response) => {

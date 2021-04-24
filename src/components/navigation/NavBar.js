@@ -27,6 +27,11 @@ function NavBar() {
             <Nav.Link as={Link} to="/about">
               About
             </Nav.Link>
+            {sessionStorage.getItem("netidone") && (
+              <Nav.Link as={Link} to="/profile" style={{ color: "#499953" }}>
+                Profile
+              </Nav.Link>
+            )}
             <Nav.Link as={Link} to="/login" style={{ color: "#5289ff" }}>
               Login
             </Nav.Link>
