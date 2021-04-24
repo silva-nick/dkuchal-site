@@ -1,70 +1,23 @@
 import React from "react";
-import { Container, Row, Button, Card } from "react-bootstrap";
+import { Container, Row, Button, Card, Col, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 class ProfileCard extends React.Component {
-  state = { featureText: "" };
+  state = {};
 
   render() {
-    const imageSrc = this.props.img
-      ? this.props.img
+    const imageSrc = this.props.user.picture
+      ? this.props.user.picture[0].thumbnails.large.url
       : require("../navigation/logo.svg");
 
-    let teamButtons = [];
-    let teamColors = {
-      SWE: "#d0f0fd",
-      DS: "#d1f7c4",
-      PM: "#cfdfff",
-      Hardware: "#e8e8e8",
-    };
-    if (this.props.teams) {
-      teamButtons = this.props.teams.map((team, index) => {
-        return (
-          <div
-            class={"team-button"}
-            key={index}
-            style={{ backgroundColor: teamColors[team] }}
-          >
-            {team === "Hardware" ? "HRD" : team}
-          </div>
-        );
-      });
-    }
-
-    if (this.props.isFeatured) {
-      setTimeout(
-        () => this.setState({ featureText: this.props.description }),
-        500
-      );
-    } else if (this.state.featureText) {
-      setTimeout(() => this.setState({ featureText: "" }), 400);
-    }
-
-    let cardStyle = {
-      width: "100%",
-      //maxHeight: "480px", // Implemented for slide modality, fucks up with person icons
-    };
-
-    let window = this.props.windowWidth;
-    let padding;
-
-    // dynamically determine left and right padding around people grid
-    if (window >= 992) {
-      // lg or xl
-      padding = 2;
-    } else {
-      // xs
-      padding = 1;
-    }
-
-    let columns = this.makePeopleRow(this.props.members);
+    let title = this.props.user.nameone + " and " + this.props.user.nametwo;
 
     return (
       <div
         style={{ display: "flex", justifyContent: "center", height: "100%" }}
       >
-        <Card style={cardStyle}>
-          <Card.Body className="project-card">
+        <Card style={{ width: "100%" }}>
+          <Card.Body>
             <div
               style={{
                 width: "48px",
@@ -79,12 +32,14 @@ class ProfileCard extends React.Component {
               }}
             >
               {" "}
-              <img
+              <Image
                 src={imageSrc}
                 style={{
                   maxWidth: "48px",
                   maxHeight: "48px",
+                  backgroundColor: "#fff",
                 }}
+                roundedCircle
               />
             </div>
 
@@ -100,56 +55,34 @@ class ProfileCard extends React.Component {
                 flexDirection: "column",
               }}
             >
-              <h4 style={{ verticalAlign: "middle" }}>{this.props.title}</h4>
+              <h4 style={{ verticalAlign: "middle" }}>{title}</h4>
             </Card.Title>
             <hr />
-
-            <Card.Text style={{ padding: "1rem 0 0 0" }}>
-              {this.props.shortDescription
-                ? this.props.shortDescription
-                : "Check out 'See More' for more information."}
-            </Card.Text>
 
             <Card.Text
               style={{
                 padding: "1rem 0 1rem 0",
-                overflow: "hidden",
-                whiteSpace: "pre-wrap",
-                maxHeight: "280px",
-                overflowY: "auto",
               }}
             >
-              {this.state.featureText}
+              <p>
+                <a style={{ fontWeight: "bold" }}>Points: </a>
+                {this.props.user.points}
+              </p>
+              <p>
+                <a style={{ fontWeight: "bold" }}>Submissions: </a>
+                {this.props.user.submissions}
+              </p>
             </Card.Text>
-            {this.state.featureText && (
-              <div style={{ paddingBottom: ".4rem" }}>
-                {" "}
-                {this.props.members && (
-                  <div style={{ marginBottom: ".8rem", fontSize: "1rem" }}>
-                    Team Members:
-                  </div>
-                )}
-                <Row
-                  ref={(node) => (this.peopleDisplay = node)}
-                  style={{ margin: `0 ${padding}%` }}
-                >
-                  {columns}
-                </Row>
-              </div>
-            )}
-
-            <div class="team-buttons">{teamButtons}</div>
             <div
               style={{ position: "absolute", right: "1rem", bottom: "1rem" }}
             >
               <Button
-                className="theme-button"
-                onClick={() => {
-                  console.log(this.props.members);
-                  this.props.callback(this.props.index);
-                }}
+                as={Link}
+                to={"/tasks"}
+                variant="link"
+                style={{ color: "#5289ff" }}
               >
-                {this.props.isFeatured ? "Close" : "See more"}
+                {"Keep Fighting"}
               </Button>
             </div>
           </Card.Body>
@@ -159,4 +92,4 @@ class ProfileCard extends React.Component {
   }
 }
 
-export default withWindowDimensions(ProfileCard);
+export default ProfileCard;

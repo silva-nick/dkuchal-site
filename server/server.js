@@ -21,13 +21,13 @@ var upload = multer({ dest: "uploads/" });
 const fs = require("fs");
 
 // Setup Airtable
-const base = require("airtable").base("appCbJwTyR6Qw1100");
-/*var Airtable = require("airtable");
+//const base = require("airtable").base("appCbJwTyR6Qw1100");
+var Airtable = require("airtable");
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
   apiKey: "key1yVlhEldCllEqO",
 });
-const base = Airtable.base("appCbJwTyR6Qw1100");*/
+const base = Airtable.base("appCbJwTyR6Qw1100");
 
 // Setup Box-API
 var BoxSDK = require("box-node-sdk");
@@ -556,7 +556,7 @@ app.get("/api/leaderboard", async (request, response, next) => {
 // Get a user's submissions
 app.get("/api/submissions", async (request, response, next) => {
   try {
-    const userNetid = request.params.netid;
+    const userNetid = request.query.netid;
     const submissions = [];
     const records = await base("submissions")
       .select({ view: "Grid view" })
@@ -588,13 +588,17 @@ app.get("/api/submissions", async (request, response, next) => {
 // Get a single user
 app.get("/api/user", async (request, response, next) => {
   try {
-    const userNetid = request.params.netid;
+    const userNetid = request.query.netid;
     const user = [];
     const records = await base("users").select({ view: "Grid view" }).all();
 
     for (let record of records) {
       record = record._rawJson.fields;
       if (record.netidone == userNetid || record.netidtwo == userNetid) {
+        delete record.netidone;
+        delete record.netidtwo;
+        delete record.pswd;
+        delete record.claims;
         user.push(record);
         break;
       }

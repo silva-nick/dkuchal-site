@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseURL = "https://dku-caps.herokuapp.com/api/";
-//const baseURL = "http://localhost:3001/api/";
+//const baseURL = "https://dku-caps.herokuapp.com/api/";
+const baseURL = "http://localhost:3001/api/";
 
 const client = axios.create({
   baseURL: baseURL,
@@ -275,7 +275,6 @@ export const getUser = async (netid) => {
 
   return response.data.user;
 };
-
 
 export default {
   getItems,
