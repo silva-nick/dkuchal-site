@@ -14,10 +14,9 @@ import {
 import Footer from "../navigation/Footer";
 import NavBar from "../navigation/NavBar";
 import ProfileCard from "./ProfileCard";
+import Logo from "../navigation/Logo";
 
 import { getSubmissions, getUser } from "../../api/api";
-
-const backupImage = require("../navigation/logo.svg");
 
 class ProfilePage extends React.Component {
   constructor() {
@@ -70,23 +69,31 @@ class ProfilePage extends React.Component {
             </Col>
             <Col lg={0} xs={0} style={{ ...displayCenter, padding: 0 }}>
               <div>
-                <Image
-                  src={
-                    submission.file
-                      ? submission.file[0].thumbnails
-                        ? submission.file[0].thumbnails.large.url
-                        : backupImage
-                      : backupImage
-                  }
-                  thumbnail
-                  style={{
-                    width: "3.2rem",
-                    height: "3.2rem",
-                    float: "left",
-                    margin: 0,
-                    objectFit: "cover",
-                  }}
-                />
+                {submission.file ? (
+                  submission.file[0].thumbnails ? (
+                    <Image
+                      src={
+                        submission.file
+                          ? submission.file[0].thumbnails
+                            ? submission.file[0].thumbnails.large.url
+                            : null
+                          : null
+                      }
+                      thumbnail
+                      style={{
+                        width: "3.2rem",
+                        height: "3.2rem",
+                        float: "left",
+                        margin: 0,
+                        objectFit: "cover",
+                      }}
+                    />
+                  ) : (
+                    Logo
+                  )
+                ) : (
+                  Logo
+                )}
               </div>
             </Col>
             <Col lg={8} xs={6}>
