@@ -16,9 +16,8 @@ class TaskPage extends React.Component {
   state = {
     loading: true,
     tasks: [],
-    tasksOpen: [0, 0, 1],
+    tasksOpen: [1, 1, 1],
     innerWidth: window.innerWidth,
-    week: 3,
   };
 
   componentDidMount = async () => {
@@ -56,26 +55,11 @@ class TaskPage extends React.Component {
             }}
           >
             {" "}
-            <Card.Link
-              href={task.description ? task.description[0].url : "#"}
-              style={
-                task.week === this.state.week
-                  ? {}
-                  : { pointerEvents: "none", color: "grey" }
-              }
-            >
+            <Card.Link href={task.description ? task.description[0].url : "#"}>
               Details
             </Card.Link>
             {!task.wkshp && (
-              <Card.Link
-                as={Link}
-                to={"/tasks/submit?task=" + task.tskcode}
-                style={
-                  task.week === this.state.week
-                    ? {}
-                    : { pointerEvents: "none", color: "grey" }
-                }
-              >
+              <Card.Link as={Link} to={"/tasks/submit?task=" + task.tskcode}>
                 Submit
               </Card.Link>
             )}
@@ -148,9 +132,7 @@ class TaskPage extends React.Component {
     }
 
     const fan = ["(April 1-12)", "(April 12-19)", "(April 19-26)"];
-    const closedStyle = {
-      textDecoration: "line-through",
-    };
+    const closedStyle = {};
 
     let cards = this.state.tasks.map((taskGroup, index) => {
       const groupCards = this.makeTasks(taskGroup);
