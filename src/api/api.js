@@ -73,6 +73,7 @@ export const putSubmission = async (raw_submission, resultCallback) => {
     }
     let fileTwoHash =
       Date.now() +
+      3 +
       "." +
       raw_submission.filetwo.type.substring(
         raw_submission.filetwo.type.indexOf("/") + 1
