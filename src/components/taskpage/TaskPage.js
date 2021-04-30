@@ -1,6 +1,6 @@
 import "./TaskPage.css";
 import React from "react";
-import { Container, Spinner, Card, Button, Collapse } from "react-bootstrap";
+import { Container, Spinner, Card, Button, Collapse,Alert } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
 import Footer from "../navigation/Footer";
@@ -11,13 +11,15 @@ import { getTasks } from "../../api/api";
 class TaskPage extends React.Component {
   constructor() {
     super();
+    this.handleAlertClose = this.handleAlertClose.bind(this);
   }
 
   state = {
     loading: true,
     tasks: [],
-    tasksOpen: [1, 1, 1],
+    tasksOpen: [0, 0, 0],
     innerWidth: window.innerWidth,
+    showAlert: true,
   };
 
   componentDidMount = async () => {
@@ -33,6 +35,11 @@ class TaskPage extends React.Component {
       this.setState({ innerWidth: window.innerWidth });
     }
   };
+
+  handleAlertClose() {
+    this.setState({ showAlert: false });
+    return;
+  }
 
   makeTasks(tasks) {
     let cards = tasks.map((task, index) => (
@@ -59,7 +66,7 @@ class TaskPage extends React.Component {
               Details
             </Card.Link>
             {!task.wkshp && (
-              <Card.Link as={Link} to={"/tasks/submit?task=" + task.tskcode}>
+              <Card.Link as={Link} to={"/tasks/submit?task=" + task.tskcode} style={{color:"#a4a4a4", pointerEvents:"none"}}>
                 Submit
               </Card.Link>
             )}
@@ -181,6 +188,23 @@ class TaskPage extends React.Component {
         <center>
           <NavBar />
         </center>
+        {this.state.showAlert && (
+          <Alert
+            variant="warning"
+            onClose={() => this.handleAlertClose(false)}
+            dismissible
+            style={{
+              textAlign: "center",
+              margin: 0,
+            }}
+          >
+            <Alert.Heading>Woah! The challenge is over.</Alert.Heading>
+            <hr />
+            <p style={{ margin: 0 }}>
+              Come back soon to check out your final ranking and select prizes.
+            </p>
+          </Alert>
+        )}
         <Container style={{ marginTop: "1.2rem", minHeight: "80vh" }}>
           {this.state.innerWidth < 500 ? (
             <h3>Open Tasks:</h3>
