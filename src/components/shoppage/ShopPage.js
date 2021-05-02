@@ -62,7 +62,7 @@ class ShopPage extends React.Component {
     innerWidth: window.innerWidth,
     toasts: [],
     shopIsOpen: false,
-    showAlert: true,
+    showAlert: false,
     claimSuccess: false,
   };
 
@@ -70,7 +70,7 @@ class ShopPage extends React.Component {
     let items = await getItems();
     //console.log(items);
     items = items ? items : [];
-    let itemsOpen = items.map((item, index) => true);
+    let itemsOpen = items.map((item, index) => false);
     this.setState({ loading: false, items: items, itemsOpen: itemsOpen });
   };
 
@@ -139,7 +139,7 @@ class ShopPage extends React.Component {
             {"Tier " + item.tier}
           </Card.Subtitle>
           <Card.Text>{item.text}</Card.Text>
-          <center>
+          {/*<center>
             <Button
               onClick={(e) => {
                 this.handleClick(e, item);
@@ -148,7 +148,7 @@ class ShopPage extends React.Component {
             >
               Claim
             </Button>
-          </center>
+            </center>*/}
         </Card.Body>
       </Card>
     ));
@@ -286,8 +286,20 @@ class ShopPage extends React.Component {
         <Container style={{ marginTop: "1.2rem", minHeight: "80vh" }}>
           {this.state.innerWidth < 500 ? <h2>Prizes:</h2> : <h1>Prizes:</h1>}
           <hr />
+          <iframe
+            class="airtable-embed"
+            src="https://airtable.com/embed/shr5jrbjR7i1S1NM1?backgroundColor=orangeLight"
+            frameborder="0"
+            onmousewheel=""
+            width="100%"
+            height="600"
+            style={{ background: "transparent", border: "1px solid #499953" }}
+          ></iframe>
+
+          <hr />
           <div>{cards}</div>
         </Container>
+
         <Footer />
       </div>
     );
