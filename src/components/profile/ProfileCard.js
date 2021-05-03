@@ -65,6 +65,10 @@ class ProfileCard extends React.Component {
               }}
             >
               <p>
+                <a style={{ fontWeight: "bold", color:"#499953" }}>Final rank: </a>
+                {this.props.user.tier}
+              </p>
+              <p>
                 <a style={{ fontWeight: "bold" }}>Points: </a>
                 {this.props.user.points}
               </p>
