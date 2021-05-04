@@ -533,7 +533,7 @@ app.get("/api/leaderboard", async (request, response, next) => {
     records.map((record, index) => {
       record = record._rawJson.fields;
 
-      delete record.netidone;
+      //delete record.netidone; // For top 3 display
       delete record.netidtwo;
       delete record.pswd;
       delete record.claims;
