@@ -12,8 +12,9 @@ import {
 
 import Footer from "../navigation/Footer";
 import NavBar from "../navigation/NavBar";
+import ProfileCard from "../profile/ProfileCard";
 
-import { getLeaders } from "../../api/api";
+import { getLeaders, getSubmissions } from "../../api/api";
 import { UpArrow, DownArrow, Flag, Circle } from "./Vectors";
 
 class Leaderboard extends React.Component {
@@ -22,8 +23,10 @@ class Leaderboard extends React.Component {
   }
 
   state = {
-    loading: true,
+    loadingLeaders: true,
+    loadingTop: true,
     leaders: [],
+    topUsers: [],
     innerWidth: window.innerWidth,
   };
 
@@ -31,7 +34,15 @@ class Leaderboard extends React.Component {
     let leaders = await getLeaders();
     leaders = leaders ? leaders : [];
 
-    this.setState({ loading: false, leaders: leaders });
+    this.setState({ loadingLeaders: false, leaders: leaders });
+
+    let topUsers = [];
+    for (let i = 0; i < 3; i++) {
+      let submissions = await getSubmissions(leaders[i].netidone);
+      topUsers.push({ ...leaders[i], submissions: submissions.length });
+    }
+
+    this.setState({ loadingTop: false, topUsers: topUsers });
   };
 
   componentDidUpdate = () => {
@@ -39,6 +50,59 @@ class Leaderboard extends React.Component {
       this.setState({ innerWidth: window.innerWidth });
     }
   };
+
+  makeTop() {
+    if (this.state.loadingTop) {
+      return (
+        <center style={{ width: "100%", height: "100%" }}>
+          <Spinner animation="border" size="md" />
+          <br />
+          <br />
+        </center>
+      );
+    } else {
+      let bestTeam = (
+        <center style={{ width: "18rem", paddingBottom: "1rem" }}>
+          <ProfileCard user={this.state.topUsers[0]} />
+        </center>
+      );
+
+      let secondBest = (
+        <center>
+          <div
+            style={{ display: "flex", flexDirection: "row", width: "38rem" }}
+          >
+            <div
+              style={{
+                maxWidth: "18rem",
+                display: "inline-block",
+                marginRight: "1rem",
+              }}
+            >
+              <ProfileCard user={this.state.topUsers[1]} />
+            </div>
+
+            <div
+              style={{
+                maxWidth: "18rem",
+                display: "inline-block",
+                marginLeft: "1rem",
+              }}
+            >
+              <ProfileCard user={this.state.topUsers[2]} />
+            </div>
+          </div>
+        </center>
+      );
+
+      return (
+        <center>
+          <center>{bestTeam}</center>
+          <center>{secondBest}</center>
+        </center>
+      );
+    }
+  }
 
   makeLeaders() {
     let displayCenter = {
@@ -100,7 +164,7 @@ class Leaderboard extends React.Component {
       );
     });
 
-    return this.state.loading ? (
+    return this.state.loadingLeaders ? (
       <center style={{ width: "100%", height: "100%", padding: "20% 0" }}>
         <Spinner animation="border" size="md" />
       </center>
@@ -111,6 +175,7 @@ class Leaderboard extends React.Component {
 
   render() {
     let leaderboard = this.makeLeaders();
+    let top = this.makeTop();
 
     return (
       <div>
@@ -119,6 +184,16 @@ class Leaderboard extends React.Component {
           <NavBar />
         </center>
         <Container style={{ marginTop: "1.2rem", minHeight: "80vh" }}>
+          {this.state.innerWidth < 500 ? (
+            <h3>Congradulate our winners:</h3>
+          ) : (
+            <h1>Congradulate our winners:</h1>
+          )}
+          <hr />
+          <br />
+          <div>{top}</div>
+          <br />
+          <br />
           {this.state.innerWidth < 500 ? (
             <h3>Leaderboard:</h3>
           ) : (

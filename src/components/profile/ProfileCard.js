@@ -24,8 +24,8 @@ class ProfileCard extends React.Component {
                 height: "48px",
                 marginRight: "1rem",
                 position: "absolute",
-                left: "1rem",
-                top: "1rem",
+                left: "1.4rem",
+                top: "1.4rem",
                 justifyContent: "center",
                 flexDirection: "column",
                 display: "flex",
@@ -37,6 +37,8 @@ class ProfileCard extends React.Component {
                 style={{
                   maxWidth: "48px",
                   maxHeight: "48px",
+                  width: "48px",
+                  height: "48px",
                   backgroundColor: "#fff",
                 }}
                 roundedCircle
@@ -65,7 +67,9 @@ class ProfileCard extends React.Component {
               }}
             >
               <p>
-                <a style={{ fontWeight: "bold", color:"#499953" }}>Final rank: </a>
+                <a style={{ fontWeight: "bold", color: "#499953" }}>
+                  Final rank:{" "}
+                </a>
                 {this.props.user.tier}
               </p>
               <p>
@@ -77,7 +81,7 @@ class ProfileCard extends React.Component {
                 {this.props.user.submissions}
               </p>
             </Card.Text>
-            <div
+            {/*<div
               style={{ position: "absolute", right: "1rem", bottom: "1rem" }}
             >
               <Button
@@ -88,7 +92,7 @@ class ProfileCard extends React.Component {
               >
                 {"Keep Fighting"}
               </Button>
-            </div>
+            </div>*/}
           </Card.Body>
         </Card>
       </div>
