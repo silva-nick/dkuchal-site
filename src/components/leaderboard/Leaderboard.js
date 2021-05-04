@@ -185,9 +185,9 @@ class Leaderboard extends React.Component {
         </center>
         <Container style={{ marginTop: "1.2rem", minHeight: "80vh" }}>
           {this.state.innerWidth < 500 ? (
-            <h3>Congradulate our winners:</h3>
+            <h3>Congratulate our winners:</h3>
           ) : (
-            <h1>Congradulate our winners:</h1>
+            <h1>Congratulate our winners:</h1>
           )}
           <hr />
           <br />
